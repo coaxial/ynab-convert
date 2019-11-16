@@ -9,3 +9,4 @@ Metrics/BlockLength:
   Exclude:
     - Guardfile
     - ynab_convert.gemspec
+    - 'spec/**/*_spec.rb'

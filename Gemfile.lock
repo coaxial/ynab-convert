@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     ynab_convert (0.1.0)
+      slop
 
 GEM
   remote: https://rubygems.org/
@@ -80,6 +81,7 @@ GEM
       rubocop
     ruby-progressbar (1.10.1)
     shellany (0.0.1)
+    slop (4.7.0)
     solargraph (0.37.2)
       backport (~> 1.1)
       bundler (>= 1.17.2)
