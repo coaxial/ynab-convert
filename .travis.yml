@@ -17,4 +17,4 @@ jobs:
         provider: rubygems
         gem: ynab_convert
         api_key: $RUBYGEMS_API_KEY
-        on: deploy-gem-release
+        on: master
