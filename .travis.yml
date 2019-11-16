@@ -16,6 +16,6 @@ jobs:
       script: echo "Publishing to rubygems.org..."
       deploy:
         provider: rubygems
-        gem: ynab-convert
+        gem: ynab_convert
         api_key: $RUBYGEMS_API_KEY
         on: deploy-gem-release

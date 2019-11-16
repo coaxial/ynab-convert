@@ -2,5 +2,5 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in ynab_csv.gemspec
+# Specify your gem's dependencies in ynab_convert.gemspec
 gemspec

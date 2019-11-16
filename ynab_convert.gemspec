@@ -2,16 +2,16 @@
 
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ynab_csv/version'
+require 'ynab_convert/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'ynab_csv'
-  spec.version       = YnabCsv::VERSION
+  spec.name          = 'ynab_convert'
+  spec.version       = YnabConvert::VERSION
   spec.authors       = ['coaxial']
   spec.email         = ['hi@64b.it']
 
   spec.summary       = 'Convert online banking CSV files to YNAB 4 format.'
-  spec.homepage      = 'https://github.com/coaxial/ynab_csv'
+  spec.homepage      = 'https://github.com/coaxial/ynab_convert'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
     spec.metadata['allowed_push_host'] = 'https://rubygems.org'
 
     spec.metadata['homepage_uri'] = spec.homepage
-    spec.metadata['source_code_uri'] = 'https://github.com/coaxial/ynab_csv'
+    spec.metadata['source_code_uri'] = 'https://github.com/coaxial/ynab_convert'
   else
     raise 'RubyGems 2.0 or newer is required to protect against ' \
       'public gem pushes.'

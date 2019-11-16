@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ynab_csv (0.1.0)
+    ynab_convert (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -110,7 +110,7 @@ DEPENDENCIES
   rubocop
   rubocop-rake
   solargraph
-  ynab_csv!
+  ynab_convert!
 
 BUNDLED WITH
    2.0.2

@@ -1,10 +1,10 @@
-# YnabCsv
+# YnabConvert
 
 Convert CSV files from online banking to a [format YNAB 4 can consume](https://docs.youneedabudget.com/article/921-formatting-csv-file).
 
 ## Installation
 
-    $ gem install ynab_csv
+    $ gem install ynab_convert
 
 ## Usage
 
@@ -18,7 +18,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/coaxial/ynab_csv.
+Bug reports and pull requests are welcome on GitHub at https://github.com/coaxial/ynab_convert.
 
 ## License
 

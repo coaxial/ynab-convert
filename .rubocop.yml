@@ -3,9 +3,9 @@ require: rubocop-rake
 
 Metrics/LineLength:
   Exclude:
-    - ynab_csv.gemspec
+    - ynab_convert.gemspec
 
 Metrics/BlockLength:
   Exclude:
     - Guardfile
-    - ynab_csv.gemspec
+    - ynab_convert.gemspec

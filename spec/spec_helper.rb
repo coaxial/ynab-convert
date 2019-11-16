@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require 'ynab_csv'
+require 'ynab_convert'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
