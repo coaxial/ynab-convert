@@ -1,4 +1,6 @@
-require "ynab_csv/version"
+# frozen_string_literal: true
+
+require 'ynab_csv/version'
 
 module YnabCsv
   class Error < StandardError; end

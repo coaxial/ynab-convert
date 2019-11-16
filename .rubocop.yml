@@ -1,0 +1,9 @@
+---
+Metrics/LineLength:
+  Exclude:
+    - ynab_csv.gemspec
+
+Metrics/BlockLength:
+  Exclude:
+    - Guardfile
+    - ynab_csv.gemspec
