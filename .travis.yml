@@ -3,5 +3,19 @@ sudo: false
 language: ruby
 cache: bundler
 rvm:
-  - 2.6.1
-before_install: gem install bundler -v 2.0.1
+  - 2.4
+  - 2.5
+  - 2.6
+before_install: gem install bundler
+script: echo "Running tests for $(ruby -v)..." && bundle exec rake ci
+
+jobs:
+  include:
+    - stage: gem release
+      rvm: 2.6
+      script: echo "Publishing to rubygems.org..."
+      deploy:
+        provider: rubygems
+        gem: ynab-convert
+        api_key: $RUBYGEMS_API_KEY
+        on: deploy-gem-release

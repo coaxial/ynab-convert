@@ -1,4 +1,6 @@
 ---
+require: rubocop-rake
+
 Metrics/LineLength:
   Exclude:
     - ynab_csv.gemspec
