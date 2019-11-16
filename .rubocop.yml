@@ -1,0 +1,11 @@
+---
+require: rubocop-rake
+
+Metrics/LineLength:
+  Exclude:
+    - ynab_convert.gemspec
+
+Metrics/BlockLength:
+  Exclude:
+    - Guardfile
+    - ynab_convert.gemspec
