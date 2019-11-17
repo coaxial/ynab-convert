@@ -16,6 +16,7 @@ module Parser
     end
 
     # Converts @file to YNAB 4 CSV format and writes it out to a new file
+    # c.f. https://docs.youneedabudget.com/article/921-formatting-csv-file
     # @param row [CSV::Row] The rows to write out
     def to_ynab!(row)
       CSV.open(output_filename, 'wb') do |csv|
