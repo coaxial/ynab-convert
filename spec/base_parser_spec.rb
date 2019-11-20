@@ -5,8 +5,14 @@ RSpec.describe Parser::Base do
     before(:context) do
       @file = 'dummy.csv'
       @institution_name = 'Mesa Credit Union'
-      @subject = Parser::Base.new(file: @file,
-                                  institution_name: @institution_name)
+      @from = Time.local(1986, 'jul', 25, 0, 30, 0)
+      @to = Time.local(1986, 'nov', 12, 5, 0, 0)
+
+      @subject = Parser::Base.new(file: @file)
+
+      @subject.instance_variable_set('@statement_from', @from)
+      @subject.instance_variable_set('@statement_to', @to)
+      @subject.instance_variable_set('@institution_name', @institution_name)
     end
 
     it 'should initialize' do
@@ -14,12 +20,10 @@ RSpec.describe Parser::Base do
     end
 
     it 'should compute the right output filename' do
-      from = Time.local(1986, 'jul', 25, 0, 30, 0)
-      to = Time.local(1986, 'nov', 12, 5, 0, 0)
-      actual = @subject.send(:output_filename, from: from, to: to)
+      actual = @subject.send(:output_filename)
       expected = "#{File.basename(@file, '.csv')}_" \
-        "#{@institution_name.snake_case}_#{from.strftime('%Y%m%d')}-" \
-        "#{to.strftime('%Y%m%d')}_ynab4.csv"
+        "#{@institution_name.snake_case}_#{@from.strftime('%Y%m%d')}-" \
+        "#{@to.strftime('%Y%m%d')}_ynab4.csv"
 
       expect(actual).to eq(expected)
     end

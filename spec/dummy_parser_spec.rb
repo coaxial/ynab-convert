@@ -23,9 +23,14 @@ RSpec.describe(Parser::Dummy) do
       @subject = Parser::Dummy.new(file: filename)
     end
 
+    after(:each) do
+      # Cleanup generated files
+      Dir.glob('*.csv').each { |f| File.delete(f) }
+    end
+
     it 'outputs valid YNAB4 CSV data' do
-      # actual=CSV.generate { |csv| csv<<@subject.to_ynab}
-      actual = @subject.to_ynab
+      @subject.to_ynab!
+      actual = File.read('valid_dummy_bank_20191223-20200202_ynab4.csv')
       expected = <<~ROWS
         "Date","Payee","Memo","Outflow","Inflow"
         "23/12/2019","coaxial","","1000000.00",""
