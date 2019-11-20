@@ -16,6 +16,11 @@ RSpec.configure do |config|
   # Run only specific tests by adding :focus
   config.filter_run_when_matching focus: true
 
+  # Automatically cleanup generated CSV files
+  config.after(:example, writes_csv: true) do
+    Dir.glob('*.csv').each { |f| File.delete(f) }
+  end
+
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
