@@ -11,35 +11,31 @@ module Parser
     # @option opts [String] :file Path to the CSV file to process
     def initialize(opts)
       @file = opts[:file]
-      file_uuid = rand(36**8).to_s(36)
     end
 
     def to_ynab!
       convert!
     end
 
-    # def to_ynab
-    #   raise NotImplementedError, :to_ynab
-    # end
-
-    # # Converts @file to YNAB 4 CSV format and writes it out to a new file
-    # # c.f. https://docs.youneedabudget.com/article/921-formatting-csv-file
-    # # @param row [CSV::Row] The rows to write out
-    # def to_ynab!(converted_csv)
-    #   headers = %w[Date Payee Memo Outflow Inflow]
-    #   CSV.open(output_filename, 'wb', write_headers: true, headers: headers) do |csv|
-    #     csv << converted_csv
-    #   end
-    # end
-
     protected
 
-    attr_accessor :file_uuid, :statement_from, :statement_to
+    attr_accessor :statement_from, :statement_to
+
+    def extract_transaction_date(_row)
+      raise NotImplementedError, :extract_transaction_date
+    end
+
+    def record_statement_interval_dates(row)
+      date = extract_transaction_date(row)
+
+      self.statement_from = date if statement_from.nil? || statement_from > date
+      self.statement_to = date if statement_to.nil? || statement_to < date
+    end
 
     def convert!
       CSV.open(temp_filename, 'wb', output_options) do |converted|
         CSV.foreach(@file, 'rb', loader_options) do |row|
-          extract_statement_interval_dates(row)
+          record_statement_interval_dates(row)
           converted << converters(row)
         end
       end
@@ -51,8 +47,14 @@ module Parser
       @institution_name.snake_case
     end
 
+    def file_uid
+      @file_uid = rand(36**8).to_s(36) if @file_uid.nil?
+      @file_uid
+    end
+
     def temp_filename
-      "#{File.basename(@file, '.csv')}_#{institution_name}_#{file_uuid}_ynab4.csv"
+      "#{File.basename(@file, '.csv')}_#{institution_name}_#{file_uid}" \
+        '_ynab4.csv'
     end
 
     def output_filename
@@ -69,7 +71,10 @@ module Parser
 
     def output_options
       {
-        converters: %i[numeric date], force_quotes: true, write_headers: true, headers: ynab_headers
+        converters: %i[numeric date],
+        force_quotes: true,
+        write_headers: true,
+        headers: ynab_headers
       }
     end
 
