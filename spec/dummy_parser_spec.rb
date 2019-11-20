@@ -29,6 +29,7 @@ RSpec.describe(Parser::Dummy) do
       expected = <<~ROWS
         "Date","Payee","Memo","Outflow","Inflow"
         "23/12/2019","coaxial","","1000000.00",""
+        "30/12/2019","Santa","","50000.00",""
         "02/02/2020","Someone Else","","45.00",""
       ROWS
 
