@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'pry'
 require 'ynab_convert'
 require 'ynab_convert/parser/base'
 
@@ -11,6 +12,9 @@ RSpec.configure do |config|
 
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
+
+  # Run only specific tests by adding :focus
+  config.filter_run_when_matching focus: true
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
