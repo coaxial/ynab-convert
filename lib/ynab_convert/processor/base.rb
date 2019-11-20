@@ -3,8 +3,8 @@
 require 'core_extensions/string'
 require 'csv'
 
-module Parser
-  # Base class for a Parser
+module Processor
+  # Base class for a Processor
   class Base
     attr_reader :loader_options
 

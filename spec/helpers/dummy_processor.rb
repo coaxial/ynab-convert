@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Parser
-  class Dummy < Parser::Base
+module Processor
+  class Dummy < Processor::Base
     def initialize(options)
       @loader_options = {
         col_sep: ';',

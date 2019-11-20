@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Parser::Base do
+RSpec.describe Processor::Base do
   context 'with any CSV file' do
     before(:context) do
       @file = 'dummy.csv'
@@ -8,7 +8,7 @@ RSpec.describe Parser::Base do
       @from = Time.local(1986, 'jul', 25, 0, 30, 0)
       @to = Time.local(1986, 'nov', 12, 5, 0, 0)
 
-      @subject = Parser::Base.new(file: @file)
+      @subject = Processor::Base.new(file: @file)
 
       @subject.instance_variable_set('@statement_from', @from)
       @subject.instance_variable_set('@statement_to', @to)
@@ -16,7 +16,7 @@ RSpec.describe Parser::Base do
     end
 
     it 'should initialize' do
-      expect(@subject).to be_an_instance_of(Parser::Base)
+      expect(@subject).to be_an_instance_of(Processor::Base)
     end
 
     it 'should compute the right output filename' do

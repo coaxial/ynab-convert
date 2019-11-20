@@ -3,7 +3,7 @@
 require 'bundler/setup'
 require 'pry-byebug'
 require 'ynab_convert'
-require 'ynab_convert/parser/base'
+require 'ynab_convert/processor/base'
 
 RSpec.configure do |config|
   include CoreExtensions::String::Inflections
