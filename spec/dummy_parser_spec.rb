@@ -19,17 +19,17 @@ RSpec.describe(Parser::Dummy) do
 
   context 'with a valid CSV file' do
     before(:context) do
-      filename=File.join(File.dirname(__FILE__),'fixtures/valid.csv')
+      filename = File.join(File.dirname(__FILE__), 'fixtures/valid.csv')
       @subject = Parser::Dummy.new(file: filename)
     end
 
     it 'outputs valid YNAB4 CSV data' do
       # actual=CSV.generate { |csv| csv<<@subject.to_ynab}
-      actual=@subject.to_ynab
-      expected=<<~ROWS
-        Date,Payee,Memo,Outflow,Inflow
-        "23/12/2019","coaxial","","1000000",""
-        "02/02/2020","Someone Else","","45",""
+      actual = @subject.to_ynab
+      expected = <<~ROWS
+        "Date","Payee","Memo","Outflow","Inflow"
+        "23/12/2019","coaxial","","1000000.00",""
+        "02/02/2020","Someone Else","","45.00",""
       ROWS
 
       expect(actual).to eq(expected)

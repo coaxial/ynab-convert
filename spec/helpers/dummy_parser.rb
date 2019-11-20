@@ -20,7 +20,6 @@ module Parser
     def open_and_convert
       ynab_headers = %w[Date Payee Memo Outflow Inflow]
       csv_loading_options = { col_sep: ';',
-                              converters: %i[numeric date],
                               headers: true }
       csv_converting_options = {
         converters: %i[numeric date],
@@ -31,7 +30,9 @@ module Parser
 
       CSV.generate(csv_converting_options) do |csv|
         CSV.foreach(@file, csv_loading_options) do |row|
-          csv << [row['transaction_date'],
+          transaction_date = Date.strptime(row['transaction_date'], '%d.%m.%y')
+
+          csv << [transaction_date.strftime('%d/%m/%Y'),
                   row['beneficiary'],
                   '',
                   row['debit'] || '',
