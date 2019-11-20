@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require 'pry'
+require 'pry-byebug'
 require 'ynab_convert'
 require 'ynab_convert/parser/base'
 
