@@ -27,6 +27,7 @@ RSpec.describe(Parser::Dummy) do
       # actual=CSV.generate { |csv| csv<<@subject.to_ynab}
       actual=@subject.to_ynab
       expected=<<~ROWS
+        Date,Payee,Memo,Outflow,Inflow
         "23/12/2019","coaxial","","1000000",""
         "02/02/2020","Someone Else","","45",""
       ROWS
