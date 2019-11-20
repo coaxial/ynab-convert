@@ -25,3 +25,30 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+RSpec::Matchers.define :exit_with_code do |expected|
+  actual = nil
+  match do |block|
+    begin
+      block.call
+    rescue SystemExit => e
+      actual = e.status
+    end
+
+    actual && (actual == expected)
+  end
+
+  supports_block_expectations
+
+  failure_message_for_should do |_block|
+    "Expected exit with code #{expected}, got #{actual} instead."
+  end
+
+  failure_message_for_should_not do |_block|
+    "expected not to exit with code #{expected}"
+  end
+
+  description do
+    "expect block to exit with #{expected}."
+  end
+end

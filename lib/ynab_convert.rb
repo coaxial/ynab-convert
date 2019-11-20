@@ -34,13 +34,24 @@ module YnabConvert
     # CSV file
     def initialize(opts)
       @file = opts[:file]
+      halt_and_catch_fire unless ::File.exist?(@file)
+
       @processor = opts[:processor].new @file
     end
 
     # Converts @file to YNAB4 format and writes it to disk
-    # @return [CSV::Row] The result of converting @file to YNAB4 format
+    # @return [String] The path to the YNAB4 formatted CSV file created
     def to_ynab!
       @processor.to_ynab!
+    end
+
+    private
+
+    def halt_and_catch_fire
+      enoent = 2
+
+      warn "File `#{@file}' not found or not accessible."
+      exit(enoent)
     end
   end
 end

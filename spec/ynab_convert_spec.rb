@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'helpers/dummy_processor.rb'
+
 RSpec.describe YnabConvert do
   it 'has a version number' do
     expect(YnabConvert::VERSION).not_to be nil
@@ -28,11 +30,24 @@ RSpec.describe YnabConvert do
     context 'with a non-existent file' do
       before(:example) do
         @filename = 'doesnt_exist.csv'
-        @opts = { file: @filename }
-        @subject = YnabConvert::File.new @opts
+        @opts = { file: @filename, processor: Processor::Dummy }
+        @subject = -> { YnabConvert::File.new(@opts) }
       end
 
-      it 'prints an error message'
+      it 'shows a friendly error message' do
+        expected = "File `#{@filename}' not found or not accessible."
+
+        begin
+          expect(@subject).to output(expected).to_stderr
+        rescue SystemExit # rubocop:disable all
+        end
+      end
+
+      it 'exits with code 2 (ENOENT)' do
+        enoent = 2
+
+        expect(@subject).to exit_with_code(enoent)
+      end
     end
 
     context 'with an existing file' do
