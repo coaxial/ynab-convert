@@ -39,7 +39,7 @@ RSpec.describe YnabConvert do
 
         begin
           expect(@subject).to output(expected).to_stderr
-        rescue SystemExit # rubocop:disable all
+        rescue SystemExit # rubocop:disable Lint/HandleExceptions
         end
       end
 
