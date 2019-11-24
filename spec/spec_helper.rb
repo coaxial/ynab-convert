@@ -46,11 +46,11 @@ RSpec::Matchers.define :exit_with_code do |expected|
 
   supports_block_expectations
 
-  failure_message_for_should do |_block|
+  failure_message do |_block|
     "Expected exit with code #{expected}, got #{actual} instead."
   end
 
-  failure_message_for_should_not do |_block|
+  failure_message_when_negated do |_block|
     "expected not to exit with code #{expected}"
   end
 
