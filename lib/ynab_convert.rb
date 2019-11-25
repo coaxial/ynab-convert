@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'ynab_convert/version'
+require 'logger'
 
 module YnabConvert
   # Metadata about the gem
@@ -34,9 +35,12 @@ module YnabConvert
     # CSV file
     def initialize(opts)
       @file = opts[:file]
-      halt_and_catch_fire unless ::File.exist?(@file)
 
-      @processor = opts[:processor].new @file
+      begin
+        @processor = opts[:processor].new(file: @file)
+      rescue Errno::ENOENT
+        handle_file_not_found
+      end
     end
 
     # Converts @file to YNAB4 format and writes it to disk
@@ -47,11 +51,12 @@ module YnabConvert
 
     private
 
-    def halt_and_catch_fire
-      enoent = 2
+    def logger
+      @logger ||= Logger.new(STDERR)
+    end
 
-      warn "File `#{@file}' not found or not accessible."
-      exit(enoent)
+    def file_not_found_message
+      raise Errno::ENOENT, "File `#{@file}' not found or not accessible."
     end
   end
 end

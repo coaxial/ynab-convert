@@ -27,48 +27,41 @@ RSpec.describe YnabConvert do
   end
 
   describe YnabConvert::File do
-    context 'with a non-existent file' do
-      before(:example) do
-        @filename = 'doesnt_exist.csv'
-        @opts = { file: @filename, processor: Processor::Dummy }
-        @subject = -> { YnabConvert::File.new(@opts) }
-      end
-
-      it 'shows a friendly error message' do
-        expected = "File `#{@filename}' not found or not accessible."
-
-        begin
-          expect(@subject).to output(expected).to_stderr
-        rescue SystemExit # rubocop:disable Lint/HandleExceptions
-        end
-      end
-
-      it 'exits with code 2 (ENOENT)' do
-        enoent = 2
-
-        expect(@subject).to exit_with_code(enoent)
-      end
-    end
-
     context 'with an existing file' do
       context 'that is valid CSV' do
         before(:example) do
-          @filename = 'exists.csv'
-          @opts = { file: @filename }
-          @subject = YnabConvert::File.new @opts
+          filename = File.join(File.dirname(__FILE__), 'fixtures/valid.csv')
+          opts = { file: filename, processor: Processor::Dummy }
+          @subject = YnabConvert::File.new opts
         end
 
-        it 'converts it'
+        it 'converts it', :writes_csv do
+          @subject.to_ynab!
+          actual = File.read('valid_dummy_bank_20191223-20200202_ynab4.csv')
+          expected = <<~ROWS
+            "Date","Payee","Memo","Outflow","Inflow"
+            "23/12/2019","coaxial","","1000000.00",""
+            "30/12/2019","Santa","","50000.00",""
+            "02/02/2020","Someone Else","","45.00",""
+          ROWS
+
+          expect(actual).to eq(expected)
+        end
       end
 
       context 'that is invalid CSV' do
         before(:example) do
-          @filename = 'exists.txt'
-          @opts = { file: @filename }
-          @subject = YnabConvert::File.new @opts
+          filename = File.join(File.dirname(__FILE__), 'fixtures/not_a_csv_file.txt')
+          opts = { file: filename, processor: Processor::Dummy }
+          @subject = -> { YnabConvert::File.new(opts) }
         end
 
-        it 'prints an error message'
+        it 'prints an error message' do
+          expect { @subject.call.to_ynab! }.to raise_error(RuntimeError,
+                                                           /unable to parse/i)
+        end
+
+        it 'cleans up the temporary CSV file'
       end
     end
   end

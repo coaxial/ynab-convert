@@ -3,7 +3,7 @@
 RSpec.describe Processor::Base do
   context 'with any CSV file' do
     before(:context) do
-      @file = 'dummy.csv'
+      @file = File.join(File.dirname(__FILE__), 'fixtures/valid.csv')
       @institution_name = 'Mesa Credit Union'
       @from = Time.local(1986, 'jul', 25, 0, 30, 0)
       @to = Time.local(1986, 'nov', 12, 5, 0, 0)
@@ -30,6 +30,18 @@ RSpec.describe Processor::Base do
 
     it "has a `to_ynab!' method" do
       expect(@subject).to respond_to(:to_ynab!)
+    end
+
+    it "has an `extract_transaction_date' method stub" do
+      subject = -> { @subject.send(:extract_transaction_date) }
+
+      expect(subject).to raise_error(NotImplementedError)
+    end
+
+    it "has a `converters' method stub" do
+      subject = -> { @subject.send(:converters) }
+
+      expect(subject).to raise_error(NotImplementedError)
     end
   end
 end

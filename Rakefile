@@ -5,9 +5,13 @@ require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 
 desc 'Run all specs'
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.pattern = Dir.glob('spec/**/*_spec.rb')
-  t.rspec_opts = '--format documentation'
+task :spec do
+  ENV['YNAB_CONVERT_ENV'] = 'test'
+
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.pattern = Dir.glob('spec/**/*_spec.rb')
+    t.rspec_opts = '--format documentation'
+  end
 end
 
 desc 'Check code format'

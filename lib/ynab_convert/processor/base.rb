@@ -10,6 +10,8 @@ module Processor
 
     # @option opts [String] :file Path to the CSV file to process
     def initialize(opts)
+      raise ::Errno::ENOENT unless File.exist? opts[:file]
+
       @file = opts[:file]
     end
 
@@ -21,7 +23,11 @@ module Processor
 
     attr_accessor :statement_from, :statement_to
 
-    def extract_transaction_date(_row)
+    def logger
+      @logger ||= Logger.new(STDERR)
+    end
+
+    def extract_transaction_date
       raise NotImplementedError, :extract_transaction_date
     end
 
@@ -43,6 +49,11 @@ module Processor
       File.rename(temp_filename, output_filename)
     end
 
+    def invalid_csv_file
+      raise "Unable to parse file `#{@file}'. Is it a valid"\
+       " CSV file from #{@institution_name}?"
+    end
+
     def institution_name
       @institution_name.snake_case
     end
@@ -58,6 +69,10 @@ module Processor
     end
 
     def output_filename
+      # if these dates are nil, the CSV file couldn't be parsed with this
+      # processor.
+      invalid_csv_file if statement_from.nil? || statement_to.nil?
+
       from = statement_from.strftime('%Y%m%d')
       to = statement_to.strftime('%Y%m%d')
 
