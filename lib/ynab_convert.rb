@@ -58,7 +58,33 @@ module YnabConvert
 
     def initialize
       @metadata = Metadata.new
-      @options = Slop.parse do |o|
+      @options = parse_argv
+      return unless no_options_given
+
+      show_usage
+      exit
+    end
+
+    def start
+      @file = File.new opts
+      logger.debug "Using processor `#{@options[:institution]}' => #{processor}"
+      @file.to_ynab!
+    end
+
+    private
+
+    def opts
+      { file: @options[:file], processor: processor }
+    rescue NameError => e
+      raise e unless e.message.match(/#{processor_class_name}/)
+
+      logger.debug "#{@options.to_h}, #{processor_class_name}"
+      show_unknown_institution_message
+      exit false
+    end
+
+    def parse_argv
+      Slop.parse do |o|
         o.on '-v', '--version', 'print the version' do
           puts @metadata.version
           exit
@@ -67,33 +93,7 @@ module YnabConvert
        ' statement to process'
         o.string '-f', '--file', 'path to the statement to process'
       end
-
-      if no_options_given
-        show_usage
-        exit
-      end
     end
-
-    def start
-      begin
-        opts = { file: @options[:file], processor: processor }
-      rescue NameError => e
-        if e.message.match(/#{processor_class_name}/)
-          logger.debug "#{@options.to_h}, #{processor_class_name}"
-          show_unknown_institution_message
-          exit false
-        else
-          raise e
-        end
-      end
-
-      logger.debug "Using processor `#{@options[:institution]}' => #{processor}"
-
-      @file = File.new opts
-      @file.to_ynab!
-    end
-
-    private
 
     def processor_class_name
       "Processor::#{@options[:institution].camel_case}"

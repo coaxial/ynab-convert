@@ -43,15 +43,18 @@ module Processor
 
       logger.debug "Found date in statement: `#{date}'"
 
+      # rubocop:disable Style/GuardClause
       if date_is_further_away(date)
+        logger.debug "Replacing statement_from `#{statement_from}' with "\
+          "`#{date}'"
         self.statement_from = date
-        logger.debug "New date `#{date}' supercedes current statement_from date `#{statement_from}'"
       end
 
       if date_is_more_recent(date)
+        logger.debug "Replacing statement_to `#{statement_to}' with `#{date}'"
         self.statement_to = date
-        logger.debug "New date `#{date}' supercedes current statement_to date `#{statement_to}'"
       end
+      # rubocop:enable Style/GuardClause
     end
 
     def date_is_more_recent(date)
@@ -62,6 +65,7 @@ module Processor
       statement_from.nil? || statement_from > date
     end
 
+    # rubocop:disable Metrics/AbcSize
     def convert!
       logger.debug "Will write to `#{temp_filename}'"
 
@@ -80,6 +84,7 @@ module Processor
       logger.debug "Renamed temp file `#{temp_filename}' to "\
         "`#{output_filename}'"
     end
+    # rubocop:enable Metrics/AbcSize
 
     def invalid_csv_file
       raise "Unable to parse file `#{@file}'. Is it a valid"\

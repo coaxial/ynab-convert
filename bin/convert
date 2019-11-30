@@ -9,6 +9,7 @@ require 'ynab_convert/processors'
 require 'ynab_convert/logger'
 require 'pry'
 
+# Add mixins and run converter
 class Convert
   String.include CoreExtensions::String::Inflections
   YnabConvert.include YnabLogger

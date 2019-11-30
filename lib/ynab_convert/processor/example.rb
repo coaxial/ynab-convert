@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Processor
+  # An example of how to implement a custom processor
   class Example < Processor::Base
     def initialize(options)
       @loader_options = {

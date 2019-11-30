@@ -10,3 +10,6 @@ Metrics/BlockLength:
     - Guardfile
     - ynab_convert.gemspec
     - 'spec/**/*_spec.rb'
+
+Metrics/MethodLength:
+  Max: 14
