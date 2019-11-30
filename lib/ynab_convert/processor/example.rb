@@ -9,6 +9,10 @@ module Processor
   # "30/12/2019","Santa","","50000.00",""
   # "02/02/2020","Someone Else","","45.00",""
   # ROWS
+  # The file name for the processor should be the institution name in
+  # camel case. It's ok to skip "Bank" or "Credit Union" when naming the file
+  # if it's redundant. For instance, this parser is for "Example Bank" but it's
+  # named "example.rb"
   class Example < Processor::Base
     # @option options [String] :file Path to the CSV file to process
     def initialize(options)
