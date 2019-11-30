@@ -17,8 +17,6 @@ module Processor
       raise ::Errno::ENOENT unless File.exist? opts[:file]
 
       @file = opts[:file]
-
-      logger.debug "Processor for `#{@institution_name}' initialized"
     end
 
     def to_ynab!
