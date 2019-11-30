@@ -2,10 +2,12 @@
 
 require 'core_extensions/string'
 require 'csv'
+require 'logger/logger'
 
 module Processor
   # Base class for a Processor
   class Base
+    include YnabLogger
     attr_reader :loader_options
 
     # @option opts [String] :file Path to the CSV file to process
@@ -17,14 +19,16 @@ module Processor
 
     def to_ynab!
       convert!
+    ensure
+      temp_csv_deleted
     end
 
     protected
 
     attr_accessor :statement_from, :statement_to
 
-    def logger
-      @logger ||= Logger.new(STDERR)
+    def temp_csv_deleted
+      FileUtils.remove_file temp_filename, force: true
     end
 
     def extract_transaction_date
@@ -39,6 +43,8 @@ module Processor
     end
 
     def convert!
+      logger.debug "Will write to `#{temp_filename}'"
+
       CSV.open(temp_filename, 'wb', output_options) do |converted|
         CSV.foreach(@file, 'rb', loader_options) do |row|
           record_statement_interval_dates(row)
@@ -59,13 +65,13 @@ module Processor
     end
 
     def file_uid
-      @file_uid = rand(36**8).to_s(36) if @file_uid.nil?
-      @file_uid
+      @file_uid ||= rand(36**8).to_s(36)
     end
 
     def temp_filename
-      "#{File.basename(@file, '.csv')}_#{institution_name}_#{file_uid}" \
-        '_ynab4.csv'
+      @temp_filename ||= "#{File.basename(@file, '.csv')}_#{institution_name}" \
+        "_#{file_uid}_ynab4.csv"
+      @temp_filename
     end
 
     def output_filename

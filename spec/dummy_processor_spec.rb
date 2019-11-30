@@ -5,7 +5,8 @@ require 'helpers/dummy_processor.rb'
 RSpec.describe(Processor::Dummy) do
   context('with any file') do
     before(:context) do
-      @subject = Processor::Dummy.new(file: File.join(File.dirname(__FILE__), 'fixtures/valid.csv'))
+      @subject = Processor::Dummy.new(file: File.join(File.dirname(__FILE__),
+                                                      'fixtures/valid.csv'))
     end
 
     it 'instantiates' do

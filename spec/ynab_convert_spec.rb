@@ -51,7 +51,8 @@ RSpec.describe YnabConvert do
 
       context 'that is invalid CSV' do
         before(:example) do
-          filename = File.join(File.dirname(__FILE__), 'fixtures/not_a_csv_file.txt')
+          filename = File.join(File.dirname(__FILE__),
+                               'fixtures/not_a_csv_file.txt')
           opts = { file: filename, processor: Processor::Dummy }
           @subject = -> { YnabConvert::File.new(opts) }
         end
@@ -61,7 +62,11 @@ RSpec.describe YnabConvert do
                                                            /unable to parse/i)
         end
 
-        it 'cleans up the temporary CSV file'
+        it 'cleans up the temporary CSV file' do
+          @subject.call.to_ynab!
+        rescue RuntimeError
+          expect(Dir['not_a_csv_file.txt_dummy_bank_*.csv'].any?).to be false
+        end
       end
     end
   end

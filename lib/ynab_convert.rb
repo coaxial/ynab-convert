@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 require 'ynab_convert/version'
-require 'logger'
+require 'logger/logger'
 
+# The application
 module YnabConvert
+  include YnabLogger
   # Metadata about the gem
   class Metadata
     def  short_desc
@@ -50,10 +52,6 @@ module YnabConvert
     end
 
     private
-
-    def logger
-      @logger ||= Logger.new(STDERR)
-    end
 
     def file_not_found_message
       raise Errno::ENOENT, "File `#{@file}' not found or not accessible."
