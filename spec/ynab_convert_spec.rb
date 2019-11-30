@@ -13,7 +13,7 @@ RSpec.describe YnabConvert do
     end
 
     it 'can show a short description' do
-      expected = 'A utility to convert online banking CSV files to a format' \
+      expected = 'An utility to convert online banking CSV files to a format' \
     " that can be imported into YNAB 4.\n"
 
       expect { @subject.short_desc }.to output(expected).to_stdout

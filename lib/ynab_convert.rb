@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 require 'ynab_convert/version'
-require 'logger/logger'
+require 'slop'
+require 'pry'
+require 'ynab_convert/logger'
+require 'core_extensions/string.rb'
 
 # The application
 module YnabConvert
-  include YnabLogger
   # Metadata about the gem
   class Metadata
     def  short_desc
-      puts 'A utility to convert online banking CSV files to a format that ' \
+      puts 'An utility to convert online banking CSV files to a format that ' \
 'can be imported into YNAB 4.'
     end
 
@@ -18,20 +20,10 @@ module YnabConvert
     end
   end
 
-  # Parse command line arguments
-  class OptionsParser
-    def options
-      Slop.parse do |o|
-        o.on '-v', '--version', 'print the version' do
-          puts Metadata.version
-          exit
-        end
-      end
-    end
-  end
-
   # Operations on the CSV file to convert
   class File
+    include YnabLogger
+
     # @option opts [String] :file The filename or path to the file
     # @option opts [Processor] :processor The class to use for converting the
     # CSV file
@@ -48,6 +40,7 @@ module YnabConvert
     # Converts @file to YNAB4 format and writes it to disk
     # @return [String] The path to the YNAB4 formatted CSV file created
     def to_ynab!
+      logger.debug "Processing `#{@file}' through `#{@processor.class.name}'"
       @processor.to_ynab!
     end
 
@@ -55,6 +48,51 @@ module YnabConvert
 
     def file_not_found_message
       raise Errno::ENOENT, "File `#{@file}' not found or not accessible."
+    end
+  end
+
+  # The command line interface methods
+  class CLI
+    include YnabLogger
+    include CoreExtensions::String::Inflections
+
+    def initialize
+      @metadata = Metadata.new
+      @options = Slop.parse do |o|
+        o.on '-v', '--version', 'print the version' do
+          puts @metadata.version
+          exit
+        end
+        o.string '-i', '--institution', 'the financial institution for the ' \
+       ' statement to process'
+        o.string '-f', '--file', 'path to the statement to process'
+      end
+
+      if no_options_given
+        show_usage
+        exit
+      end
+    end
+
+    def start
+      processor = "YnabConvert::Processor::#{@options[:institution].camel_case}".split('::').inject(Object) { |o, c| o.const_get c }
+      opts = { file: @options[:file], processor: processor }
+
+      logger.debug "Using processor `#{@options[:institution]}' => #{processor}"
+
+      @file = File.new opts
+      @file.to_ynab!
+    end
+
+    private
+
+    def no_options_given
+      @options[:institution].nil? || @options[:file].nil?
+    end
+
+    def show_usage
+      puts @metadata.short_desc
+      puts @options
     end
   end
 end

@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+# vi: ft=ruby
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'ynab_convert'
+require 'core_extensions/string'
+require 'ynab_convert/processors'
+require 'ynab_convert/logger'
+require 'pry'
+
+class Convert
+  String.include CoreExtensions::String::Inflections
+  YnabConvert.include YnabLogger
+
+  def initialize
+    @yc = YnabConvert::CLI.new
+  end
+
+  def start
+    @yc.start
+  end
+end
+
+yc = Convert.new
+yc.start

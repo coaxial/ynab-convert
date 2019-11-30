@@ -74,6 +74,7 @@ group :red_green_refactor, halt_on_fail: true do
   guard :rubocop, cli: ['--auto-correct'] do
     watch('Gemfile')
     watch('Rakefile')
+    watch('bin/convert')
     watch(/.+\.rb$/)
     watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
   end

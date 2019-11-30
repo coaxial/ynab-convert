@@ -2,12 +2,14 @@
 
 require 'core_extensions/string'
 require 'csv'
-require 'logger/logger'
+require 'ynab_convert/logger'
 
 module Processor
   # Base class for a Processor
   class Base
     include YnabLogger
+    include CoreExtensions::String::Inflections
+
     attr_reader :loader_options
 
     # @option opts [String] :file Path to the CSV file to process
@@ -15,11 +17,14 @@ module Processor
       raise ::Errno::ENOENT unless File.exist? opts[:file]
 
       @file = opts[:file]
+
+      logger.debug "Processor for `#{@institution_name}' initialized"
     end
 
     def to_ynab!
       convert!
     ensure
+      logger.debug "Deleting temp file `#{temp_filename}'"
       temp_csv_deleted
     end
 
@@ -38,8 +43,25 @@ module Processor
     def record_statement_interval_dates(row)
       date = extract_transaction_date(row)
 
-      self.statement_from = date if statement_from.nil? || statement_from > date
-      self.statement_to = date if statement_to.nil? || statement_to < date
+      logger.debug "Found date in statement: `#{date}'"
+
+      if date_is_further_away(date)
+        self.statement_from = date
+        logger.debug "New date `#{date}' supercedes current statement_from date `#{statement_from}'"
+      end
+
+      if date_is_more_recent(date)
+        self.statement_to = date
+        logger.debug "New date `#{date}' supercedes current statement_to date `#{statement_to}'"
+      end
+    end
+
+    def date_is_more_recent(date)
+      statement_to.nil? || statement_to < date
+    end
+
+    def date_is_further_away(date)
+      statement_from.nil? || statement_from > date
     end
 
     def convert!
@@ -47,12 +69,18 @@ module Processor
 
       CSV.open(temp_filename, 'wb', output_options) do |converted|
         CSV.foreach(@file, 'rb', loader_options) do |row|
+          logger.debug "Parsing row: `#{row.to_h}'"
+
           record_statement_interval_dates(row)
           converted << converters(row)
         end
+
+        logger.debug 'Done converting'
       end
 
       File.rename(temp_filename, output_filename)
+      logger.debug "Renamed temp file `#{temp_filename}' to "\
+        "`#{output_filename}'"
     end
 
     def invalid_csv_file

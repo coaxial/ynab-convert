@@ -8,6 +8,10 @@ module CoreExtensions
       def snake_case
         downcase.tr(' ', '_').gsub(/[^a-z_]/, '')
       end
+
+      def camel_case
+        split('_').collect(&:capitalize).join
+      end
     end
   end
 end
