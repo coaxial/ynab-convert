@@ -89,9 +89,9 @@ module YnabConvert
           puts @metadata.version
           exit
         end
-        o.string '-i', '--institution', 'the financial institution for the ' \
-       ' statement to process'
-        o.string '-f', '--file', 'path to the statement to process'
+        o.string '-i', '--institution', 'name of the financial institution '\
+ 'that generated the file to convert'
+        o.string '-f', '--file', 'path to the csv file to convert'
       end
     end
 
@@ -115,7 +115,8 @@ module YnabConvert
     def show_unknown_institution_message
       warn 'Could not find any processor for the institution '\
         "`#{@options[:institution]}'. If it's not a typo, consider "\
-        'contributing a new processor.'
+        'contributing a new processor (see https://github.com/coaxial/'\
+        'ynab_convert#contributing to get started).'
     end
   end
 end

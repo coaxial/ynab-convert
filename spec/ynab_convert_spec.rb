@@ -9,8 +9,9 @@ RSpec.describe YnabConvert do
 
   context 'when run from the command line' do
     it 'converts the csv file', :writes_csv do
-      system('bin/convert -f spec/fixtures/valid.csv -i example')
-      actual = File.read('valid_dummy_bank_20191223-20200202_ynab4.csv')
+      system('bin/ynab_convert -f spec/fixtures/valid.csv -i example')
+
+      actual = File.read('valid_example_bank_20191223-20200202_ynab4.csv')
       expected = <<~ROWS
         "Date","Payee","Memo","Outflow","Inflow"
         "23/12/2019","coaxial","","1000000.00",""
