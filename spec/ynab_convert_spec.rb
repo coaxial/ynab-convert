@@ -7,6 +7,21 @@ RSpec.describe YnabConvert do
     expect(YnabConvert::VERSION).not_to be nil
   end
 
+  context 'when run from the command line' do
+    it 'converts the csv file', :writes_csv do
+      system('bin/convert -f spec/fixtures/valid.csv -i example')
+      actual = File.read('valid_dummy_bank_20191223-20200202_ynab4.csv')
+      expected = <<~ROWS
+        "Date","Payee","Memo","Outflow","Inflow"
+        "23/12/2019","coaxial","","1000000.00",""
+        "30/12/2019","Santa","","50000.00",""
+        "02/02/2020","Someone Else","","45.00",""
+      ROWS
+
+      expect(actual).to eq(expected)
+    end
+  end
+
   describe YnabConvert::Metadata do
     before(:example) do
       @subject = YnabConvert::Metadata.new

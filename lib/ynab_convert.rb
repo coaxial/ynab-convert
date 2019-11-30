@@ -75,7 +75,17 @@ module YnabConvert
     end
 
     def start
-      processor = "YnabConvert::Processor::#{@options[:institution].camel_case}".split('::').inject(Object) { |o, c| o.const_get c }
+      processor_class_name = "Processor::#{@options[:institution].camel_case}"
+      begin
+        processor = processor_class_name.split('::').inject(Object) { |o, c| o.const_get c }
+      rescue NameError => e
+        if e.message.match(/#{processor_class_name}/)
+          show_unknown_institution_message
+          logger.debug "#{@options.to_h}, #{processor_class_name}"
+        end
+        raise e
+      end
+
       opts = { file: @options[:file], processor: processor }
 
       logger.debug "Using processor `#{@options[:institution]}' => #{processor}"
@@ -93,6 +103,12 @@ module YnabConvert
     def show_usage
       puts @metadata.short_desc
       puts @options
+    end
+
+    def show_unknown_institution_message
+      warn 'Could not find any processor for the institution '\
+        "`#{@options[:institution]}'. If it's not a typo, consider "\
+        'contributing a new processor.'
     end
   end
 end
