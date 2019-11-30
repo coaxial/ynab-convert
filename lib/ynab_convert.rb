@@ -75,18 +75,17 @@ module YnabConvert
     end
 
     def start
-      processor_class_name = "Processor::#{@options[:institution].camel_case}"
       begin
-        processor = processor_class_name.split('::').inject(Object) { |o, c| o.const_get c }
+        opts = { file: @options[:file], processor: processor }
       rescue NameError => e
         if e.message.match(/#{processor_class_name}/)
-          show_unknown_institution_message
           logger.debug "#{@options.to_h}, #{processor_class_name}"
+          show_unknown_institution_message
+          exit false
+        else
+          raise e
         end
-        raise e
       end
-
-      opts = { file: @options[:file], processor: processor }
 
       logger.debug "Using processor `#{@options[:institution]}' => #{processor}"
 
@@ -95,6 +94,14 @@ module YnabConvert
     end
 
     private
+
+    def processor_class_name
+      "Processor::#{@options[:institution].camel_case}"
+    end
+
+    def processor
+      processor_class_name.split('::').inject(Object) { |o, c| o.const_get c }
+    end
 
     def no_options_given
       @options[:institution].nil? || @options[:file].nil?
