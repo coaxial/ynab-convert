@@ -24,19 +24,20 @@ RSpec.describe(Processor::UbsChequing) do
     end
 
     # it 'outputs valid YNAB4 CSV data', :writes_csv do
-    it 'outputs valid YNAB4 CSV data' do
+    fit 'outputs valid YNAB4 CSV data' do
       @subject.to_ynab!
       actual = File.read(
-        'ubs_chequing_ubs_chequing_20191018-20191104_ynab4.csv'
+        'ubs_chequing_ubs_chequing_20191018-20191106_ynab4.csv'
       )
       expected = <<~ROWS
         "Date","Payee","Memo","Outflow","Inflow"
-        "04/11/2019","TRANSFER","","21502.00",""
-        "29/10/2019","PAYMENT","","1725.00",""
-        "29/10/2019","PAYMENT","","920.53",""
-        "25/10/2019","Entrée paiement SIC","","","16399.80"
-        "21/10/2019","A STORE","","175.40",""
-        "18/10/2019","WALTER WHITE","","","53512.00"
+        "06/11/2019","Compte personnel UBS VIS1W OBJECTION TO UBS WITHIN 30 DAYS, UBS SWITZERLAND AG, C/O UBS CARD CENTER, CREDIT CARD STATEMENT, OF 15.11.2019, ACCOUNT NUMBER 0000 1234 5678 9012, LSV débit CHF","","10959.40",""
+        "04/11/2019","Compte personnel UBS TRANSFER CH0123456789012345678, FRAU MACKENZIE EXAMPLE U/O, HERR WALTER WHITE, E-Banking virement compte à compte","","21502.00",""
+        "29/10/2019","Compte personnel UBS PAYMENT FRAU MACKENZIE EXAMPLE U/O, HERR WALTER WHITE, PAYMENT, E-Banking virement compte à compte","","1725.00",""
+        "29/10/2019","Compte personnel UBS PAYMENT FRAU MACKENZIE EXAMPLE U/O, HERR WALTER WHITE, E-Banking virement compte à compte","","920.53",""
+        "25/10/2019","Compte personnel UBS Entrée paiement SIC ","","","16399.80"
+        "21/10/2019","Compte personnel UBS A STORE 8001 ZURICH, E-Banking CHF intérieur","","175.40",""
+        "18/10/2019","Compte personnel UBS WALTER WHITE BAHNHOFSTRASSE 1, 8001 ZURICH, SOME REFERENCE, SECOND LINE, Entrée paiement SIC","","","53512.00"
       ROWS
 
       expect(actual).to eq(expected)

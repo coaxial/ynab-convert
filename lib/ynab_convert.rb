@@ -77,7 +77,8 @@ module YnabConvert
     private
 
     def opts
-      { file: @options[:file], processor: processor, language: @options[:language] }
+      { file: @options[:file], processor: processor, language:
+        @options[:language] }
     rescue NameError => e
       raise e unless e.message.match(/#{processor_class_name}/)
 

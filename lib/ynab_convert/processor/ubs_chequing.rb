@@ -27,12 +27,11 @@ module Processor
 
     protected
 
-    # rubocop:disable Metrics/AbcSize
     # TODO: Fix AbcSize
     def converters(row)
       converted_row = [
         extract_transaction_date(row).strftime('%d/%m/%Y'),
-        row[header_names[:payee]],
+        transaction_description(row),
         '',
         row[header_names[:debit]] || '',
         row[header_names[:credit]] || ''
@@ -41,7 +40,6 @@ module Processor
       skip_row(row) if inflow_or_outflow_missing?(converted_row)
       converted_row
     end
-    # rubocop:enable Metrics/AbcSize
 
     def extract_transaction_date(row)
       skip_row(row) if missing_transaction_date?(row)
@@ -49,6 +47,15 @@ module Processor
     end
 
     private
+
+    def transaction_description(row)
+      # Transaction description is spread over 3 columns
+      [
+        row[header_names[:payee_0]],
+        row[header_names[:payee_1]],
+        row[header_names[:payee_2]]
+      ].join(' ')
+    end
 
     def register_custom_converters
       CSV::Converters[:amounts] = lambda { |s|
@@ -59,7 +66,8 @@ module Processor
         s
       }
       CSV::Converters[:transaction_dates] = lambda { |s|
-        if !s.nil? && /\d{2}\.\d{2}\.\d{4}/.match(s)
+        if !s.nil? && /^\d{2}\.\d{2}\.\d{4}$/.match(s)
+          logger.debug "Found a date to convert `#{s.inspect}'"
           return Date.strptime(s, '%d.%m.%Y')
         end
 
@@ -85,8 +93,9 @@ module Processor
     def header_names
       case @language
       when :fr
-        { transaction_date: 'Date de transaction', payee: 'Description 2',
-          debit: 'Débit', credit: 'Crédit' }
+        { transaction_date: 'Date de transaction', payee_0: 'Description',
+          payee_1: 'Description 2', payee_2: 'Description 3', debit: 'Débit',
+          credit: 'Crédit' }
       else
         raise YnabConvert::Error, "Language `#{@language.inspect}' missing in "\
           'processor'
