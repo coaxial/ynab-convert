@@ -7,6 +7,7 @@ require 'ynab_convert'
 require 'core_extensions/string'
 require 'ynab_convert/processors'
 require 'ynab_convert/logger'
+require 'ynab_convert/error'
 require 'pry'
 
 # Add mixins and run converter

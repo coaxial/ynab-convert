@@ -10,6 +10,7 @@ require 'bundler/setup'
 require 'pry-byebug'
 require 'ynab_convert/processors'
 require 'ynab_convert'
+require 'ynab_convert/error'
 
 RSpec.configure do |config|
   include CoreExtensions::String::Inflections

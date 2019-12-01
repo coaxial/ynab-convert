@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-RSpec.describe(Processor::UbsChequingFr) do
+RSpec.describe(Processor::UbsChequing) do
   context('with any file') do
     before(:context) do
-      @subject = Processor::UbsChequingFr.new(
+      @subject = Processor::UbsChequing.new(
         file: File.join(File.dirname(__FILE__), 'fixtures/ubs_chequing.csv')
       )
     end
 
     it 'instantiates' do
-      expect(@subject).to be_an_instance_of(Processor::UbsChequingFr)
+      expect(@subject).to be_an_instance_of(Processor::UbsChequing)
     end
 
     it 'inherits from Processor::Base' do
@@ -20,7 +20,7 @@ RSpec.describe(Processor::UbsChequingFr) do
   context 'with a valid CSV file' do
     before(:context) do
       filename = File.join(File.dirname(__FILE__), 'fixtures/ubs_chequing.csv')
-      @subject = Processor::UbsChequingFr.new(file: filename)
+      @subject = Processor::UbsChequing.new(file: filename)
     end
 
     # it 'outputs valid YNAB4 CSV data', :writes_csv do

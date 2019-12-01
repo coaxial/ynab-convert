@@ -13,10 +13,15 @@ module Processor
     attr_reader :loader_options
 
     # @option opts [String] :file Path to the CSV file to process
+    # @option options [Symbol] :language Language the file is in (some
+    # institutions are multilingual and will change the headers' names
+    # based on the customer's language
     def initialize(opts)
+      logger.debug "Initializing processor with options: `#{opts.to_h}'"
       raise ::Errno::ENOENT unless File.exist? opts[:file]
 
       @file = opts[:file]
+      @language ||= opts[:language]
     end
 
     def to_ynab!
@@ -52,7 +57,6 @@ module Processor
           "`#{date}'"
         self.statement_from = date
       end
-
       # rubocop:disable Style/GuardClause
       if date_is_more_recent(date)
         logger.debug "Replacing statement_to `#{statement_to}' with `#{date}'"
@@ -111,9 +115,8 @@ module Processor
     end
 
     def temp_filename
-      @temp_filename ||= "#{File.basename(@file, '.csv')}_#{institution_name}" \
-        "_#{file_uid}_ynab4.csv"
-      @temp_filename
+      "#{File.basename(@file, '.csv')}_#{institution_name}_#{file_uid}_ynab4"\
+        '.csv'
     end
 
     def output_filename
