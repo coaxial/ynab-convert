@@ -14,6 +14,15 @@ task :spec do
   end
 end
 
+namespace 'spec' do
+  desc 'Enable debug logging'
+  task :debug do
+    ENV['YNAB_CONVERT_DEBUG'] = 'true'
+
+    Rake::Task[:spec].invoke
+  end
+end
+
 desc 'Check code format'
 RuboCop::RakeTask.new
 

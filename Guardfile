@@ -1,3 +1,4 @@
+# vi: set ft=ruby
 # frozen_string_literal: true
 
 # A sample Guardfile
@@ -26,6 +27,8 @@
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 group :red_green_refactor, halt_on_fail: true do
+  # Can't use the rake task here because guard appends rspec options to the
+  # command that aren't compatible with rake
   guard :rspec, cmd: 'YNAB_CONVERT_ENV=test bundle exec rspec' do
     require 'guard/rspec/dsl'
     dsl = Guard::RSpec::Dsl.new(self)

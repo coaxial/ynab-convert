@@ -43,6 +43,10 @@ git commits and tags, and push the `.gem` file to
 Bug reports and pull requests are welcome on GitHub at
 https://github.com/coaxial/ynab_convert.
 
+### Enable debug output
+
+Run `ynab_convert` with `YNAB_CONVERT_DEBUG=true`.
+
 ### Adding a new financial institution
 
 If there is no processor for your financial institution, you can contribute one

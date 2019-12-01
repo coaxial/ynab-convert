@@ -30,6 +30,11 @@ module Processor
 
     attr_accessor :statement_from, :statement_to
 
+    def skip_row(row)
+      logger.debug "Found empty row, skipping it: #{row.to_h}"
+      throw :skip_row
+    end
+
     def temp_csv_deleted
       FileUtils.remove_file temp_filename, force: true
     end
@@ -42,14 +47,13 @@ module Processor
       date = extract_transaction_date(row)
 
       logger.debug "Found date in statement: `#{date}'"
-
-      # rubocop:disable Style/GuardClause
       if date_is_further_away(date)
         logger.debug "Replacing statement_from `#{statement_from}' with "\
           "`#{date}'"
         self.statement_from = date
       end
 
+      # rubocop:disable Style/GuardClause
       if date_is_more_recent(date)
         logger.debug "Replacing statement_to `#{statement_to}' with `#{date}'"
         self.statement_to = date
@@ -66,25 +70,32 @@ module Processor
     end
 
     # rubocop:disable Metrics/AbcSize
+    # TODO Fix AbcSize for this method
     def convert!
       logger.debug "Will write to `#{temp_filename}'"
 
       CSV.open(temp_filename, 'wb', output_options) do |converted|
         CSV.foreach(@file, 'rb', loader_options) do |row|
           logger.debug "Parsing row: `#{row.to_h}'"
-
-          record_statement_interval_dates(row)
-          converted << converters(row)
+          # Some rows don't contain valid or useful data
+          catch :skip_row do
+            converted << converters(row)
+            record_statement_interval_dates(row)
+          end
         end
 
         logger.debug 'Done converting'
       end
 
+      rename_file
+    end
+    # rubocop:enable Metrics/AbcSize
+
+    def rename_file
       File.rename(temp_filename, output_filename)
       logger.debug "Renamed temp file `#{temp_filename}' to "\
         "`#{output_filename}'"
     end
-    # rubocop:enable Metrics/AbcSize
 
     def invalid_csv_file
       raise "Unable to parse file `#{@file}'. Is it a valid"\

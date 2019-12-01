@@ -12,18 +12,27 @@ module Processor
   # The file name for the processor should be the institution name in
   # camel case. It's ok to skip "Bank" or "Credit Union" when naming the file
   # if it's redundant. For instance, this parser is for "Example Bank" but it's
-  # named "example.rb"
+  # named "example.rb", its corresponding spec is
+  # "spec/example_processor_spec.rb" and its fixture would be
+  # "spec/fixtures/example.csv"
   class Example < Processor::Base
     # @option options [String] :file Path to the CSV file to process
     def initialize(options)
+      # Custom converters can be added so that the CSV data is parsed when
+      # loading the original file
+      register_custom_converters
+
       # These are the options for the CSV module (see
       # https://ruby-doc.org/stdlib-2.6/libdoc/csv/rdoc/CSV.html#method-c-new)
       # They should match the format for the CSV file that the financial
       # institution generates.
       @loader_options = {
         col_sep: ';',
+        # Use your converters, if any
+        converters: %i[my_converter transaction_date],
         headers: true
       }
+
       # This is the financial institution's full name as it calls itself. This
       # usually matches the institution's letterhead and/or commercial name.
       # It can happen that the same institution needs different parsers because
@@ -37,6 +46,26 @@ module Processor
       super(options)
     end
 
+    private
+
+    def register_custom_converters
+      CSV::Converters[:transaction_date] = lambda { |s|
+        # Only match strings that have two digits, a dot, two digits, a dot,
+        # two digits, i.e. the dates in this institution's CSV files.
+        if !s.nil? && /\d{2}\.\d{2}\.\d{2}/.match(s)
+          return Date.strptime(s, '%d.%m.%y')
+        end
+
+        s
+      }
+      CSV::Converters[:my_converter] = lambda { |s|
+        # A contrived example, just to illustrate multiple converters
+        return s.downcase if s.respond_to?(:downcase)
+
+        s
+      }
+    end
+
     protected
 
     # Converts the institution's CSV rows into YNAB4 rows.
@@ -47,21 +76,27 @@ module Processor
     # Note that Example Bank doesn't include any relevant column for YNAB4's
     # "Memo" column so it's skipped and gets '' as its value.
     def converters(row)
-      transaction_date = extract_transaction_date(row)
+      # CSV files can have funny data in them, including invalid or empty rows.
+      # These rows can be skipped from the converted YNAB4 file by calling
+      # skip_row when detected. In this particular case, if there is no
+      # transaction date, it means the row is empty or invalid and we discard
+      # it.
+      skip_row(row) if row['transaction_date'].nil?
 
-      # Convert the original transaction_date to DD/MM/YYYY as YNAB4 expects it.
-      [transaction_date.strftime('%d/%m/%Y'),
+      # Convert the original transaction_date to DD/MM/YYYY as YNAB4 expects
+      # it.
+      [row['transaction_date'].strftime('%d/%m/%Y'),
        row['beneficiary'],
        '',
        row['debit'] || '',
        row['credit'] || '']
     end
 
-    # Extracts and casts transaction dates to a Date object. This is used to
-    # generate the YNAB4 CSV file's name.
+    # This is used to find the oldest and most recent transactions, so the
+    # YNAB4 file can have the interval in its name.
     def extract_transaction_date(row)
       # The date's format in the institution's CSV is "DD.MM.YYYY".
-      Date.strptime(row['transaction_date'], '%d.%m.%y')
+      row['transaction_date']
     end
   end
 end
