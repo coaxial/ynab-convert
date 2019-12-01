@@ -28,6 +28,7 @@ module YnabConvert
     # @option opts [Processor] :processor The class to use for converting the
     # CSV file
     def initialize(opts)
+      logger.debug opts.to_h
       @file = opts[:file]
 
       begin
@@ -76,7 +77,7 @@ module YnabConvert
     private
 
     def opts
-      { file: @options[:file], processor: processor }
+      { file: @options[:file], processor: processor, language: @options[:language] }
     rescue NameError => e
       raise e unless e.message.match(/#{processor_class_name}/)
 
@@ -94,7 +95,8 @@ module YnabConvert
         o.string '-i', '--institution', 'name of the financial institution '\
  'that generated the file to convert'
         o.string '-f', '--file', 'path to the csv file to convert'
-        o.string '-l', '--language', 'language for the headers if applicable. '\
+        o.symbol '-l', '--language', 'language for the headers if applicable '\
+          '(optional.) Example: -l en. '\
           'Some institutions are multilingual and will name the headers '\
           "differently based on the client's language."
       end

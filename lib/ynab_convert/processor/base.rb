@@ -5,7 +5,7 @@ require 'csv'
 require 'ynab_convert/logger'
 
 module Processor
-  # Base class for a Processor
+  # Base class for a Processor, all processors must inherit from it
   class Base
     include YnabLogger
     include CoreExtensions::String::Inflections
@@ -21,7 +21,7 @@ module Processor
       raise ::Errno::ENOENT unless File.exist? opts[:file]
 
       @file = opts[:file]
-      @language ||= opts[:language]
+      @language = opts[:language] unless opts[:language].nil?
     end
 
     def to_ynab!
