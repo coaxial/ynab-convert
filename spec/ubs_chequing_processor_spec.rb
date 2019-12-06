@@ -24,7 +24,7 @@ RSpec.describe(Processor::UbsChequing) do
     end
 
     # it 'outputs valid YNAB4 CSV data', :writes_csv do
-    fit 'outputs valid YNAB4 CSV data' do
+    it 'outputs valid YNAB4 CSV data' do
       @subject.to_ynab!
       actual = File.read(
         'ubs_chequing_ubs_chequing_20191018-20191106_ynab4.csv'
