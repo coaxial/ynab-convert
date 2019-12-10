@@ -18,7 +18,6 @@ module Processor
         headers: true
       }
       @institution_name = 'Revolut'
-      @headers = { transaction_date: nil, payee: nil, debit: nil, credit: nil }
 
       super(options)
     end
@@ -29,7 +28,6 @@ module Processor
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
     def converters(row)
-      extract_header_names(row)
       date = extract_transaction_date(row).strftime('%d/%m/%Y')
       payee = row[headers[:payee]]
       unless row[headers[:debit]].nil?
@@ -42,7 +40,7 @@ module Processor
       ynab_row = [
         date,
         payee,
-        '',
+        nil,
         debit,
         credit
       ]
@@ -54,8 +52,6 @@ module Processor
     # rubocop:enable Metrics/AbcSize
 
     private
-
-    attr_accessor :headers
 
     def extract_header_names(row)
       @headers[:transaction_date] ||= row.headers[0]

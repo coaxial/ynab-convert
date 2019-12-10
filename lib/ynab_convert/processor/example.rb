@@ -42,15 +42,11 @@ module Processor
       # 'Example Bank (credit cards)' and 'Example Bank (chequing)'
       @institution_name = 'Example Bank'
 
-      @headers = { transaction_date: nil, payee: nil, debit: nil, credit: nil }
-
       # This is mandatory.
       super(options)
     end
 
     private
-
-    attr_accessor :headers
 
     def register_custom_converters
       CSV::Converters[:transaction_date] = lambda { |s|
@@ -81,38 +77,41 @@ module Processor
     # "Memo" column so it's skipped and gets '' as its value.
     # rubocop:disable Metrics/AbcSize
     def converters(row)
-      extract_header_names(row)
+      transaction_date = row[headers[:transaction_date]]
+      payee = row[headers[:payee]]
+      debit = row[headers[:debit]]
+      credit = row[headers[:credit]]
       # CSV files can have funny data in them, including invalid or empty rows.
       # These rows can be skipped from the converted YNAB4 file by calling
       # skip_row when detected. In this particular case, if there is no
       # transaction date, it means the row is empty or invalid and we discard
       # it.
-      skip_row(row) if row[headers[:transaction_date]].nil?
+      skip_row(row) if transaction_date.nil?
 
-      # Convert the original transaction_date to DD/MM/YYYY as YNAB4 expects
-      # it.
-      [row[headers[:transaction_date]].strftime('%d/%m/%Y'),
-       row[headers[:payee]],
-       '',
-       row[headers[:debit]] || '',
-       row[headers[:credit]] || '']
+      [
+        # Convert the original transaction_date to DD/MM/YYYY as YNAB4 expects
+        # it.
+        transaction_date.strftime('%d/%m/%Y'),
+        payee,
+        '',
+        debit,
+        credit
+      ]
     end
     # rubocop:enable Metrics/AbcSize
 
-    # This is used to find the oldest and most recent transactions, so the
-    # YNAB4 file can have the interval in its name.
-    def extract_transaction_date(row)
-      # The date's format in the institution's CSV is "DD.MM.YYYY".
-      row[headers[:transaction_date]]
-    end
-
     private
 
+    # Institutions love translating the column names, apparently. Rather than
+    # hardcoding the column name as a string, use the headers array at the
+    # right index.
+    # These lookups aren't particularly expensive but they're done on each row
+    # so why not memoize them with ||=
     def extract_header_names(row)
-      @headers[:transaction_date] ||= row.headers[0]
-      @headers[:payee] ||= row.headers[2]
-      @headers[:debit] ||= row.headers[3]
-      @headers[:credit] ||= row.headers[4]
+      headers[:transaction_date] ||= row.headers[0]
+      headers[:payee] ||= row.headers[2]
+      headers[:debit] ||= row.headers[3]
+      headers[:credit] ||= row.headers[4]
     end
   end
 end

@@ -17,7 +17,6 @@ module Processor
         skip_lines: 'sep=;'
       }
       @institution_name = 'UBS (Credit cards)'
-      @headers = { transaction_date: nil, payee: nil, debit: nil, credit: nil }
 
       super(options)
     end
@@ -25,7 +24,6 @@ module Processor
     protected
 
     def converters(row)
-      extract_header_names(row)
       unless row[headers[:transaction_date]].nil?
         date = row[headers[:transaction_date]].strftime('%d/%m/%Y')
       end
@@ -40,7 +38,7 @@ module Processor
       converted_row = [
         date,
         payee,
-        '',
+        nil,
         debit,
         credit
       ]
@@ -52,13 +50,11 @@ module Processor
 
     private
 
-    attr_accessor :headers
-
     def extract_header_names(row)
-      @headers[:transaction_date] ||= row.headers[3]
-      @headers[:payee] ||= row.headers[4]
-      @headers[:debit] ||= row.headers[10]
-      @headers[:credit] ||= row.headers[11]
+      headers[:transaction_date] ||= row.headers[3]
+      headers[:payee] ||= row.headers[4]
+      headers[:debit] ||= row.headers[10]
+      headers[:credit] ||= row.headers[11]
     end
 
     def register_custom_converters
@@ -71,7 +67,7 @@ module Processor
           amount = s.delete("'") .to_f
           logger.debug "Converted `#{s}' into amount `#{amount}'"
           return amount
-end
+        end
 
         logger.debug "Not an amount, not parsing `#{s.inspect}'"
         s
@@ -89,11 +85,6 @@ end
           s
         end
       }
-    end
-
-    def missing_transaction_date?(row)
-      # If It's missing a transaction date, it's most likely invalid
-      row[headers[:transaction_date]].nil?
     end
   end
 end

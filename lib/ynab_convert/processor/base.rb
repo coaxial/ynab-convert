@@ -28,6 +28,7 @@ module Processor
       raise ::Errno::ENOENT unless File.exist? opts[:file]
 
       @file = opts[:file]
+      @headers = { transaction_date: nil, payee: nil, debit: nil, credit: nil }
     end
 
     def to_ynab!
@@ -44,7 +45,7 @@ module Processor
 
     protected
 
-    attr_accessor :statement_from, :statement_to
+    attr_accessor :statement_from, :statement_to, :headers
 
     def inflow_or_outflow_missing?(row)
       inflow_index = 3
@@ -104,6 +105,7 @@ module Processor
           logger.debug "Parsing row: `#{row.to_h}'"
           # Some rows don't contain valid or useful data
           catch :skip_row do
+            extract_header_names(row)
             ynab_row = converters(row)
             if inflow_or_outflow_missing?(ynab_row) || transaction_date_missing?(ynab_row)
               logger.debug 'Empty row, skipping it'

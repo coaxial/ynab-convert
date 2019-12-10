@@ -14,7 +14,6 @@ module Processor
         headers: true
       }
       @institution_name = 'UBS (Chequing)'
-      @headers = { transaction_date: nil, payee: nil, debit: nil, credit: nil }
 
       super(options)
     end
@@ -22,7 +21,6 @@ module Processor
     protected
 
     def converters(row)
-      extract_header_names(row)
       date = extract_transaction_date(row).strftime('%d/%m/%Y')
       payee = transaction_payee(row)
       unless row[headers[:debit]].nil?
@@ -35,7 +33,7 @@ module Processor
       converted_row = [
         date,
         payee,
-        '',
+        nil,
         debit,
         credit
       ]
@@ -45,21 +43,19 @@ module Processor
     end
 
     def extract_transaction_date(row)
-      skip_row(row) if missing_transaction_date?(row)
+      skip_row(row) if row[headers[:transaction_date]].nil?
       row[headers[:transaction_date]]
     end
 
     private
 
-    attr_accessor :headers
-
     def extract_header_names(row)
-      @headers[:transaction_date] ||= row.headers[9]
-      @headers[:payee_line_1] ||= row.headers[12]
-      @headers[:payee_line_2] ||= row.headers[13]
-      @headers[:payee_line_3] ||= row.headers[14]
-      @headers[:debit] ||= row.headers[18]
-      @headers[:credit] ||= row.headers[19]
+      headers[:transaction_date] ||= row.headers[9]
+      headers[:payee_line_1] ||= row.headers[12]
+      headers[:payee_line_2] ||= row.headers[13]
+      headers[:payee_line_3] ||= row.headers[14]
+      headers[:debit] ||= row.headers[18]
+      headers[:credit] ||= row.headers[19]
     end
 
     def transaction_payee(row)
@@ -100,11 +96,6 @@ end
           s
         end
       }
-    end
-
-    def missing_transaction_date?(row)
-      # If It's missing a transaction date, it's most likely invalid
-      row[headers[:transaction_date]].nil?
     end
   end
 end
