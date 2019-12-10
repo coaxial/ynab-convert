@@ -48,17 +48,10 @@ module Processor
       ]
 
       logger.debug "Converted row: #{ynab_row}"
-      skip_row(row) if inflow_or_outflow_missing?(ynab_row)
-
       ynab_row
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
-
-    def extract_transaction_date(row)
-      skip_row(row) if missing_transaction_date?(row)
-      row[headers[:transaction_date]]
-    end
 
     private
 
@@ -120,15 +113,6 @@ module Processor
     def missing_transaction_date?(row)
       # If It's missing a transaction date, it's most likely invalid
       row[headers[:transaction_date]].nil?
-    end
-
-    def inflow_or_outflow_missing?(row)
-      inflow_index = 3
-      outflow_index = 4
-      # Values can be Nil, nil.zero? is an error but not nil == 0
-      # rubocop:disable Style/NumericPredicate
-      row[inflow_index] == 0 || row[outflow_index] == 0
-      # rubocop:enable Style/NumericPredicate
     end
   end
 end

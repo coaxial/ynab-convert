@@ -22,13 +22,6 @@ module Processor
       # loading the original file
       register_custom_converters
 
-      # Set the default language to English, if relevant. Some institutions
-      # translate the headers in the CSV file based on the customer's language.
-      # If the user explicitly defined a language (`-l` or `--language` on the
-      # command line), Processor::Base will overwrite @language with the user
-      # supplied value.
-      @language = :en
-
       # These are the options for the CSV module (see
       # https://ruby-doc.org/stdlib-2.6/libdoc/csv/rdoc/CSV.html#method-c-new)
       # They should match the format for the CSV file that the financial
@@ -49,11 +42,15 @@ module Processor
       # 'Example Bank (credit cards)' and 'Example Bank (chequing)'
       @institution_name = 'Example Bank'
 
+      @headers = { transaction_date: nil, payee: nil, debit: nil, credit: nil }
+
       # This is mandatory.
       super(options)
     end
 
     private
+
+    attr_accessor :headers
 
     def register_custom_converters
       CSV::Converters[:transaction_date] = lambda { |s|
@@ -84,20 +81,21 @@ module Processor
     # "Memo" column so it's skipped and gets '' as its value.
     # rubocop:disable Metrics/AbcSize
     def converters(row)
+      extract_header_names(row)
       # CSV files can have funny data in them, including invalid or empty rows.
       # These rows can be skipped from the converted YNAB4 file by calling
       # skip_row when detected. In this particular case, if there is no
       # transaction date, it means the row is empty or invalid and we discard
       # it.
-      skip_row(row) if row[header_names[:transaction_date]].nil?
+      skip_row(row) if row[headers[:transaction_date]].nil?
 
       # Convert the original transaction_date to DD/MM/YYYY as YNAB4 expects
       # it.
-      [row[header_names[:transaction_date]].strftime('%d/%m/%Y'),
-       row[header_names[:payee]],
+      [row[headers[:transaction_date]].strftime('%d/%m/%Y'),
+       row[headers[:payee]],
        '',
-       row[header_names[:debit]] || '',
-       row[header_names[:credit]] || '']
+       row[headers[:debit]] || '',
+       row[headers[:credit]] || '']
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -105,27 +103,16 @@ module Processor
     # YNAB4 file can have the interval in its name.
     def extract_transaction_date(row)
       # The date's format in the institution's CSV is "DD.MM.YYYY".
-      row[header_names[:transaction_date]]
+      row[headers[:transaction_date]]
     end
 
     private
 
-    # Translates the header names to various language, when relevant.
-    def header_names
-      case @language
-      when :en
-        {
-          transaction_date: 'transaction_date', payee: 'beneficiary',
-          debit: 'debit', credit: 'credit'
-        }
-      when :fr
-        {
-          transaction_date: 'date_transaction', payee: 'beneficiaire',
-          debit: 'debit', credit: 'credit'
-        }
-      else
-        raise YnabConvert::Error "Language `#{@language}' missing in processor"
-      end
+    def extract_header_names(row)
+      @headers[:transaction_date] ||= row.headers[0]
+      @headers[:payee] ||= row.headers[2]
+      @headers[:debit] ||= row.headers[3]
+      @headers[:credit] ||= row.headers[4]
     end
   end
 end

@@ -33,7 +33,7 @@ module YnabConvert
 
       begin
         @processor = opts[:processor].new(
-          file: @file, language: opts[:language]
+          file: @file
         )
       rescue Errno::ENOENT
         handle_file_not_found
@@ -77,8 +77,7 @@ module YnabConvert
     private
 
     def opts
-      { file: @options[:file], processor: processor, language:
-        @options[:language] }
+      { file: @options[:file], processor: processor }
     rescue NameError => e
       raise e unless e.message.match(/#{processor_class_name}/)
 
@@ -96,10 +95,6 @@ module YnabConvert
         o.string '-i', '--institution', 'name of the financial institution '\
  'that generated the file to convert'
         o.string '-f', '--file', 'path to the csv file to convert'
-        o.symbol '-l', '--language', 'language for the headers if applicable '\
-          '(optional.) Example: -l en. '\
-          'Some institutions are multilingual and will name the headers '\
-          "differently based on the client's language."
       end
     end
 

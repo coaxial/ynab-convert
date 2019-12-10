@@ -32,12 +32,6 @@ RSpec.describe Processor::Base do
       expect(@subject).to respond_to(:to_ynab!)
     end
 
-    it "has an `extract_transaction_date' method stub" do
-      subject = -> { @subject.send(:extract_transaction_date) }
-
-      expect(subject).to raise_error(NotImplementedError)
-    end
-
     it "has a `converters' method stub" do
       subject = -> { @subject.send(:converters) }
 

@@ -72,13 +72,13 @@ RSpec.describe YnabConvert do
         end
 
         it 'prints an error message' do
-          expect { @subject.call.to_ynab! }.to raise_error(RuntimeError,
+          expect { @subject.call.to_ynab! }.to raise_error(YnabConvert::Error,
                                                            /unable to parse/i)
         end
 
         it 'cleans up the temporary CSV file' do
           @subject.call.to_ynab!
-        rescue RuntimeError
+        rescue YnabConvert::Error
           expect(Dir['not_a_csv_file.txt_example_bank_*.csv'].any?).to be false
         end
       end
