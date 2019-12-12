@@ -35,16 +35,8 @@ module Processor
         credit = format('%<amount>.2f', amount: row[headers[:credit]])
       end
 
-      converted_row = [
-        date,
-        payee,
-        nil,
-        debit,
-        credit
-      ]
-
+      converted_row = [date, payee, nil, debit, credit]
       logger.debug "Converted row: #{converted_row}"
-
       converted_row
     end
 
@@ -72,6 +64,7 @@ module Processor
         logger.debug "Not an amount, not parsing `#{s.inspect}'"
         s
       }
+
       CSV::Converters[:transaction_dates] = lambda { |s|
         date_regex = /^\d{2}\.\d{2}\.\d{4}$/
 

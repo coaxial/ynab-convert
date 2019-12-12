@@ -24,9 +24,6 @@ module Processor
 
     protected
 
-    # TODO: Fix AbcSize
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
     def converters(row)
       date = extract_transaction_date(row).strftime('%d/%m/%Y')
       payee = row[headers[:payee]]
@@ -48,8 +45,6 @@ module Processor
       logger.debug "Converted row: #{ynab_row}"
       ynab_row
     end
-    # rubocop:enable Metrics/MethodLength
-    # rubocop:enable Metrics/AbcSize
 
     private
 
@@ -60,8 +55,6 @@ module Processor
       @headers[:credit] ||= row.headers[3]
     end
 
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
     def register_custom_converters
       CSV::Converters[:amounts] = lambda { |s|
         # Yes, amount come with a non breaking trailing space... Which is
@@ -103,8 +96,6 @@ module Processor
       }
       # rubocop:enable Style/AsciiComments
     end
-    # rubocop:enable Metrics/MethodLength
-    # rubocop:enable Metrics/AbcSize
 
     def missing_transaction_date?(row)
       # If It's missing a transaction date, it's most likely invalid

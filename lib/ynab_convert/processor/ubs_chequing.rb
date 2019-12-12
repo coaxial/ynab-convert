@@ -77,7 +77,7 @@ module Processor
           amount = s.delete("'") .to_f
           logger.debug "Converted `#{s}' into amount `#{amount}'"
           return amount
-end
+        end
 
         logger.debug "Not an amount, not parsing `#{s.inspect}'"
         s

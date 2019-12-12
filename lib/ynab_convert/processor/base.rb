@@ -6,6 +6,7 @@ require 'ynab_convert/logger'
 
 module Processor
   # Base class for a Processor, all processors must inherit from it
+  # rubocop:disable Metrics/ClassLength
   class Base
     include YnabLogger
     include CoreExtensions::String::Inflections
@@ -52,8 +53,10 @@ module Processor
       outflow_index = 4
       # If there is neither inflow and outflow values, or their value is 0,
       # then the row is not valid to YNAB4
-      (row[inflow_index].nil? || row[inflow_index].empty? || row[inflow_index] == '0.00') &&
-        (row[outflow_index].nil? || row[outflow_index].empty? || row[outflow_index] == '0.00')
+      (row[inflow_index].nil? || row[inflow_index].empty? ||
+       row[inflow_index] == '0.00') &&
+        (row[outflow_index].nil? || row[outflow_index].empty? ||
+         row[outflow_index] == '0.00')
     end
 
     def skip_row(row)
@@ -79,14 +82,17 @@ module Processor
       date = Date.parse(ynab_row[transaction_date_index])
 
       if date_is_further_away?(date)
-        logger.debug "Replacing statement_from `#{statement_from.inspect}' with "\
-          "`#{date}'"
+        logger.debug "Replacing statement_from `#{statement_from.inspect}' "\
+          "with `#{date}'"
         self.statement_from = date
       end
+      # rubocop:disable Style/GuardClause
       if date_is_more_recent?(date)
-        logger.debug "Replacing statement_to `#{statement_to.inspect}' with `#{date}'"
+        logger.debug "Replacing statement_to `#{statement_to.inspect}' with "\
+          "`#{date}'"
         self.statement_to = date
       end
+      # rubocop:enable Style/GuardClause
     end
 
     def date_is_more_recent?(date)
@@ -107,7 +113,8 @@ module Processor
           catch :skip_row do
             extract_header_names(row)
             ynab_row = converters(row)
-            if inflow_or_outflow_missing?(ynab_row) || transaction_date_missing?(ynab_row)
+            if inflow_or_outflow_missing?(ynab_row) ||
+               transaction_date_missing?(ynab_row)
               logger.debug 'Empty row, skipping it'
               skip_row(row)
             end
@@ -127,8 +134,8 @@ module Processor
     end
 
     def invalid_csv_file
-      raise YnabConvert::Error, "Unable to parse file `#{@file}'. Is it a valid CSV file from "\
-        "#{@institution_name}?"
+      raise YnabConvert::Error, "Unable to parse file `#{@file}'. Is it a "\
+        "valid CSV file from #{@institution_name}?"
     end
 
     def file_uid
@@ -136,8 +143,8 @@ module Processor
     end
 
     def temp_filename
-      "#{File.basename(@file, '.csv')}_#{@institution_name.snake_case}_#{file_uid}_ynab4"\
-        '.csv'
+      "#{File.basename(@file, '.csv')}_#{@institution_name.snake_case}_"\
+        "#{file_uid}_ynab4.csv"
     end
 
     def output_filename
@@ -149,8 +156,8 @@ module Processor
       from = statement_from.strftime('%Y%m%d')
       to = statement_to.strftime('%Y%m%d')
 
-      "#{File.basename(@file, '.csv')}_#{@institution_name.snake_case}_#{from}-" \
-        "#{to}_ynab4.csv"
+      "#{File.basename(@file, '.csv')}_#{@institution_name.snake_case}_"\
+        "#{from}-#{to}_ynab4.csv"
     end
 
     def ynab_headers
@@ -170,4 +177,5 @@ module Processor
       raise NotImplementedError, :converters
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
