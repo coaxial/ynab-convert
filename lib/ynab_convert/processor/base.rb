@@ -17,10 +17,6 @@ module Processor
 
     # TODO: extract converters from revolut to base
 
-    # TODO: move fixtures to separate dirs so they have better names and result
-    # in better output file in specs (my_bank_my_bank_20190101-20190201... is
-    # redundant, see revolut
-
     # @option opts [String] :file Path to the CSV file to process
     def initialize(opts)
       logger.debug "Initializing processor with options: `#{opts.to_h}'"

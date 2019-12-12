@@ -2,8 +2,10 @@
 
 RSpec.describe Processor::Base do
   context 'with any CSV file' do
+    fixture_path = 'fixtures/example/valid.csv'
+
     before(:context) do
-      @file = File.join(File.dirname(__FILE__), 'fixtures/valid.csv')
+      @file = File.join(File.dirname(__FILE__), fixture_path)
       @institution_name = 'Mesa Credit Union'
       @from = Time.local(1986, 'jul', 25, 0, 30, 0)
       @to = Time.local(1986, 'nov', 12, 5, 0, 0)

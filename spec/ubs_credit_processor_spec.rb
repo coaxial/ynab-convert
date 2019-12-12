@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe(Processor::UbsCredit) do
+  fixture_path = 'fixtures/ubs_credit/statement.csv'
+
   context('with any file') do
     before(:context) do
       @subject = Processor::UbsCredit.new(
-        file: File.join(File.dirname(__FILE__), 'fixtures/ubs_credit.csv')
+        file: File.join(File.dirname(__FILE__), fixture_path)
       )
     end
 
@@ -19,7 +21,7 @@ RSpec.describe(Processor::UbsCredit) do
 
   context 'with a valid CSV file' do
     before(:context) do
-      filename = File.join(File.dirname(__FILE__), 'fixtures/ubs_credit.csv')
+      filename = File.join(File.dirname(__FILE__), fixture_path)
       @subject = Processor::UbsCredit.new(file: filename)
     end
 
@@ -27,7 +29,7 @@ RSpec.describe(Processor::UbsCredit) do
     it 'outputs valid YNAB4 CSV data' do
       @subject.to_ynab!
       actual = File.read(
-        'ubs_credit_ubs_credit_cards_20191028-20191111_ynab4.csv'
+        'statement_ubs_credit_cards_20191028-20191111_ynab4.csv'
       )
       expected = <<~ROWS
         "Date","Payee","Memo","Outflow","Inflow"

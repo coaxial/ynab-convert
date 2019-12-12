@@ -7,7 +7,7 @@ RSpec.describe YnabConvert do
 
   context 'when run from the command line' do
     it 'converts the csv file', :writes_csv do
-      system('bin/ynab_convert -f spec/fixtures/valid.csv -i example')
+      system('bin/ynab_convert -f spec/fixtures/example/valid.csv -i example')
 
       actual = File.read('valid_example_bank_20191223-20200202_ynab4.csv')
       expected = <<~ROWS
@@ -44,7 +44,7 @@ RSpec.describe YnabConvert do
     context 'with an existing file' do
       context 'that is valid CSV' do
         before(:example) do
-          filename = File.join(File.dirname(__FILE__), 'fixtures/valid.csv')
+          filename = File.join(File.dirname(__FILE__), 'fixtures/example/valid.csv')
           opts = { file: filename, processor: Processor::Example }
           @subject = YnabConvert::File.new opts
         end
@@ -66,7 +66,7 @@ RSpec.describe YnabConvert do
       context 'that is invalid CSV' do
         before(:example) do
           filename = File.join(File.dirname(__FILE__),
-                               'fixtures/not_a_csv_file.txt')
+                               'fixtures/example/not_a_csv_file.txt')
           opts = { file: filename, processor: Processor::Example }
           @subject = -> { YnabConvert::File.new(opts) }
         end
