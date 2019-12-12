@@ -14,6 +14,11 @@ task :spec do
   end
 end
 
+desc 'Run all tests (synonym for spec)'
+task :test do
+  Rake::Task[:spec].invoke
+end
+
 namespace 'spec' do
   desc 'Enable debug logging'
   task :debug do
