@@ -13,8 +13,6 @@ module Processor
 
     attr_reader :loader_options
 
-    # TODO: remove language, see revolut
-
     # TODO: rename converters to something more meaningful
 
     # TODO: extract converters from revolut to base

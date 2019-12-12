@@ -20,7 +20,7 @@ RSpec.describe(Processor::UbsCredit) do
   context 'with a valid CSV file' do
     before(:context) do
       filename = File.join(File.dirname(__FILE__), 'fixtures/ubs_credit.csv')
-      @subject = Processor::UbsCredit.new(file: filename, language: :fr)
+      @subject = Processor::UbsCredit.new(file: filename)
     end
 
     # it 'outputs valid YNAB4 CSV data', :writes_csv do

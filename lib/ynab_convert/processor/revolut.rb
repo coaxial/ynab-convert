@@ -8,8 +8,6 @@ module Processor
     # @option options [String] :file Path to the CSV file to process
     def initialize(options)
       register_custom_converters
-      # Set the default language, Processor::Base will overwrite it if present
-      # in options
       @loader_options = {
         col_sep: ';',
         converters: %i[amounts transaction_dates],
