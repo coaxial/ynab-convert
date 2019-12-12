@@ -3,8 +3,10 @@
 RSpec.describe(Processor::Example) do
   context('with any file') do
     before(:context) do
-      @subject = Processor::Example.new(file: File.join(File.dirname(__FILE__),
-                                                        'fixtures/valid.csv'))
+      @subject = Processor::Example.new(
+        file: File.join(File.dirname(__FILE__),
+                        'fixtures/example/valid.csv')
+      )
     end
 
     it 'instantiates' do
@@ -18,7 +20,7 @@ RSpec.describe(Processor::Example) do
 
   context 'with a valid CSV file' do
     before(:context) do
-      filename = File.join(File.dirname(__FILE__), 'fixtures/valid.csv')
+      filename = File.join(File.dirname(__FILE__), 'fixtures/example/valid.csv')
       @subject = Processor::Example.new(file: filename)
     end
 

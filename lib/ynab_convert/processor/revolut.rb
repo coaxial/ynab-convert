@@ -22,7 +22,7 @@ module Processor
 
     protected
 
-    def converters(row)
+    def transformers(row)
       date = extract_transaction_date(row).strftime('%d/%m/%Y')
       payee = row[headers[:payee]]
       unless row[headers[:debit]].nil?

@@ -86,7 +86,7 @@ module Processor
     # "beneficiary", nothing, "debit", and "credit" respectively.
     # Note that Example Bank doesn't include any relevant column for YNAB4's
     # "Memo" column so it's skipped and gets '' as its value.
-    def converters(row)
+    def transformers(row)
       # Convert the original transaction_date to DD/MM/YYYY as YNAB4 expects
       # it.
       unless row[headers[:transaction_date]].nil?

@@ -44,7 +44,8 @@ RSpec.describe YnabConvert do
     context 'with an existing file' do
       context 'that is valid CSV' do
         before(:example) do
-          filename = File.join(File.dirname(__FILE__), 'fixtures/example/valid.csv')
+          filename = File.join(File.dirname(__FILE__),
+                               'fixtures/example/valid.csv')
           opts = { file: filename, processor: Processor::Example }
           @subject = YnabConvert::File.new opts
         end

@@ -23,7 +23,7 @@ module Processor
 
     protected
 
-    def converters(row)
+    def transformers(row)
       unless row[headers[:transaction_date]].nil?
         date = row[headers[:transaction_date]].strftime('%d/%m/%Y')
       end

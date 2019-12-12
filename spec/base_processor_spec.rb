@@ -34,8 +34,8 @@ RSpec.describe Processor::Base do
       expect(@subject).to respond_to(:to_ynab!)
     end
 
-    it "has a `converters' method stub" do
-      subject = -> { @subject.send(:converters) }
+    it "has a `transformers' method stub" do
+      subject = -> { @subject.send(:transformers) }
 
       expect(subject).to raise_error(NotImplementedError)
     end

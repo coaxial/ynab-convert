@@ -13,10 +13,6 @@ module Processor
 
     attr_reader :loader_options
 
-    # TODO: rename converters to something more meaningful
-
-    # TODO: extract converters from revolut to base
-
     # @option opts [String] :file Path to the CSV file to process
     def initialize(opts)
       logger.debug "Initializing processor with options: `#{opts.to_h}'"
@@ -106,7 +102,7 @@ module Processor
           # Some rows don't contain valid or useful data
           catch :skip_row do
             extract_header_names(row)
-            ynab_row = converters(row)
+            ynab_row = transformers(row)
             if inflow_or_outflow_missing?(ynab_row) ||
                transaction_date_missing?(ynab_row)
               logger.debug 'Empty row, skipping it'
@@ -167,8 +163,8 @@ module Processor
       }
     end
 
-    def converters
-      raise NotImplementedError, :converters
+    def transformers
+      raise NotImplementedError, :transformers
     end
   end
   # rubocop:enable Metrics/ClassLength
