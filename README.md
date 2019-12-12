@@ -27,6 +27,9 @@ latest one on 2019-12-01.
 `-i` argument | Institution's full name | Institution's website | Remarks
 ---|---|---|---
 `example` | Example Bank | N/A | Reference processor implementation, not a real institution
+`revolut` | Revolut Ltd | [revolut.com](https://www.revolut.com/) | The processor isn't aware of currencies. Make sure the statements processed with `revolut` are in the same currency that your YNAB is in
+`ubs_chequing` | UBS Switzerland (private banking) | [ubs.ch](https://ubs.ch) | Private chequing and joint accounts
+`ubs_credit` | UBS Switzerland (credit cards) | [ubs.ch](https://ubs.ch) | Both MasterCard and Visa
 
 ## Contributing
 
@@ -34,18 +37,14 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run
 `rake spec` to run the tests. You can also run `bin/console` for an interactive
 prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To
-release a new version, update the version number in `version.rb`, and then run
-`bundle exec rake release`, which will create a git tag for the version, push
-git commits and tags, and push the `.gem` file to
-[rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
 
 Bug reports and pull requests are welcome on GitHub at
 https://github.com/coaxial/ynab_convert.
 
 ### Enable debug output
 
-Run `ynab_convert` with `YNAB_CONVERT_DEBUG=true`.
+Run `ynab_convert` with `YNAB_CONVERT_DEBUG=true`, or use the rake task `spec:debug`. Debug logging goes to STDERR.
 
 ### Adding a new financial institution
 
