@@ -9,3 +9,10 @@ Metrics/BlockLength:
   Exclude:
     - Guardfile
     - ynab_convert.gemspec
+    - 'spec/**/*_spec.rb'
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/AbcSize:
+  Enabled: false
