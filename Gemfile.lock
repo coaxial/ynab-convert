@@ -17,9 +17,6 @@ GEM
     docile (1.3.2)
     ffi (1.11.2)
     formatador (0.2.5)
-    fuubar (2.5.1)
-      rspec-core (~> 3.0)
-      ruby-progressbar (~> 1.4)
     guard (2.16.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -124,7 +121,6 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 2.0)
-  fuubar
   guard-rspec
   guard-rubocop
   pry-byebug
