@@ -26,11 +26,6 @@ namespace 'spec' do
 
     Rake::Task[:spec].invoke
   end
-
-  desc 'Only run tests with tag :focus'
-  task :focus do
-    Rake::Task[:spec].invoke({ tag: :focus })
-  end
 end
 
 desc 'Check code format'
