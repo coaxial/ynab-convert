@@ -14,12 +14,21 @@ module Processor
     attr_reader :loader_options
 
     # @option opts [String] :file Path to the CSV file to process
-    def initialize(opts)
+    # @option opts [Symbol] :format YNAB4 format to use, one of :flows or :amounts. :flows is useful for CSVs with separate debit and credit columns, :flows is for CSVs with only one amount columns and +/- numbers. See https://docs.youneedabudget.com/article/921-formatting-csv-file
+    def initialize(opts = { file: "", format: :flows })
       logger.debug "Initializing processor with options: `#{opts.to_h}'"
       raise ::Errno::ENOENT unless File.exist? opts[:file]
 
       @file = opts[:file]
-      @headers = { transaction_date: nil, payee: nil, debit: nil, credit: nil }
+      @headers = { transaction_date: nil, payee: nil }
+
+      if opts[:format] == :amounts
+        flows_columns = { amount: nil }
+        @headers.merge!(flows_columns)
+      else
+        flows_columns = { inflow: nil, outflow: nil }
+        @headers.merge!(flows_columns)
+      end
     end
 
     def to_ynab!
