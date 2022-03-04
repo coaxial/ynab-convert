@@ -44,7 +44,8 @@ https://github.com/coaxial/ynab_convert.
 
 ### Enable debug output
 
-Run `ynab_convert` with `YNAB_CONVERT_DEBUG=true`, or use the rake task `spec:debug`. Debug logging goes to STDERR.
+Run `ynab_convert` with `YNAB_CONVERT_DEBUG=true`, or use the rake task
+`spec:debug`. Debug logging goes to STDERR.
 
 ### Adding a new financial institution
 
