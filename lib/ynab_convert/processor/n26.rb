@@ -2,21 +2,6 @@
 
 module Processor
   # Processes CSV files from N26
-  #
-  # An example of how to implement a custom processor
-  # Processes CSV files with this format:
-  # <<~ROWS
-  # "Date","Payee","Memo","Outflow","Inflow"
-  # "23/12/2019","coaxial","","1000000.00",""
-  # "30/12/2019","Santa","","50000.00",""
-  # "02/02/2020","Someone Else","","45.00",""
-  # ROWS
-  # The file name for the processor should be the institution name in
-  # camel case. It's ok to skip "Bank" or "Credit Union" when naming the file
-  # if it's redundant. For instance, this parser is for "Example Bank" but it's
-  # named "example.rb", its corresponding spec is
-  # "spec/example_processor_spec.rb" and its fixture would be
-  # "spec/fixtures/example.csv"
   class N26 < Processor::Base
     # @option options [String] :file Path to the CSV file to process
     def initialize(options)

@@ -5,7 +5,8 @@ require 'csv'
 require 'ynab_convert/logger'
 
 module Processor
-  # Base class for a Processor, all processors must inherit from it
+  # Base class for a Processor, all processors must inherit from it.
+
   # rubocop:disable Metrics/ClassLength
   class Base
     include YnabLogger
@@ -13,8 +14,8 @@ module Processor
 
     attr_reader :loader_options
 
-    # @option opts [String] :file Path to the CSV file to process
-    # @option opts [Symbol] :format YNAB4 format to use, one of :flows or
+    # @option options [String] :file Path to the CSV file to process
+    # @option options [Symbol] :format YNAB4 format to use, one of :flows or
     #   :amounts. :flows is useful for CSVs with separate debit and credit
     #   columns, :amounts is for CSVs with only one amount columns and +/-
     #   numbers. See
