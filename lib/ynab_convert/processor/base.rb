@@ -16,8 +16,9 @@ module Processor
     # @option opts [String] :file Path to the CSV file to process
     # @option opts [Symbol] :format YNAB4 format to use, one of :flows or
     #   :amounts. :flows is useful for CSVs with separate debit and credit
-    #   columns, :flows is for CSVs with only one amount columns and +/-
-    #   numbers. See https://docs.youneedabudget.com/article/921-formatting-csv-file
+    #   columns, :amounts is for CSVs with only one amount columns and +/-
+    #   numbers. See
+    #   https://docs.youneedabudget.com/article/921-formatting-csv-file
     def initialize(opts = { file: '', format: :flows })
       logger.debug "Initializing processor with options: `#{opts.to_h}'"
       raise ::Errno::ENOENT unless File.exist? opts[:file]
