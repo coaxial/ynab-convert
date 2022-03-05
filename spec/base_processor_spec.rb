@@ -3,35 +3,36 @@
 RSpec.describe Processor::Base do
   context 'with any CSV file' do
     fixture_path = 'fixtures/example/valid.csv'
+    full_path = File.join(File.dirname(__FILE__), fixture_path)
 
-    before(:context) do
-      @file = File.join(File.dirname(__FILE__), fixture_path)
-      @institution_name = 'Mesa Credit Union'
-      @from = Time.local(1986, 'jul', 25, 0, 30, 0)
-      @to = Time.local(1986, 'nov', 12, 5, 0, 0)
+    let(:file) { full_path }
+    let(:institution_name) { 'Mesa Credit Union' }
+    let(:from) { Time.local(1986, 'jul', 25, 0, 30, 0) }
+    let(:to) { Time.local(1986, 'nov', 12, 5, 0, 0) }
+    let(:subject) do
+      instance = Processor::Base.new(file: full_path)
+      instance.instance_variable_set('@statement_from', from)
+      instance.instance_variable_set('@statement_to', to)
+      instance.instance_variable_set('@institution_name', institution_name)
 
-      @subject = Processor::Base.new(file: @file)
-
-      @subject.instance_variable_set('@statement_from', @from)
-      @subject.instance_variable_set('@statement_to', @to)
-      @subject.instance_variable_set('@institution_name', @institution_name)
+      instance
     end
 
     it 'should initialize' do
-      expect(@subject).to be_an_instance_of(Processor::Base)
+      expect(subject).to be_an_instance_of(Processor::Base)
     end
 
     it 'should compute the right output filename' do
-      actual = @subject.send(:output_filename)
-      expected = "#{File.basename(@file, '.csv')}_" \
-        "#{@institution_name.snake_case}_#{@from.strftime('%Y%m%d')}-" \
-        "#{@to.strftime('%Y%m%d')}_ynab4.csv"
+      actual = subject.send(:output_filename)
+      expected = "#{File.basename(file, '.csv')}_" \
+        "#{institution_name.snake_case}_#{from.strftime('%Y%m%d')}-" \
+        "#{to.strftime('%Y%m%d')}_ynab4.csv"
 
       expect(actual).to eq(expected)
     end
 
     it 'should work in :flows format by default' do
-      actual = @subject.instance_variable_get('@headers')
+      actual = subject.instance_variable_get('@headers')
       expected = {
         transaction_date: nil,
         payee: nil,
@@ -43,17 +44,17 @@ RSpec.describe Processor::Base do
     end
 
     it "has a `to_ynab!' method" do
-      expect(@subject).to respond_to(:to_ynab!)
+      expect(subject).to respond_to(:to_ynab!)
     end
 
     it "has a `transformers' method stub" do
-      subject = -> { @subject.send(:transformers) }
+      lambda = -> { subject.send(:transformers) }
 
-      expect(subject).to raise_error(NotImplementedError)
+      expect(lambda).to raise_error(NotImplementedError)
     end
 
     context 'using :amounts format' do
-      let(:subject) { Processor::Base.new(file: @file, format: :amounts) }
+      let(:subject) { Processor::Base.new(file: file, format: :amounts) }
 
       it 'should have amounts columns' do
         actual = subject.instance_variable_get('@headers')
@@ -64,7 +65,7 @@ RSpec.describe Processor::Base do
     end
 
     context 'using :flows format' do
-      let(:subject) { Processor::Base.new(file: @file, format: :flows) }
+      let(:subject) { Processor::Base.new(file: file, format: :flows) }
 
       it 'should have flows columns' do
         actual = subject.instance_variable_get('@headers')
@@ -80,10 +81,10 @@ RSpec.describe Processor::Base do
     end
 
     context 'when omitting the file path' do
-      subject = -> { Processor::Base.new }
+      lambda = -> { Processor::Base.new({}) }
 
       it 'throws an error' do
-        expect { subject.call }.to raise_error(::Errno::ENOENT)
+        expect { lambda.call }.to raise_error(::Errno::ENOENT)
       end
     end
   end

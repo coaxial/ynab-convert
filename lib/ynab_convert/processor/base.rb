@@ -19,7 +19,10 @@ module Processor
     #   columns, :amounts is for CSVs with only one amount columns and +/-
     #   numbers. See
     #   https://docs.youneedabudget.com/article/921-formatting-csv-file
-    def initialize(opts = { file: '', format: :flows })
+    def initialize(options)
+      default_options = { file: '', format: :flows }
+      opts = default_options.merge(options)
+
       logger.debug "Initializing processor with options: `#{opts.to_h}'"
       raise ::Errno::ENOENT unless File.exist? opts[:file]
 
