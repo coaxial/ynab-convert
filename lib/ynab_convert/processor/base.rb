@@ -140,8 +140,8 @@ module Processor
       logger.debug "Will write to `#{temp_filename}'"
 
       logger.debug(loader_options)
-      CSV.open(temp_filename, 'wb', output_options) do |converted|
-        CSV.foreach(@file, 'rb', loader_options) do |row|
+      CSV.open(temp_filename, 'wb', **output_options) do |converted|
+        CSV.foreach(@file, 'rb', **loader_options) do |row|
           logger.debug "Parsing row: `#{row.to_h}'"
           # Some rows don't contain valid or useful data
           catch :skip_row do
