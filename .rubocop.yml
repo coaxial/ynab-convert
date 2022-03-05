@@ -1,5 +1,10 @@
 ---
+# See https://github.com/rubocop/rubocop/blob/master/config/default.yml for all
+# options
 require: rubocop-rake
+
+AllCops:
+  DisplayCopNames: true
 
 Metrics/LineLength:
   Exclude:

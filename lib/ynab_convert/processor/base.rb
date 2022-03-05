@@ -14,12 +14,29 @@ module Processor
     attr_reader :loader_options
 
     # @option opts [String] :file Path to the CSV file to process
-    def initialize(opts)
+    # @option opts [Symbol] :format YNAB4 format to use, one of :flows or
+    #   :amounts. :flows is useful for CSVs with separate debit and credit
+    #   columns, :amounts is for CSVs with only one amount columns and +/-
+    #   numbers. See
+    #   https://docs.youneedabudget.com/article/921-formatting-csv-file
+    def initialize(options)
+      default_options = { file: '', format: :flows }
+      opts = default_options.merge(options)
+
       logger.debug "Initializing processor with options: `#{opts.to_h}'"
       raise ::Errno::ENOENT unless File.exist? opts[:file]
 
       @file = opts[:file]
-      @headers = { transaction_date: nil, payee: nil, debit: nil, credit: nil }
+      @headers = { transaction_date: nil, payee: nil }
+      @format = opts[:format]
+
+      if @format == :amounts
+        amounts_columns = { amount: nil }
+        @headers.merge!(amounts_columns)
+      else
+        flows_columns = { inflow: nil, outflow: nil }
+        @headers.merge!(flows_columns)
+      end
     end
 
     def to_ynab!
@@ -38,15 +55,41 @@ module Processor
 
     attr_accessor :statement_from, :statement_to, :headers
 
-    def inflow_or_outflow_missing?(row)
+    def amount_invalid?(row)
+      amount_index = 3
+
+      # If there is no amount,
+      # then the row is invalid.
+      row[amount_index].nil? || row[amount_index].empty?
+    end
+
+    def inflow_outflow_invalid?(row)
       inflow_index = 3
       outflow_index = 4
-      # If there is neither inflow and outflow values, or their value is 0,
-      # then the row is not valid to YNAB4
-      (row[inflow_index].nil? || row[inflow_index].empty? ||
-       row[inflow_index] == '0.00') &&
-        (row[outflow_index].nil? || row[outflow_index].empty? ||
-         row[outflow_index] == '0.00')
+
+      # If there is neither inflow and outflow values,
+      # or both the inflow and outflow amounts are 0,
+      # then the row is invalid.
+      (
+        row[inflow_index].nil? ||
+        row[inflow_index].empty? ||
+        row[inflow_index] == '0.00'
+      ) && (
+        row[outflow_index].nil? ||
+        row[outflow_index].empty? ||
+        row[outflow_index] == '0.00'
+      )
+    end
+
+    def amounts_missing?(row)
+      logger.debug "Checking for missing amount in `#{row}`"
+      if @format == :amounts
+        logger.debug 'Using `:amounts`'
+        amount_invalid?(row)
+      else
+        logger.debug 'Using `:flows`'
+        inflow_outflow_invalid?(row)
+      end
     end
 
     def skip_row(row)
@@ -96,6 +139,7 @@ module Processor
     def convert!
       logger.debug "Will write to `#{temp_filename}'"
 
+      logger.debug(loader_options)
       CSV.open(temp_filename, 'wb', output_options) do |converted|
         CSV.foreach(@file, 'rb', loader_options) do |row|
           logger.debug "Parsing row: `#{row.to_h}'"
@@ -103,7 +147,7 @@ module Processor
           catch :skip_row do
             extract_header_names(row)
             ynab_row = transformers(row)
-            if inflow_or_outflow_missing?(ynab_row) ||
+            if amounts_missing?(ynab_row) ||
                transaction_date_missing?(ynab_row)
               logger.debug 'Empty row, skipping it'
               skip_row(row)
@@ -151,7 +195,17 @@ module Processor
     end
 
     def ynab_headers
-      %w[Date Payee Memo Outflow Inflow]
+      common_headers = %w[Date Payee Memo]
+
+      if @format == :amounts
+        amounts_headers = %w[Amount]
+        common_headers.concat(amounts_headers)
+      else
+        flows_headers = %w[Outflow Inflow]
+        common_headers.concat(flows_headers)
+      end
+
+      common_headers
     end
 
     def output_options

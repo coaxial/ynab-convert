@@ -27,6 +27,7 @@ latest one on 2019-12-01.
 `-i` argument | Institution's full name | Institution's website | Remarks
 ---|---|---|---
 `example` | Example Bank | N/A | Reference processor implementation, not a real institution
+`n26` | N26 | [n26.com](n26.com) | N26 CSV statements
 `revolut` | Revolut Ltd | [revolut.com](https://www.revolut.com/) | The processor isn't aware of currencies. Make sure the statements processed with `revolut` are in the same currency that your YNAB is in
 `ubs_chequing` | UBS Switzerland (private banking) | [ubs.ch](https://ubs.ch) | Private chequing and joint accounts
 `ubs_credit` | UBS Switzerland (credit cards) | [ubs.ch](https://ubs.ch) | Both MasterCard and Visa
@@ -44,7 +45,8 @@ https://github.com/coaxial/ynab_convert.
 
 ### Enable debug output
 
-Run `ynab_convert` with `YNAB_CONVERT_DEBUG=true`, or use the rake task `spec:debug`. Debug logging goes to STDERR.
+Run `ynab_convert` with `YNAB_CONVERT_DEBUG=true`, or use the rake task
+`spec:debug`. Debug logging goes to STDERR.
 
 ### Adding a new financial institution
 

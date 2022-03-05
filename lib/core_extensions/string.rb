@@ -6,7 +6,7 @@ module CoreExtensions
     # Adds convenience methods
     module Inflections
       def snake_case
-        downcase.tr(' ', '_').gsub(/[^a-z_]/, '')
+        downcase.tr(' ', '_').gsub(/[^a-z_0-9]/, '')
       end
 
       def camel_case

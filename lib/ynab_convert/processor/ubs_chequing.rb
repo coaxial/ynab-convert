@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Processor
-  # Processes CSV files from UBS Personal Banking Switzerland (French)
+  # Processes CSV files from UBS Personal Banking Switzerland
   class UbsChequing < Processor::Base
     # @option options [String] :file Path to the CSV file to process
     def initialize(options)

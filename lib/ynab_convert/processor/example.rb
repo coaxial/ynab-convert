@@ -14,7 +14,7 @@ module Processor
   # if it's redundant. For instance, this parser is for "Example Bank" but it's
   # named "example.rb", its corresponding spec is
   # "spec/example_processor_spec.rb" and its fixture would be
-  # "spec/fixtures/example.csv"
+  # "spec/fixtures/example/statement.csv"
   class Example < Processor::Base
     # @option options [String] :file Path to the CSV file to process
     def initialize(options)
