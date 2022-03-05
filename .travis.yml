@@ -3,12 +3,12 @@ language: ruby
 cache: bundler
 rvm:
   - 2.6
+  - 2.7
 before_install: gem install bundler
 
 jobs:
   include:
     - stage: test
-      rvm: 2.6
       script: echo "Running tests for $(ruby -v)..." && bundle exec rake ci
     - stage: gem release
       rvm: 2.6

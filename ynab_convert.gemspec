@@ -14,6 +14,16 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/coaxial/ynab_convert'
   spec.license       = 'MIT'
 
+  spec.required_ruby_version = '>= 2.6.5', '<= 2.7'
+
+  spec.metadata = {
+    'bug_tracker_uri' => 'https://github.com/coaxial/ynab_convert/issues',
+    'documentation_uri' => 'https://rubydoc.info/github/coaxial/ynab_convert/master',
+    'homepage_uri' => 'https://github.com/coaxial/ynab_convert',
+    'source_code_uri' => 'https://github.com/coaxial/ynab_convert'
+  }
+  spec.post_install_message = 'Happy budgetting!'
+
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)

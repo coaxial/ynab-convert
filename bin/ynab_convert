@@ -9,7 +9,6 @@ require 'ynab_convert/processors'
 require 'ynab_convert/logger'
 require 'ynab_convert/error'
 require 'slop/symbol'
-require 'pry'
 
 # Add mixins and run converter
 class Convert

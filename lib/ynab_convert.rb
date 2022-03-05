@@ -2,7 +2,6 @@
 
 require 'ynab_convert/version'
 require 'slop'
-require 'pry'
 require 'ynab_convert/logger'
 require 'core_extensions/string.rb'
 
