@@ -17,10 +17,10 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>=2.6.5'
 
   spec.metadata = {
-    "bug_tracker_uri"   => "https://github.com/coaxial/ynab_convert/issues",
-    "documentation_uri" => "https://rubydoc.info/github/coaxial/ynab_convert/master",
-    "homepage_uri"      => "https://github.com/coaxial/ynab_convert",
-    "source_code_uri"   => "https://github.com/coaxial/ynab_convert",
+    'bug_tracker_uri' => 'https://github.com/coaxial/ynab_convert/issues',
+    'documentation_uri' => 'https://rubydoc.info/github/coaxial/ynab_convert/master',
+    'homepage_uri' => 'https://github.com/coaxial/ynab_convert',
+    'source_code_uri' => 'https://github.com/coaxial/ynab_convert'
   }
   spec.post_install_message = 'Happy budgetting!'
 
