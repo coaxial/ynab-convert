@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/coaxial/ynab_convert'
   spec.license       = 'MIT'
 
-  spec.required_ruby_version = '>=2.6.5'
+  spec.required_ruby_version = '>= 2.6.5', '<= 2.7'
 
   spec.metadata = {
     'bug_tracker_uri' => 'https://github.com/coaxial/ynab_convert/issues',
