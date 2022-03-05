@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Processor
-  # Processes CSV files from UBS Credit Cards Switzerland (French)
+  # Processes CSV files from UBS Credit Cards Switzerland
   class UbsCredit < Processor::Base
     # @option options [String] :file Path to the CSV file to process
     def initialize(options)
