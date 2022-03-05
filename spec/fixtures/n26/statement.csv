@@ -1,0 +1,3 @@
+"Date","Bénéficiaire","Numéro de compte","Type de transaction","Référence de paiement","Montant (EUR)","Montant (Devise étrangère)","Sélectionnez la devise étrangère","Taux de conversion"
+"2022-01-20","Amel MaruMaru","MOCKACCOUNTNUMBER000","Revenus","","200000.0","","",""
+"2022-02-11","Hallberg-Rassy","MOCKACCOUNTNUMBER001","Virement","","-120000.0","","",""

@@ -32,7 +32,12 @@ RSpec.describe Processor::Base do
 
     it 'should work in :flows format by default' do
       actual = @subject.instance_variable_get('@headers')
-      expected = { transaction_date: nil, payee: nil, inflow: nil, outflow: nil }
+      expected = {
+        transaction_date: nil,
+        payee: nil,
+        inflow: nil,
+        outflow: nil
+      }
 
       expect(actual).to eq(expected)
     end
@@ -63,7 +68,12 @@ RSpec.describe Processor::Base do
 
       it 'should have flows columns' do
         actual = subject.instance_variable_get('@headers')
-        expected = { transaction_date: nil, payee: nil, inflow: nil, outflow: nil }
+        expected = {
+          transaction_date: nil,
+          payee: nil,
+          inflow: nil,
+          outflow: nil
+        }
 
         expect(actual).to eq(expected)
       end
