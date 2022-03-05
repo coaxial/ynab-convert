@@ -59,13 +59,6 @@ module Processor
 
     protected
 
-    # Converts the institution's CSV rows into YNAB4 rows.
-    # The YNAB4 columns are:
-    # "Date', "Payee", "Memo", "Outflow", "Inflow"
-    # which match Example Bank's "transaction_date" (after parsing),
-    # "beneficiary", nothing, "debit", and "credit" respectively.
-    # Note that Example Bank doesn't include any relevant column for YNAB4's
-    # "Memo" column so it's skipped and gets '' as its value.
     def transformers(row)
       transaction_date = row[headers[:transaction_date]]
       payee = row[headers[:payee]]
