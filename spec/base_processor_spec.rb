@@ -18,11 +18,11 @@ RSpec.describe Processor::Base do
       instance
     end
 
-    it 'should initialize' do
+    it 'initializes' do
       expect(subject).to be_an_instance_of(Processor::Base)
     end
 
-    it 'should compute the right output filename' do
+    it 'computes the right output filename' do
       actual = subject.send(:output_filename)
       expected = "#{File.basename(file, '.csv')}_" \
         "#{institution_name.snake_case}_#{from.strftime('%Y%m%d')}-" \
@@ -31,7 +31,7 @@ RSpec.describe Processor::Base do
       expect(actual).to eq(expected)
     end
 
-    it 'should work in :flows format by default' do
+    it 'works in :flows format by default' do
       actual = subject.instance_variable_get('@headers')
       expected = {
         transaction_date: nil,
@@ -56,7 +56,7 @@ RSpec.describe Processor::Base do
     context 'using :amounts format' do
       let(:subject) { Processor::Base.new(file: file, format: :amounts) }
 
-      it 'should have amounts columns' do
+      it 'has an amounts columns' do
         actual = subject.instance_variable_get('@headers')
         expected = { transaction_date: nil, payee: nil, amount: nil }
 
@@ -67,7 +67,7 @@ RSpec.describe Processor::Base do
     context 'using :flows format' do
       let(:subject) { Processor::Base.new(file: file, format: :flows) }
 
-      it 'should have flows columns' do
+      it 'has a flows columns' do
         actual = subject.instance_variable_get('@headers')
         expected = {
           transaction_date: nil,
