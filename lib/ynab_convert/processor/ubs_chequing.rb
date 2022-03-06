@@ -59,12 +59,22 @@ module Processor
     end
 
     def transaction_payee(row)
-      # Transaction description is spread over 3 columns
+      # Transaction description is spread over 3 columns.
+      # Moreover, UBS thought wise to append a bunch of junk information after
+      # the transaction details within the third description field. *Most* of
+      # this junk starts after the meaningful data and starts with ", OF",
+      # ", ON", ", ESR", two digits then five groups of five digits then ", TN"
+      # so we discard it; YNAB4 being unable to automatically categorize new
+      # transactions at the same store/payee because the payee always looks
+      # different (thanks to the variable nature of the appended junk).
+      # See `spec/fixtures/ubs_chequing/statement.csv` L18 and L2.
+      junk_desc_regex = /, (O[FN]|ESR|\d{2} \d{5} \d{5} \d{5} \d{5} \d{5}, TN)/
+
       [
         row[headers[:payee_line_1]],
         row[headers[:payee_line_2]],
         row[headers[:payee_line_3]]
-      ].join(' ')
+      ].join(' ').split(junk_desc_regex).first
     end
 
     def register_custom_converters
