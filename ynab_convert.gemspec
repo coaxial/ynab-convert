@@ -17,6 +17,8 @@ Gem::Specification.new do |spec|
     Utility to convert CSV statements into the YNAB4 format for easier
     transation import. Supports several banks and can easily be extended to
     add more.
+    add more. Supports currency conversions to base currency (with daily rates)
+    for statements with accounts in different currencies.
   DESC
 
   spec.required_ruby_version = '~> 2.6'
