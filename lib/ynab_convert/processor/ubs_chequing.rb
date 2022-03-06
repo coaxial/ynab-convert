@@ -71,7 +71,7 @@ module Processor
       # See `spec/fixtures/ubs_chequing/statement.csv` L2 and L18--22
 
       # rubocop:disable Metrics/LineLength
-      junk_desc_regex = /, (O[FN]|ESR|QRR|\d{2} \d{5} \d{5} \d{5} \d{5} \d{5}, TN)/
+      junk_desc_regex = /,? (O[FN]|ESR|QRR|\d{2} \d{5} \d{5} \d{5} \d{5} \d{5}, TN)/
       # rubocop:enable Metrics/LineLength
 
       [
