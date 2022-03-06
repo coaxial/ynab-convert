@@ -13,6 +13,11 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Convert online banking CSV files to YNAB 4 format.'
   spec.homepage      = 'https://github.com/coaxial/ynab_convert'
   spec.license       = 'MIT'
+  spec.description   = <<~DESC
+    Utility to convert CSV statements into the YNAB4 format for easier
+    transation import. Supports several banks and can easily be extended to
+    add more.
+  DESC
 
   spec.required_ruby_version = '~> 2.6'
 
