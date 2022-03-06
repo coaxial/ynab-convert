@@ -43,6 +43,7 @@ RSpec.describe(Processor::UbsChequing) do
         "18/10/2019","Paiement carte de debit CARD 00000000-0 0000 Shop AG, 1234 St. Santis","","3010.66",""
         "18/10/2019","Ordre PayNet EBILL INVOICE SWISSCOM SCHWEIZ AG, 3050 BERN","","1620.00",""
         "18/10/2019","Ordre e-banking DO IT GARDEN, MIGROS-GENOSSENSCHAFT S-BUND","","199.10",""
+        "18/10/2019","Ordre PayNet EBILL INVOICE ST.PLACE STADTWERKE, 6660 ST. PLACE","","283.00",""
       ROWS
 
       expect(actual).to eq(expected)

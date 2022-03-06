@@ -63,12 +63,16 @@ module Processor
       # Moreover, UBS thought wise to append a bunch of junk information after
       # the transaction details within the third description field. *Most* of
       # this junk starts after the meaningful data and starts with ", OF",
-      # ", ON", ", ESR", two digits then five groups of five digits then ", TN"
-      # so we discard it; YNAB4 being unable to automatically categorize new
-      # transactions at the same store/payee because the payee always looks
-      # different (thanks to the variable nature of the appended junk).
-      # See `spec/fixtures/ubs_chequing/statement.csv` L18 and L2.
-      junk_desc_regex = /, (O[FN]|ESR|\d{2} \d{5} \d{5} \d{5} \d{5} \d{5}, TN)/
+      # ", ON", ", ESR", ", QRR", two digits then five groups of five digits
+      # then ", TN" so we discard it; YNAB4 being unable to automatically
+      # categorize new transactions at the same store/payee because the payee
+      # always looks different (thanks to the variable nature of the appended
+      # junk).
+      # See `spec/fixtures/ubs_chequing/statement.csv` L2 and L18--22
+
+      # rubocop:disable Metrics/LineLength
+      junk_desc_regex = /, (O[FN]|ESR|QRR|\d{2} \d{5} \d{5} \d{5} \d{5} \d{5}, TN)/
+      # rubocop:enable Metrics/LineLength
 
       [
         row[headers[:payee_line_1]],
