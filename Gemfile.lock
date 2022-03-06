@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ynab_convert (1.0.4)
+    ynab_convert (1.0.5)
       i18n
       slop
 
