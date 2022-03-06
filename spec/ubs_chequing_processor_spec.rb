@@ -44,6 +44,7 @@ RSpec.describe(Processor::UbsChequing) do
         "18/10/2019","Ordre PayNet EBILL INVOICE SWISSCOM SCHWEIZ AG, 3050 BERN","","1620.00",""
         "18/10/2019","Ordre e-banking DO IT GARDEN, MIGROS-GENOSSENSCHAFT S-BUND","","199.10",""
         "18/10/2019","Ordre PayNet EBILL INVOICE ST.PLACE STADTWERKE, 6660 ST. PLACE","","283.00",""
+        "18/10/2019","Ordre e-banking SERAFE TAX","","23450.00",""
       ROWS
 
       expect(actual).to eq(expected)
