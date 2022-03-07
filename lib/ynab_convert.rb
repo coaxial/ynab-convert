@@ -4,6 +4,7 @@ require 'ynab_convert/version'
 require 'slop'
 require 'ynab_convert/logger'
 require 'core_extensions/string.rb'
+require 'ynab_convert/configuration'
 
 # The application
 module YnabConvert
@@ -60,6 +61,7 @@ module YnabConvert
 
     def initialize
       @metadata = Metadata.new
+      @config = Config.new
       @options = parse_argv
       return unless no_options_given
 
@@ -94,6 +96,8 @@ module YnabConvert
         o.string '-i', '--institution', 'name of the financial institution '\
  'that generated the file to convert'
         o.string '-f', '--file', 'path to the csv file to convert'
+        o.string '-g', '--generate-config', 'generate a sample configuration '\
+          "file at #{@config.file_path}"
       end
     end
 
