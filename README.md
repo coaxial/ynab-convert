@@ -1,6 +1,8 @@
 # YnabConvert
 
-Convert CSV files from online banking to a [format YNAB 4 can consume](https://docs.youneedabudget.com/article/921-formatting-csv-file).
+Convert CSV files from online banking to a [format YNAB 4 can consume](https://docs.youneedabudget.com/article/9).
+
+Download YNAB4 here: https://www.youneedabudget.com/ynab-classic-help/
 
 ## Installation
 
