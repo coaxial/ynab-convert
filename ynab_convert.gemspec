@@ -65,5 +65,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'solargraph'
 
   spec.add_dependency 'i18n'
-  spec.add_dependency 'slop'
+  spec.add_dependency 'slop', '~> 4.9.1'
 end

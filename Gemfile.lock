@@ -3,7 +3,7 @@ PATH
   specs:
     ynab_convert (1.0.8)
       i18n
-      slop
+      slop (~> 4.9.1)
 
 GEM
   remote: https://rubygems.org/
