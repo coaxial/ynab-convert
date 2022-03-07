@@ -6,9 +6,11 @@ RSpec.describe YnabConvert do
   end
 
   context 'when run from the command line' do
-    it 'converts the csv file', :writes_csv do
+    before(:example) do
       system('bin/ynab_convert -f spec/fixtures/example/valid.csv -i example')
+    end
 
+    it 'converts the csv file', :writes_csv do
       actual = File.read('valid_example_bank_20191223-20200202_ynab4.csv')
       expected = <<~ROWS
         "Date","Payee","Memo","Outflow","Inflow"
@@ -22,36 +24,34 @@ RSpec.describe YnabConvert do
   end
 
   describe YnabConvert::Metadata do
-    before(:example) do
-      @subject = YnabConvert::Metadata.new
-    end
+    let(:subject) { YnabConvert::Metadata.new }
 
     it 'shows a short description' do
       expected = 'An utility to convert online banking CSV files to a format' \
     " that can be imported into YNAB 4.\n"
 
-      expect { @subject.short_desc }.to output(expected).to_stdout
+      expect { subject.short_desc }.to output(expected).to_stdout
     end
 
     it 'shows its version' do
       expected = "YNAB Convert #{YnabConvert::VERSION}\n"
 
-      expect { @subject.version }.to output(expected).to_stdout
+      expect { subject.version }.to output(expected).to_stdout
     end
   end
 
   describe YnabConvert::Statement do
     context 'with an existing file' do
       context 'that is valid CSV' do
-        before(:example) do
+        let(:subject) do
           filename = File.join(File.dirname(__FILE__),
                                'fixtures/example/valid.csv')
           opts = { file: filename, processor: Processor::Example }
-          @subject = YnabConvert::Statement.new opts
+          YnabConvert::Statement.new opts
         end
 
         it 'converts it', :writes_csv do
-          @subject.to_ynab!
+          subject.to_ynab!
           actual = File.read('valid_example_bank_20191223-20200202_ynab4.csv')
           expected = <<~ROWS
             "Date","Payee","Memo","Outflow","Inflow"
@@ -65,20 +65,20 @@ RSpec.describe YnabConvert do
       end
 
       context 'that is invalid CSV' do
-        before(:example) do
+        let(:subject) do
           filename = File.join(File.dirname(__FILE__),
                                'fixtures/example/not_a_csv_file.txt')
           opts = { file: filename, processor: Processor::Example }
-          @subject = -> { YnabConvert::Statement.new(opts) }
+          -> { YnabConvert::Statement.new(opts) }
         end
 
         it 'prints an error message' do
-          expect { @subject.call.to_ynab! }.to raise_error(YnabConvert::Error,
-                                                           /unable to parse/i)
+          expect { subject.call.to_ynab! }.to raise_error(YnabConvert::Error,
+                                                          /unable to parse/i)
         end
 
         it 'cleans up the temporary CSV file' do
-          @subject.call.to_ynab!
+          subject.call.to_ynab!
         rescue YnabConvert::Error
           expect(Dir['not_a_csv_file.txt_example_bank_*.csv'].any?).to be false
         end
