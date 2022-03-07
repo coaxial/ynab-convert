@@ -59,7 +59,29 @@ module Processor
     end
 
     def transaction_payee(row)
+      raw_payee_line = [
+        row[headers[:payee_line_2]],
+        row[headers[:payee_line_3]]
+      ]
+
       # Transaction description is spread over 3 columns.
+      # There are two types of entries:
+      # 1. only the first column contains data
+      # 2. all three columns contain data, most of it junk
+      #
+      # Cleaning them up means dropping the first column if there is anything
+      # in the other columns;
+      # removing the CARD 00000000-0 0000 at the beginning of debit card
+      # payment entries;
+      # removing the rest of the junk appended after the worthwhile data (see
+      # below for details on that)
+      if row[headers[:payee_line_2]].nil?
+        # Make it an Array, for consistency
+        raw_payee_line = [row[headers[:payee_line_1]]]
+      end
+
+      concat_payee_line = raw_payee_line.join(' ')
+
       # Moreover, UBS thought wise to append a bunch of junk information after
       # the transaction details within the third description field. *Most* of
       # this junk starts after the meaningful data and starts with ", OF",
@@ -71,14 +93,14 @@ module Processor
       # See `spec/fixtures/ubs_chequing/statement.csv` L2 and L18--22
 
       # rubocop:disable Metrics/LineLength
-      junk_desc_regex = /,? (O[FN]|ESR|QRR|\d{2} \d{5} \d{5} \d{5} \d{5} \d{5}, TN)/
+      junk_desc_regex = /,? (O[FN]|ESR|QRR|\d{2} \d{5} \d{5} \d{5} \d{5} \d{5}, TN).*/
       # rubocop:enable Metrics/LineLength
 
-      [
-        row[headers[:payee_line_1]],
-        row[headers[:payee_line_2]],
-        row[headers[:payee_line_3]]
-      ].join(' ').split(junk_desc_regex).first
+      # Of course, it wouldn't be complete with more junk information at the
+      # beginning of *some* lines (debit card payments)
+      debit_card_junk_regex = /CARD \d{8}\-\d \d{4} /
+
+      concat_payee_line.sub(junk_desc_regex, '').sub(debit_card_junk_regex, '')
     end
 
     def register_custom_converters
