@@ -26,14 +26,14 @@ RSpec.describe YnabConvert do
       @subject = YnabConvert::Metadata.new
     end
 
-    it 'can show a short description' do
+    it 'shows a short description' do
       expected = 'An utility to convert online banking CSV files to a format' \
     " that can be imported into YNAB 4.\n"
 
       expect { @subject.short_desc }.to output(expected).to_stdout
     end
 
-    it 'can show its version' do
+    it 'shows its version' do
       expected = "YNAB Convert #{YnabConvert::VERSION}\n"
 
       expect { @subject.version }.to output(expected).to_stdout
