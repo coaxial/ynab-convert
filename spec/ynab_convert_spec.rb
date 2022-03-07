@@ -40,14 +40,14 @@ RSpec.describe YnabConvert do
     end
   end
 
-  describe YnabConvert::File do
+  describe YnabConvert::Statement do
     context 'with an existing file' do
       context 'that is valid CSV' do
         before(:example) do
           filename = File.join(File.dirname(__FILE__),
                                'fixtures/example/valid.csv')
           opts = { file: filename, processor: Processor::Example }
-          @subject = YnabConvert::File.new opts
+          @subject = YnabConvert::Statement.new opts
         end
 
         it 'converts it', :writes_csv do
@@ -69,7 +69,7 @@ RSpec.describe YnabConvert do
           filename = File.join(File.dirname(__FILE__),
                                'fixtures/example/not_a_csv_file.txt')
           opts = { file: filename, processor: Processor::Example }
-          @subject = -> { YnabConvert::File.new(opts) }
+          @subject = -> { YnabConvert::Statement.new(opts) }
         end
 
         it 'prints an error message' do

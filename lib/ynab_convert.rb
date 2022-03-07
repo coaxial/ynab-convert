@@ -20,7 +20,7 @@ module YnabConvert
   end
 
   # Operations on the CSV file to convert
-  class File
+  class Statement
     include YnabLogger
 
     # @option opts [String] :file The filename or path to the file
@@ -68,7 +68,7 @@ module YnabConvert
     end
 
     def start
-      @file = File.new opts
+      @file = Statement.new opts
       logger.debug "Using processor `#{@options[:institution]}' => #{processor}"
       @file.to_ynab!
     end
