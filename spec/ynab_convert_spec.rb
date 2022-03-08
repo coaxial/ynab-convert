@@ -6,20 +6,59 @@ RSpec.describe YnabConvert do
   end
 
   context 'when run from the command line' do
-    before(:example) do
-      system('bin/ynab_convert -f spec/fixtures/example/valid.csv -i example')
+    context 'with a valid csv file' do
+      before(:example) do
+        system('bin/ynab_convert -f spec/fixtures/example/valid.csv -i example')
+      end
+
+      it 'converts the csv file', :writes_csv do
+        actual = File.read('valid_example_bank_20191223-20200202_ynab4.csv')
+        expected = <<~ROWS
+          "Date","Payee","Memo","Outflow","Inflow"
+          "23/12/2019","coaxial","","1000000.00",""
+          "30/12/2019","santa","","50000.00",""
+          "02/02/2020","someone else","","45.00",""
+        ROWS
+
+        expect(actual).to eq(expected)
+      end
     end
 
-    it 'converts the csv file', :writes_csv do
-      actual = File.read('valid_example_bank_20191223-20200202_ynab4.csv')
-      expected = <<~ROWS
-        "Date","Payee","Memo","Outflow","Inflow"
-        "23/12/2019","coaxial","","1000000.00",""
-        "30/12/2019","santa","","50000.00",""
-        "02/02/2020","someone else","","45.00",""
-      ROWS
+    context 'with a non-existent csv file' do
+      let(:subject) { `bin/ynab_convert -f doesnt_exist.csv -i example`.chomp }
 
-      expect(actual).to eq(expected)
+      it 'shows an error message' do
+        expected = "File `doesnt_exist.csv' not found or not accessible."
+
+        expect(subject).to eq(expected)
+      end
+    end
+
+    context 'when there is already a user config file' do
+      let(:user_file_path) do
+        File.join(
+          File.dirname(File.expand_path(__dir__)),
+          'ynab_convert.yml'
+        )
+      end
+      let(:subject) do
+        FileUtils.touch(
+          File.join(
+            File.dirname(File.expand_path(__dir__)),
+            'ynab_convert.yml'
+          )
+        )
+
+        `bin/ynab_convert -g 2>&1`.chomp
+      end
+
+      it 'shows an error message' do
+        expected = 'Existing user configuration file found at '\
+        "`#{user_file_path}`, remove it if you really meant to overwrite with "\
+        'default config.'
+
+        expect(subject).to eq(expected)
+      end
     end
   end
 

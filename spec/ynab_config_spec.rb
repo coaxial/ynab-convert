@@ -8,6 +8,8 @@ RSpec.describe YnabConvert::Config do
       'ynab_convert.yml'
     )
   end
+
+  # The default config file is at lib/ynab_convert/default_config.yml
   let(:default_config_file_location) do
     File.join(
       File.expand_path('..', File.dirname(__FILE__)),
@@ -17,19 +19,12 @@ RSpec.describe YnabConvert::Config do
     )
   end
 
-  before(:example) do
-    File.write(
-      config_file_location,
-      File.read(default_config_file_location)
-    )
-  end
-
-  after(:example) { File.delete(config_file_location) }
-
   let(:subject) { YnabConvert::Config.new }
 
+  after(:example) { FileUtils.rm_f(config_file_location) }
+
   it 'has a config file location' do
-    actual = subject.file_path
+    actual = subject.user_file_path
     expected = config_file_location
 
     expect(actual).to eq(expected)
@@ -49,6 +44,24 @@ RSpec.describe YnabConvert::Config do
     expected = File.read(default_config_file_location)
 
     expect(actual).to eq(expected)
+  end
+
+  context 'when a config file already exists' do
+    let(:custom_user_config) do
+      <<~USRCONF
+        ---
+        Test custom user config
+      USRCONF
+    end
+
+    before(:example) do
+      File.write(config_file_location, custom_user_config)
+    end
+
+    it 'throws an error' do
+      expect { subject.write_default }.to raise_error(Errno::EEXIST,
+                                                      /already exists/)
+    end
   end
 
   context 'for a given YnabConvert::Processor' do

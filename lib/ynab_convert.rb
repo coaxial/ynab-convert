@@ -4,7 +4,9 @@ require 'ynab_convert/version'
 require 'slop'
 require 'ynab_convert/logger'
 require 'core_extensions/string.rb'
-require 'ynab_convert/configuration'
+require 'ynab_convert/config'
+
+require 'pry' if ENV['YNAB_CONVERT_DEBUG']
 
 # The application
 module YnabConvert
@@ -49,8 +51,9 @@ module YnabConvert
 
     private
 
-    def file_not_found_message
-      raise Errno::ENOENT, "File `#{@file}' not found or not accessible."
+    def handle_file_not_found
+      puts "File `#{@file}' not found or not accessible."
+      exit 1
     end
   end
 
@@ -96,8 +99,18 @@ module YnabConvert
         o.string '-i', '--institution', 'name of the financial institution '\
  'that generated the file to convert'
         o.string '-f', '--file', 'path to the csv file to convert'
-        o.string '-g', '--generate-config', 'generate a sample configuration '\
-          "file at #{@config.file_path}"
+        o.on '-g', '--generate-config', 'generate a sample configuration '\
+          "file at `#{@config.user_file_path}`" do
+            begin
+              @config.write_default
+            rescue Errno::EEXIST
+              handle_file_exists
+              exit 1
+            end
+
+            puts "Default configuration written at `#{@config.user_file_path}`"
+            exit
+          end
       end
     end
 
@@ -123,6 +136,12 @@ module YnabConvert
         "`#{@options[:institution]}'. If it's not a typo, consider "\
         'contributing a new processor (see https://github.com/coaxial/'\
         'ynab_convert#contributing to get started).'
+    end
+
+    def handle_file_exists
+      warn 'Existing user configuration file found at '\
+      "`#{@config.user_file_path}`, remove it if you really meant to overwrite"\
+      ' with default config.'
     end
   end
 end
