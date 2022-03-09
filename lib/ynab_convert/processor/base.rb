@@ -52,6 +52,8 @@ module Processor
       delete_temp_csv
     end
 
+    def convert_amount(from:, to:, date:); end
+
     protected
 
     attr_accessor :statement_from, :statement_to, :headers

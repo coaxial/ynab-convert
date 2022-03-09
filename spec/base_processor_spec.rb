@@ -87,5 +87,13 @@ RSpec.describe Processor::Base do
         expect { lambda.call }.to raise_error(::Errno::ENOENT)
       end
     end
+
+    it 'has a `convert_amount\' method' do
+      expect(subject).to respond_to(:convert_amount)
+    end
+
+    context 'when the config file has a `TargetCurrency\' entry' do
+      it 'converts the amounts'
+    end
   end
 end

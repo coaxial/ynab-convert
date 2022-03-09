@@ -66,7 +66,7 @@ RSpec.describe YnabConvert::Config do
 
   context 'for a given YnabConvert::Processor' do
     it 'returns the relevant configuration' do
-      actual = subject.get(processor: :N26)
+      actual = subject.get(key: :N26)
       expected = { TargetCurrency: 'CHF' }
 
       expect(actual).to eq(expected)

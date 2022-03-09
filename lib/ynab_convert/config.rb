@@ -39,10 +39,9 @@ module YnabConvert
       File.exist?(@user_file_path)
     end
 
-    # @option processor [Symbol] :processor Class name of the processor to get the
-    #   configuration for
-    def get(processor:)
-      @config[processor]
+    # @option key [Symbol] :key Top level key to get from the config file.
+    def get(key:)
+      @config[key]
     end
 
     private
