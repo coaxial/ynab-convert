@@ -3,8 +3,8 @@
 require 'ynab_convert/config.rb'
 require 'ynab_convert/api_client/currency_api.rb'
 
-RSpec.describe YnabConvert::APIClient::CurrencyApi do
-  let(:client) { YnabConvert::APIClient::CurrencyApi.new }
+RSpec.describe YnabConvert::APIClient::CurrencyAPI do
+  let(:client) { YnabConvert::APIClient::CurrencyAPI.new }
 
   context 'with a valid date' do
     it 'gives the historical rates', :vcr do

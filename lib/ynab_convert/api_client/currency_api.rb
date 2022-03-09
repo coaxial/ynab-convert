@@ -10,7 +10,7 @@ module YnabConvert
   module APIClient
     # Client for currency-api
     # (https://github.com/fawazahmed0/currency-api#readme)
-    class CurrencyApi
+    class CurrencyAPI
       def initialize
         @api_base_path = 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/'
         @available_date_range = {
