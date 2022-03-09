@@ -13,3 +13,4 @@
 # test artifacts
 *_ynab4.csv
 /ynab_convert.yml
+.byebug_history
