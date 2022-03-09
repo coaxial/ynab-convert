@@ -14,7 +14,7 @@ module YnabConvert
         'default_config.yml'
       )
       @user_file_path = compute_user_file_path
-      @config = YAML.safe_load(user_config_or_default, symbolize_names: true)
+      @config = YAML.safe_load(user_config_or_default, symbolize_names: true) || {}
     end
 
     # @return [String] The configuration to use
@@ -49,7 +49,7 @@ module YnabConvert
     # @param key [Symbol] Top-level key to get
     # @return [Hash] Value at matching key
     def get(key:)
-      @config[key]
+      @config.fetch(key, {})
     end
 
     private

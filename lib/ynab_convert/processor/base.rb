@@ -3,6 +3,7 @@
 require 'core_extensions/string'
 require 'csv'
 require 'ynab_convert/logger'
+require 'ynab_convert/config'
 
 module Processor
   # Base class for a Processor, all processors must inherit from it.
@@ -14,14 +15,17 @@ module Processor
 
     attr_reader :loader_options
 
+    # @param [Hash] options The options to instantiate the processor
     # @option options [String] :file Path to the CSV file to process
     # @option options [Symbol] :format YNAB4 format to use, one of :flows or
     #   :amounts. :flows is useful for CSVs with separate debit and credit
     #   columns, :amounts is for CSVs with only one amount columns and +/-
     #   numbers. See
     #   https://docs.youneedabudget.com/article/921-formatting-csv-file
+    # @option options [YnabConvert::Config] :config Override the default Config
+    #   object. Typically used for testing with mocks and doubles.
     def initialize(options)
-      default_options = { file: '', format: :flows }
+      default_options = { file: '', format: :flows, config: YnabConvert::Config.new }
       opts = default_options.merge(options)
 
       logger.debug "Initializing processor with options: `#{opts.to_h}'"
@@ -30,6 +34,7 @@ module Processor
       @file = opts[:file]
       @headers = { transaction_date: nil, payee: nil }
       @format = opts[:format]
+      @config = opts[:config]
 
       if @format == :amounts
         amounts_columns = { amount: nil }
@@ -51,8 +56,6 @@ module Processor
       logger.debug "Deleting temp file `#{temp_filename}'"
       delete_temp_csv
     end
-
-    def convert_amount(from:, to:, date:); end
 
     protected
 
@@ -149,11 +152,15 @@ module Processor
           # Some rows don't contain valid or useful data
           catch :skip_row do
             extract_header_names(row)
-            ynab_row = transformers(row)
-            if amounts_missing?(ynab_row) ||
-               transaction_date_missing?(ynab_row)
+            transformed_row = transformers(row)
+            if amounts_missing?(transformed_row) ||
+               transaction_date_missing?(transformed_row)
               logger.debug 'Empty row, skipping it'
               skip_row(row)
+            end
+            ynab_row = transformed_row
+            if currency_conversion_needed?
+              ynab_row = convert_amounts(transformed_row)
             end
             converted << ynab_row
             record_statement_interval_dates(ynab_row)
@@ -220,8 +227,24 @@ module Processor
       }
     end
 
+    # After the individual cells have been parsed from the raw CSV to Ruby
+    # primitives with `register_custom_converters` and CSV::Converters, this
+    # method will map the statement's CSV columns to YNAB4 columns (namely:
+    # "date", "payee", "memo", and "debit" + "credit" or "amount").
     def transformers
       raise NotImplementedError, :transformers
+    end
+
+    def currency_conversion_needed?
+      processor_name = self.class.name.split('::').last
+      config = @config.get(key: processor_name)
+
+      config.key?(:TargetCurrency)
+    end
+
+    # Convert the amounts on a given row into YNAB4 budget's currency.
+    def convert_amount(row)
+      row
     end
   end
   # rubocop:enable Metrics/ClassLength

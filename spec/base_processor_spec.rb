@@ -9,6 +9,12 @@ RSpec.describe Processor::Base do
     let(:institution_name) { 'Mesa Credit Union' }
     let(:from) { Time.local(1986, 'jul', 25, 0, 30, 0) }
     let(:to) { Time.local(1986, 'nov', 12, 5, 0, 0) }
+    let(:ynab4_filename) do
+      "#{File.basename(file, '.csv')}_" \
+       "#{institution_name.snake_case}_#{from.strftime('%Y%m%d')}-" \
+       "#{to.strftime('%Y%m%d')}_ynab4.csv"
+    end
+
     let(:subject) do
       instance = Processor::Base.new(file: full_path)
       instance.instance_variable_set('@statement_from', from)
@@ -24,9 +30,7 @@ RSpec.describe Processor::Base do
 
     it 'computes the right output filename' do
       actual = subject.send(:output_filename)
-      expected = "#{File.basename(file, '.csv')}_" \
-        "#{institution_name.snake_case}_#{from.strftime('%Y%m%d')}-" \
-        "#{to.strftime('%Y%m%d')}_ynab4.csv"
+      expected = ynab4_filename
 
       expect(actual).to eq(expected)
     end
@@ -48,9 +52,9 @@ RSpec.describe Processor::Base do
     end
 
     it "has a `transformers' method stub" do
-      lambda = -> { subject.send(:transformers) }
+      actual = -> { subject.send(:transformers) }
 
-      expect(lambda).to raise_error(NotImplementedError)
+      expect(actual).to raise_error(NotImplementedError)
     end
 
     context 'using :amounts format' do
@@ -88,12 +92,31 @@ RSpec.describe Processor::Base do
       end
     end
 
-    it 'has a `convert_amount\' method' do
-      expect(subject).to respond_to(:convert_amount)
+    context 'when the config file has a `TargetCurrency\' entry' do
+      let(:subject) do
+        mock_config = { TargetCurrency: :CAD }
+        config_double = instance_double('YnabConvert::Config')
+        allow(config_double).to receive(:get).and_return(mock_config)
+
+        instance = Processor::Base.new(file: full_path, config: mock_config)
+        instance.instance_variable_set('@statement_from', from)
+        instance.instance_variable_set('@statement_to', to)
+        instance.instance_variable_set('@institution_name', institution_name)
+
+        instance
+      end
+
+      it 'converts the amounts' # do
+      # subject.send(:convert!)
+      # actual=File.read(ynab4_filename)
+      # expected=''
+
+      # expect(actual).to eq(expected)
+      # end
     end
 
-    context 'when the config file has a `TargetCurrency\' entry' do
-      it 'converts the amounts'
+    context 'when the config file doesn\'t have a `TargetCurrency` entry' do
+      it 'doesn\'t convert the amounts'
     end
   end
 end

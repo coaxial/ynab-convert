@@ -65,11 +65,22 @@ RSpec.describe YnabConvert::Config do
   end
 
   context 'for a given YnabConvert::Processor' do
-    it 'returns the relevant configuration' do
-      actual = subject.get(key: :N26)
-      expected = { TargetCurrency: 'CHF' }
+    context 'when that processor has a configuration entry' do
+      it 'returns the relevant configuration' do
+        actual = subject.get(key: :N26)
+        expected = { TargetCurrency: 'CHF' }
 
-      expect(actual).to eq(expected)
+        expect(actual).to eq(expected)
+      end
+    end
+
+    context 'when that processor doesn\'t have a configuration entry' do
+      it 'returns an empty hash' do
+        actual = subject.get(key: :nope)
+        expected = {}
+
+        expect(actual).to eq(expected)
+      end
     end
   end
 end

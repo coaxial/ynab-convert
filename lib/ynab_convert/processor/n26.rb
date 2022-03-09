@@ -3,7 +3,7 @@
 module Processor
   # Processes CSV files from N26
   class N26 < Processor::Base
-    # @option options [String] :file Path to the CSV file to process
+    # @param file [String] Path to the CSV file to process
     def initialize(options)
       # Custom converters can be added so that the CSV data is parsed when
       # loading the original file
