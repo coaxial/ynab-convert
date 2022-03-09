@@ -33,7 +33,7 @@ module YnabConvert
       def out_of_bounds?(date)
         parsed_date = Date.parse(date)
 
-        parsed_date < @available_date_range[:min] &&
+        parsed_date < @available_date_range[:min] ||
           parsed_date > @available_date_range[:max]
       end
 

@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/2022-03-09/currencies/eur.min.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - cdn.jsdelivr.net
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Date:
+      - Wed, 09 Mar 2022 08:55:21 GMT
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Timing-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Etag:
+      - W/"97-D91P1V97BKMSajFTMisngOJWPsI"
+      X-Served-By:
+      - cache-fra19150-FRA
+      X-Cache:
+      - MISS
+      Vary:
+      - Accept-Encoding
+      Cf-Cache-Status:
+      - MISS
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 6e9297560e9d01df-ZRH
+      Alt-Svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: Package size exceeded the configured limit of 50 MB. Try https://github.com/fawazahmed0/currency-api/tree/1/2022-03-09/currencies/eur.min.json
+        instead.
+  recorded_at: Wed, 09 Mar 2022 08:55:21 GMT
+recorded_with: VCR 6.0.0

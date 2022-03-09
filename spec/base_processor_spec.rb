@@ -81,10 +81,10 @@ RSpec.describe Processor::Base do
     end
 
     context 'when omitting the file path' do
-      lambda = -> { Processor::Base.new({}) }
+      actual = -> { Processor::Base.new({}) }
 
       it 'throws an error' do
-        expect { lambda.call }.to raise_error(::Errno::ENOENT)
+        expect { actual.call }.to raise_error(::Errno::ENOENT)
       end
     end
 
