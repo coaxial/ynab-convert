@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-# Turns raw CSV cell contents into the appropriate Ruby primitive
 module Converters
+  # Turns raw CSV cell contents into the appropriate Ruby primitives.
   # Base class for Converters
   class Converter
-    # @param custom_converters [Hash<Symbol, CSV::FieldsConverter>] A Hash of converters
+    # @param custom_converters [Hash<Symbol, CSV::FieldsConverter>] A Hash of
+    #   converters
     # to run each field through
     def initialize(custom_converters: {})
       # Register converters
