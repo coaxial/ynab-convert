@@ -8,8 +8,8 @@ module Documents
   module Statements
     # The base Statement class from which other Statements inherit
     class Statement
-      attr_accessor :csv_import_options
-      attr_accessor :filepath
+      attr_reader :csv_import_options
+      attr_reader :filepath
 
       # @param filepath [String] path to the CSV file
       # @param csv_import_options [CSV::DEFAULT_OPTIONS] options describing
