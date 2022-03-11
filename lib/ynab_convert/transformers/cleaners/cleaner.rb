@@ -8,8 +8,8 @@ module Cleaners
   # in the instance.
   class Cleaner
     # Cleans up a row
-    # @param row [Array<String, Numeric, Date>] The row to parse
-    # @return [void]
+    # @param row [CSV::Row] The row to parse in YNAB4 format
+    # @return [CSV::Row] The cleaned up row in YNAB4 format
     def parse(_row)
       raise NotImplementedError, :parse
     end
