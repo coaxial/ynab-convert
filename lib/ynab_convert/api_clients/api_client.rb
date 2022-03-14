@@ -2,6 +2,7 @@
 
 module APIClients
   class APIClient
+    # @param api_base_path [String] Base path to the API
     def initialize(api_base_path:)
       @api_base_path = api_base_path
     end
