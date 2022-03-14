@@ -55,6 +55,29 @@ RSpec.describe Formatters::Formatter do
     end
   end
 
+  context 'when there is no memo field' do
+    let(:statement) do
+      csv_statement = <<~CSV
+        date,payee1,payee2,amount
+        "2022-03-10","Test","Payee","13.37"
+      CSV
+      options = { col_sep: ',', quote_char: '"', headers: true }
+      CSV.parse(csv_statement, options)
+    end
+
+    let(:subject) do
+      Formatters::Formatter.new(date: [0], payee: [1, 2], memo: [],
+                                amount: [3])
+    end
+
+    it 'formats rows' do
+      actual = statement.reduce([]) { |acc, row| acc << subject.format(row) }
+      expected = [['2022-03-10', 'Test Payee', '', '13.37']]
+
+      expect(actual).to eq(expected)
+    end
+  end
+
   context 'with a :flows statement' do
     let(:statement) do
       csv_statement = <<~CSV
