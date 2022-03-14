@@ -20,39 +20,50 @@ module Validators
     # @param row [Array<String, Numeric, Date] The row to validate
     # @return [Boolean] Whether the row's Amount or Inflow and Outflow is valid
     def self.amount_valid?(row)
-      amount_index = 3
-      outflow_index = 3
-      inflow_index = 4
+      # An amount is invalid either if:
+      #   - the Amount value is empty or 0
+      #   - the Inflow and Outflow values are both empty or 0
+      # Whether Amount or Inflow and Outflow are checked depends on the YNAB4
+      # format for that row (:flows or :amounts)
+      return !amount_is_invalid?(row) if row_format(row) == :amounts
+
+      !(inflow_is_invalid?(row) && outflow_is_invalid?(row))
+    end
+
+    def self.row_format(row)
       format = :flows
       # :flows has 5 columns: Date, Payee, Memo, Outflow, Inflow
       # :amounts has 4 columns: Date, Payee, Memo, Amount
       format = :amounts if row.length == 4
-      # indices_to_check = [outflow_index, inflow_index]
-      # indices_to_check = [amount_index] if format == :amounts
 
-      # An amount is invalid if it has no amount or a 0 amount in any of the
-      # amount, or inflow and outflow columns
-      if format == :amounts
-        amount_is_invalid = (
-            row[outflow_index].nil? ||
-            row[outflow_index].empty? ||
-            row[outflow_index] == '0.0'
-          )
-        return !amount_is_invalid
-      end
+      format
+    end
 
-      inflow_is_invalid = (
-          row[outflow_index].nil? ||
-          row[outflow_index].empty? ||
-          row[outflow_index] == '0.0'
-        )
-      outflow_is_invalid = (
-          row[inflow_index].nil? ||
-          row[inflow_index].empty? ||
-          row[inflow_index] == '0.0'
-        )
+    def self.amount_is_invalid?(row)
+      amount_index = 3
+      (
+        row[amount_index].nil? ||
+        row[amount_index].empty? ||
+        row[amount_index] == '0.0'
+      )
+    end
 
-      !(inflow_is_invalid && outflow_is_invalid)
+    def self.inflow_is_invalid?(row)
+      inflow_index = 4
+      (
+        row[inflow_index].nil? ||
+        row[inflow_index].empty? ||
+        row[inflow_index] == '0.0'
+      )
+    end
+
+    def self.outflow_is_invalid?(row)
+      outflow_index = 3
+      (
+        row[outflow_index].nil? ||
+        row[outflow_index].empty? ||
+        row[outflow_index] == '0.0'
+      )
     end
 
     # Validates the Date value

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module YNAB4Files
+  # Represents the YNAB4 formatted CSV data for importing into YNAB4
   class YNAB4File
     attr_reader :csv_export_options
 

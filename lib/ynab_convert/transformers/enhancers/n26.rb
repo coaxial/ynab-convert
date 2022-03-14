@@ -4,6 +4,7 @@ require 'ynab_convert/transformers/enhancers/enhancer'
 require 'ynab_convert/api_clients/currency_api'
 
 module Enhancers
+  # Converts amounts from EUR to CHF
   class N26 < Enhancer
     def initialize
       @api_client = APIClients::CurrencyAPI.new

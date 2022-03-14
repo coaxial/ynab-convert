@@ -22,7 +22,9 @@ RSpec.describe Enhancers::N26 do
     end
 
     it 'converts currency', :vcr do
-      actual = ynab_csv.reduce([]) { |acc, row| acc << subject.enhance(row).to_h }
+      actual = ynab_csv.reduce([]) do |acc, row|
+        acc << subject.enhance(row).to_h
+      end
       expected = [
         { 'Date' => '2022-03-10', 'Payee' => 'Test Payee', 'Memo' => '',
           'Amount' => '13.71' },

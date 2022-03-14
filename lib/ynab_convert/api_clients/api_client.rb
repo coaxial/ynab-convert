@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module APIClients
+  # Base APIClient
   class APIClient
     # @param api_base_path [String] Base path to the API
     def initialize(api_base_path:)
