@@ -61,6 +61,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-rake'
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'solargraph'
+  spec.add_development_dependency 'vcr'
+  spec.add_development_dependency 'webmock'
 
   spec.add_dependency 'i18n'
   spec.add_dependency 'slop'
