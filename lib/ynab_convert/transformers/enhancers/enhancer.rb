@@ -8,6 +8,8 @@ module Enhancers
   class Enhancer
     def initialize; end
 
+    # @param _row [CSV::Row] The row to enhance
+    # @return [CSV::Row] The enhanced row
     def enhance(_row)
       raise NotImplementedError, :enhance
     end
