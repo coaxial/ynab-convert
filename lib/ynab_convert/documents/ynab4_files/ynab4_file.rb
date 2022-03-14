@@ -49,4 +49,4 @@ module YNAB4Files
       base_headers.concat(extra_headers)
     end
   end
-  end
+end

@@ -7,18 +7,22 @@ module Formatters
     # @param [Hash] headers_indices the indices at which to find each
     #   header's name
     # @option  headers_indices [Array<Numeric>] :date transaction date
-    # @option  headers_indices [Array<Numeric>] :payee transaction payee/description
-    # @option  headers_indices [Array<Numeric>] :memo transaction memo or currency if currency conversion will be performed
-    # @option  headers_indices [Array<Numeric>] :amount transaction amount (if Statement is using the :amounts format)
-    # @option  headers_indices [Array<Numeric>] :outflow transaction outflow (if using the :flows format)
-    # @option  headers_indices [Array<Numeric>] :inflow transaction inflow (if using the :flows format)
+    # @option  headers_indices [Array<Numeric>] :payee transaction
+    #   payee/description
+    # @option  headers_indices [Array<Numeric>] :memo transaction memo or
+    #   currency if currency conversion will be performed
+    # @option  headers_indices [Array<Numeric>] :amount transaction amount (if
+    #   Statement is using the :amounts format)
+    # @option  headers_indices [Array<Numeric>] :outflow transaction outflow
+    #   (if using the :flows format)
+    # @option  headers_indices [Array<Numeric>] :inflow transaction inflow (if
+    #   using the :flows format)
     def initialize(headers_indices)
       @format = :flows
       unless headers_indices[:amount].nil? || headers_indices[:amount].empty?
         @format = :amounts
       end
       @headers_indices = headers_indices
-      # @indices={date:date,payee:payee,memo:memo,amount:amount,outflow:outflow,inflow:inflow}
     end
 
     # Turns CSV rows into YNAB4 rows (Date, Payee, Memo, Amount or Outflow and

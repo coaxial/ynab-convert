@@ -11,10 +11,10 @@ RSpec.describe Formatters::Formatter do
 
   context 'when Statement fields and YNAB4 fields match 1:1' do
     let(:statement) do
-      csv_statement = <<~csv
+      csv_statement = <<~CSV
         date,payee,memo,amount
         "2022-03-10","Test Payee","","13.37"
-      csv
+      CSV
       options = { col_sep: ',', quote_char: '"', headers: true }
       CSV.parse(csv_statement, options)
     end
@@ -34,10 +34,10 @@ RSpec.describe Formatters::Formatter do
 
   context 'when Statement fields and YNAB4 fields don\'t match 1:1' do
     let(:statement) do
-      csv_statement = <<~csv
+      csv_statement = <<~CSV
         date,payee1,payee2,memo,amount
         "2022-03-10","Test","Payee","","13.37"
-      csv
+      CSV
       options = { col_sep: ',', quote_char: '"', headers: true }
       CSV.parse(csv_statement, options)
     end
@@ -57,11 +57,11 @@ RSpec.describe Formatters::Formatter do
 
   context 'with a :flows statement' do
     let(:statement) do
-      csv_statement = <<~csv
-        date,payee,memo,amount
+      csv_statement = <<~CSV
+        date,payee,memo,outflow,inflow
         "2022-03-10","Test Payee","","13.37",""
         "2022-03-10","Test Credit","","","6.66"
-      csv
+      CSV
       options = { col_sep: ',', quote_char: '"', headers: true }
       CSV.parse(csv_statement, options)
     end

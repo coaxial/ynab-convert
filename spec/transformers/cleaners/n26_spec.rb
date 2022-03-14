@@ -5,11 +5,11 @@ require 'ynab_convert/transformers/cleaners/n26'
 
 RSpec.describe Cleaners::N26 do
   let(:statement) do
-    csv_statement = <<~csv
+    csv_statement = <<~CSV
       Date,Payee,Memo,Amount
       "2022/01/20","Amel MaruMaru","","200000"
       "2022/02/11","Hallberg-Rassy","","-120000"
-    csv
+    CSV
     CSV.parse(csv_statement, headers: true)
   end
 
