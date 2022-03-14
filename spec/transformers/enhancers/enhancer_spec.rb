@@ -9,7 +9,7 @@ RSpec.describe Enhancers::Enhancer do
     expect(subject).to be_an_instance_of(Enhancers::Enhancer)
   end
 
-  it 'has an `enhance` method' do
-    expect(subject).to respond_to(:enhance)
+  it 'has a `run` method' do
+    expect(subject).to respond_to(:run)
   end
 end

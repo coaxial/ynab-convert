@@ -9,7 +9,7 @@ RSpec.describe Cleaners::Cleaner do
     expect(subject).to be_an_instance_of(Cleaners::Cleaner)
   end
 
-  it 'has a `parse` method' do
-    expect(subject).to respond_to(:parse)
+  it 'has a `run` method' do
+    expect(subject).to respond_to(:run)
   end
 end

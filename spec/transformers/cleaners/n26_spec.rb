@@ -22,7 +22,7 @@ RSpec.describe Cleaners::N26 do
   it 'cleans rows' do
     # to_h makes it simpler to compare actual and expected; it avoids the
     # verbose creation of an array of CSV::Row to build the `expected` array.
-    actual = statement.reduce([]) { |acc, row| acc << subject.parse(row).to_h }
+    actual = statement.reduce([]) { |acc, row| acc << subject.run(row).to_h }
     expected = [
       { 'Date' => '2022/01/20', 'Payee' => 'Amel MaruMaru', 'Memo' => '',
         'Amount' => '200000' },

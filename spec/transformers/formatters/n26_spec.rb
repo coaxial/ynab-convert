@@ -14,7 +14,7 @@ RSpec.describe Formatters::N26 do
   end
 
   it 'formats rows' do
-    actual = statement.reduce([]) { |acc, row| acc << subject.format(row) }
+    actual = statement.reduce([]) { |acc, row| acc << subject.run(row) }
 
     expected = [
       ['2022-01-20', 'Amel MaruMaru', 'EUR', '200000.0'],

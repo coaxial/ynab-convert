@@ -3,7 +3,7 @@
 module Cleaners
   # Cleans N26 Statements
   class N26 < Cleaner
-    def parse(row)
+    def run(row)
       # No cleaning required
       row
     end

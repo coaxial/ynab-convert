@@ -29,7 +29,7 @@ module Formatters
     # Inflow)
     # @param row [CSV::Row] The CSV row to parse
     # @return [Array<String>] The YNAB4 formatted row
-    def format(row)
+    def run(row)
       ynab_row = [date(row), payee(row), memo(row)]
 
       if @format == :amounts

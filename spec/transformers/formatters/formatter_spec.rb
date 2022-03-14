@@ -25,7 +25,7 @@ RSpec.describe Formatters::Formatter do
     end
 
     it 'formats rows' do
-      actual = statement.reduce([]) { |acc, row| acc << subject.format(row) }
+      actual = statement.reduce([]) { |acc, row| acc << subject.run(row) }
       expected = [['2022-03-10', 'Test Payee', '', '13.37']]
 
       expect(actual).to eq(expected)
@@ -48,7 +48,7 @@ RSpec.describe Formatters::Formatter do
     end
 
     it 'formats rows' do
-      actual = statement.reduce([]) { |acc, row| acc << subject.format(row) }
+      actual = statement.reduce([]) { |acc, row| acc << subject.run(row) }
       expected = [['2022-03-10', 'Test Payee', '', '13.37']]
 
       expect(actual).to eq(expected)
@@ -71,7 +71,7 @@ RSpec.describe Formatters::Formatter do
     end
 
     it 'formats rows' do
-      actual = statement.reduce([]) { |acc, row| acc << subject.format(row) }
+      actual = statement.reduce([]) { |acc, row| acc << subject.run(row) }
       expected = [['2022-03-10', 'Test Payee', '', '13.37']]
 
       expect(actual).to eq(expected)
@@ -95,7 +95,7 @@ RSpec.describe Formatters::Formatter do
     end
 
     it 'formats rows' do
-      actual = statement.reduce([]) { |acc, row| acc << subject.format(row) }
+      actual = statement.reduce([]) { |acc, row| acc << subject.run(row) }
       expected = [
         ['2022-03-10', 'Test Payee', '', '13.37', ''],
         ['2022-03-10', 'Test Credit', '', '', '6.66']

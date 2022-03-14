@@ -15,7 +15,7 @@ module Enhancers
     # @note The currency is hardcoded to CHF for now
     # @note Takes a YNAB4 formatted CSV::Row, with the transaction's currency
     # in the Memo field
-    def enhance(row)
+    def run(row)
       # Handle :flows and :amounts formats
       amount_index = 3
       # "".to_f => 0.0

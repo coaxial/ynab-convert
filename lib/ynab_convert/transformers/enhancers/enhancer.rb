@@ -10,7 +10,7 @@ module Enhancers
 
     # @param _row [CSV::Row] The row to enhance
     # @return [CSV::Row] The enhanced row
-    def enhance(_row)
+    def run(_row)
       raise NotImplementedError, :enhance
     end
   end

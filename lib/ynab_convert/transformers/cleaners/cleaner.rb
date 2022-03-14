@@ -10,7 +10,7 @@ module Cleaners
     # Cleans up a row
     # @param row [CSV::Row] The row to parse in YNAB4 format
     # @return [CSV::Row] The cleaned up row in YNAB4 format
-    def parse(_row)
+    def run(_row)
       raise NotImplementedError, :parse
     end
   end
