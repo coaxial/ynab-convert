@@ -26,9 +26,13 @@ RSpec.describe APIClients::CurrencyAPI, :vcr do
   end
 
   context "with today's date" do
+    let(:today) { Date.parse('2022-03-14') }
+
+    before(:example) { Timecop.freeze(today) }
+
     it 'errors' do
       actual = lambda {
-        subject.historical(base_currency: :eur, date: '2022-03-14')
+        subject.historical(base_currency: :eur, date: today.to_s)
       }
 
       expect(&actual).to raise_error(Errno::EDOM, /.* out of .* range.*/)

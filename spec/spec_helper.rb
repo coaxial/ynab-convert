@@ -13,6 +13,7 @@ require 'ynab_convert'
 require 'ynab_convert/error'
 require 'slop/symbol'
 require 'vcr_setup'
+require 'timecop'
 
 RSpec.configure do |config|
   include CoreExtensions::String::Inflections
