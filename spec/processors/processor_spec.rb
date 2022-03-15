@@ -78,15 +78,14 @@ RSpec.describe Processors::Processor do
       Documents::YNAB4Files::YNAB4File.new(institution_name: 'Test')
     end
     let(:subject) do
-      # TODO: see if instance_double can be removed altogether
-      mock_cleaner = instance_double(Transformers::Cleaners::Cleaner)
-      allow(mock_cleaner).to receive(:run) { |row| row }
-      mock_formatter = instance_double(Transformers::Formatters::Formatter)
-      allow(mock_formatter).to receive(:run) { |row| row }
-      mock_enhancer = instance_double(Transformers::Enhancers::Enhancer)
-      allow(mock_enhancer).to receive(:run) { |row| row }
+      cleaner = Transformers::Cleaners::Cleaner
+      allow(cleaner).to receive(:run) { |row| row }
+      formatter = Transformers::Formatters::Formatter
+      allow(formatter).to receive(:run) { |row| row }
+      enhancer = Transformers::Enhancers::Enhancer
+      allow(enhancer).to receive(:run) { |row| row }
 
-      transformers = [mock_cleaner, mock_formatter, mock_enhancer]
+      transformers = [cleaner, formatter, enhancer]
       options = {
         statement: statement, ynab4_file: ynab4_file, transformers:
 transformers
