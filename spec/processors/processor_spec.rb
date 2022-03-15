@@ -51,9 +51,9 @@ RSpec.describe Processors::Processor do
     end
 
     it 'runs each transformer' do
-      # There are five rows in the fixture statement, so the transformer
-      # should have run five times
-      expect(cleaner).to have_received(:run).exactly(5).times
+      # There are six rows in the fixture statement, so the transformer
+      # should have run six times
+      expect(cleaner).to have_received(:run).exactly(6).times
     end
   end
 

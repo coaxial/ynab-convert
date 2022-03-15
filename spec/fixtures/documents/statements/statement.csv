@@ -3,3 +3,4 @@ transaction_date;account;beneficiary;debit;credit;balance
 ;;;;;
 2019-12-30;Chequing;Santa;50000.00;;11950000
 2020-02-02;Chequing;Someone Else;45.00;;11949955
+2020-02-03;Chequing;Dummy Entry;;;11949955
