@@ -11,10 +11,16 @@ RSpec.describe Documents::Statements::Statement do
     )
 
     let(:subject) do
-      class Test < Documents::Statements::Statement
+      # Defining a Documents::Statements::Test class properly nested in modules
+      # so that .class.name contains all the namespaces
+      module Documents
+        module Statements
+          class Test < Statement
+          end
+        end
       end
 
-      Test.new(filepath: csv_path)
+      Documents::Statements::Test.new(filepath: csv_path)
     end
 
     it 'has an institution name' do

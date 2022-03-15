@@ -21,7 +21,7 @@ module Documents
       end
 
       def institution_name
-        self.class.name.split('::').join
+        self.class.name.split('::').last
       end
 
       private

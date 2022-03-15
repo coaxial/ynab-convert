@@ -12,7 +12,7 @@ module Transformers
       # @param row [CSV::Row] The row to parse in YNAB4 format
       # @return [CSV::Row] The cleaned up row in YNAB4 format
       def run(_row)
-        raise NotImplementedError, :parse
+        raise NotImplementedError, :run
       end
     end
   end

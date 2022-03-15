@@ -12,7 +12,7 @@ module Transformers
       # @param _row [CSV::Row] The row to enhance
       # @return [CSV::Row] The enhanced row
       def run(_row)
-        raise NotImplementedError, :enhance
+        raise NotImplementedError, :run
       end
     end
   end
