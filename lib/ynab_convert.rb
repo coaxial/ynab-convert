@@ -4,6 +4,7 @@ require 'ynab_convert/version'
 require 'slop'
 require 'ynab_convert/logger'
 require 'core_extensions/string.rb'
+require 'byebug' if ENV['YNAB_CONVERT_DEBUG']
 
 # The application
 module YnabConvert
