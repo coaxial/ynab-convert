@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/documents/ynab4_files/ynab4_file'
+require 'ynab_convert/documents'
 
-RSpec.describe YNAB4Files::YNAB4File do
+RSpec.describe Documents::YNAB4Files::YNAB4File do
   let(:subject) do
-    YNAB4Files::YNAB4File.new(
+    Documents::YNAB4Files::YNAB4File.new(
       institution_name: 'Test Bank'
     )
   end
 
   it 'instantiates' do
-    expect(subject).to be_an_instance_of(YNAB4Files::YNAB4File)
+    expect(subject).to be_an_instance_of(Documents::YNAB4Files::YNAB4File)
   end
 
   context 'when the format isn\'t specified' do
@@ -24,8 +24,8 @@ RSpec.describe YNAB4Files::YNAB4File do
 
   context 'when the format is set to :amounts' do
     let(:subject) do
-      YNAB4Files::YNAB4File.new(format: :amounts,
-                                institution_name: 'Test Bank')
+      Documents::YNAB4Files::YNAB4File.new(format: :amounts,
+                                           institution_name: 'Test Bank')
     end
 
     it 'uses :amounts' do

@@ -2,11 +2,11 @@
 
 require 'ynab_convert/transformers/enhancers/n26'
 
-RSpec.describe Enhancers::N26 do
-  let(:subject) { Enhancers::N26.new }
+RSpec.describe Transformers::Enhancers::N26 do
+  let(:subject) { Transformers::Enhancers::N26.new }
 
   it 'inherits from Enhancers::Enhancer' do
-    expect(subject).to be_kind_of(Enhancers::Enhancer)
+    expect(subject).to be_kind_of(Transformers::Enhancers::Enhancer)
   end
 
   context 'with a CSV::Row' do

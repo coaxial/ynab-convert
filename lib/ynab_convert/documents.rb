@@ -6,6 +6,8 @@ module Documents
 
   # Load all known Documents
   documents.each do |document|
-    Dir[File.join(__dir__, document, '*.rb')].each { |file| require file }
+    Dir[File.join(__dir__, 'documents', document, '*.rb')].each do |file|
+      require file
+    end
   end
 end

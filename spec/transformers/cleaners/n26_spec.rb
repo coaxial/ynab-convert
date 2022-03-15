@@ -3,7 +3,7 @@
 require 'ynab_convert/transformers/cleaners/cleaner'
 require 'ynab_convert/transformers/cleaners/n26'
 
-RSpec.describe Cleaners::N26 do
+RSpec.describe Transformers::Cleaners::N26 do
   let(:statement) do
     csv_statement = <<~CSV
       Date,Payee,Memo,Amount
@@ -13,10 +13,10 @@ RSpec.describe Cleaners::N26 do
     CSV.parse(csv_statement, headers: true)
   end
 
-  let(:subject) { Cleaners::N26.new }
+  let(:subject) { Transformers::Cleaners::N26.new }
 
   it 'inherits from Cleaner' do
-    expect(subject).to be_kind_of(Cleaners::Cleaner)
+    expect(subject).to be_kind_of(Transformers::Cleaners::Cleaner)
   end
 
   it 'cleans rows' do

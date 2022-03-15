@@ -2,11 +2,12 @@
 
 require 'ynab_convert/transformers/formatters/formatter'
 
-RSpec.describe Formatters::Formatter do
+RSpec.describe Transformers::Formatters::Formatter do
   it 'instantiates' do
-    subject = Formatters::Formatter.new(date: [0], payee: [1], memo: [2],
-                                        amount: [3])
-    expect(subject).to be_kind_of(Formatters::Formatter)
+    subject = Transformers::Formatters::Formatter.new(date: [0], payee:
+                                                      [1], memo: [2],
+                                                      amount: [3])
+    expect(subject).to be_kind_of(Transformers::Formatters::Formatter)
   end
 
   context 'when Statement fields and YNAB4 fields match 1:1' do
@@ -20,8 +21,8 @@ RSpec.describe Formatters::Formatter do
     end
 
     let(:subject) do
-      Formatters::Formatter.new(date: [0], payee: [1], memo: [2],
-                                amount: [3])
+      Transformers::Formatters::Formatter.new(date: [0], payee: [1], memo: [2],
+                                              amount: [3])
     end
 
     it 'formats rows' do
@@ -43,8 +44,8 @@ RSpec.describe Formatters::Formatter do
     end
 
     let(:subject) do
-      Formatters::Formatter.new(date: [0], payee: [1, 2], memo: [3],
-                                amount: [4])
+      Transformers::Formatters::Formatter.new(date: [0], payee: [1, 2],
+                                              memo: [3], amount: [4])
     end
 
     it 'formats rows' do
@@ -66,8 +67,8 @@ RSpec.describe Formatters::Formatter do
     end
 
     let(:subject) do
-      Formatters::Formatter.new(date: [0], payee: [1, 2], memo: [],
-                                amount: [3])
+      Transformers::Formatters::Formatter.new(date: [0], payee: [1, 2],
+                                              memo: [], amount: [3])
     end
 
     it 'formats rows' do
@@ -90,8 +91,8 @@ RSpec.describe Formatters::Formatter do
     end
 
     let(:subject) do
-      Formatters::Formatter.new(date: [0], payee: [1], memo: [2],
-                                outflow: [3], inflow: [4])
+      Transformers::Formatters::Formatter.new(date: [0], payee: [1], memo:
+                                              [2], outflow: [3], inflow: [4])
     end
 
     it 'formats rows' do

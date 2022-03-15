@@ -2,11 +2,11 @@
 
 require 'ynab_convert/transformers/enhancers/enhancer'
 
-RSpec.describe Enhancers::Enhancer do
-  let(:subject) { Enhancers::Enhancer.new }
+RSpec.describe Transformers::Enhancers::Enhancer do
+  let(:subject) { Transformers::Enhancers::Enhancer.new }
 
   it 'instantiates' do
-    expect(subject).to be_an_instance_of(Enhancers::Enhancer)
+    expect(subject).to be_an_instance_of(Transformers::Enhancers::Enhancer)
   end
 
   it 'has a `run` method' do

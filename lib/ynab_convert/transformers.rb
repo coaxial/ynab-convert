@@ -7,6 +7,8 @@ module Transformers
 
   # Load all known Transformers
   transformers.each do |transformer|
-    Dir[File.join(__dir__, transformer, '*.rb')].each { |file| require file }
+    Dir[File.join(__dir__, 'transformers', transformer, '*.rb')].each do |file|
+      require file
+    end
   end
 end

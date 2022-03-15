@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/documents/statements/statement'
+require 'ynab_convert/documents'
 
-RSpec.describe Statements::Statement do
+RSpec.describe Documents::Statements::Statement do
   context 'with an existing CSV statement' do
     csv_path = File.join(
       File.dirname(__dir__),
@@ -11,7 +11,7 @@ RSpec.describe Statements::Statement do
     )
 
     let(:subject) do
-      class Test < Statements::Statement
+      class Test < Documents::Statements::Statement
       end
 
       Test.new(filepath: csv_path)
@@ -24,7 +24,7 @@ RSpec.describe Statements::Statement do
     context 'when given custom CSV import options' do
       custom_options = { col_sep: ';' }
       let(:subject) do
-        Statements::Statement.new(
+        Documents::Statements::Statement.new(
           filepath: csv_path,
           csv_import_options: custom_options
         )
@@ -49,7 +49,7 @@ RSpec.describe Statements::Statement do
   context 'with a non-existent CSV statement' do
     let(:subject) do
       lambda {
-        Statements::Statement.new(
+        Documents::Statements::Statement.new(
           filepath: 'nope.csv'
         )
       }

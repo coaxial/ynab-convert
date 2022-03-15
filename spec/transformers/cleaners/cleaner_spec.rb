@@ -2,11 +2,11 @@
 
 require 'ynab_convert/transformers/cleaners/cleaner'
 
-RSpec.describe Cleaners::Cleaner do
-  let(:subject) { Cleaners::Cleaner.new }
+RSpec.describe Transformers::Cleaners::Cleaner do
+  let(:subject) { Transformers::Cleaners::Cleaner.new }
 
   it 'instantiates' do
-    expect(subject).to be_an_instance_of(Cleaners::Cleaner)
+    expect(subject).to be_an_instance_of(Transformers::Cleaners::Cleaner)
   end
 
   it 'has a `run` method' do
