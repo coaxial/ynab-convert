@@ -3,6 +3,7 @@
 require 'core_extensions/string'
 require 'csv'
 require 'ynab_convert/logger'
+require 'fileutils'
 
 module Processor
   # Base class for a Processor, all processors must inherit from it.
