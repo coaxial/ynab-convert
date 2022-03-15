@@ -19,6 +19,10 @@ module Statements
       @csv_import_options = csv_import_options
     end
 
+    def institution_name
+      self.class.name.split('::').join
+    end
+
     private
 
     # Verifies that the file exists at path, raises an error if not.

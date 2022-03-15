@@ -10,10 +10,15 @@ RSpec.describe Statements::Statement do
       'fixtures/documents/statements/statement.csv'
     )
 
-    let(:subject) { Statements::Statement.new(filepath: csv_path) }
+    let(:subject) do
+      class Test < Statements::Statement
+      end
 
-    it 'instantiates' do
-      expect(subject).to be_an_instance_of(Statements::Statement)
+      Test.new(filepath: csv_path)
+    end
+
+    it 'has an institution name' do
+      expect(subject.institution_name).to eq('Test')
     end
 
     context 'when given custom CSV import options' do
