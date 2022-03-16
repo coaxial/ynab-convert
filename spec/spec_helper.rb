@@ -12,6 +12,8 @@ require 'ynab_convert/processors'
 require 'ynab_convert'
 require 'ynab_convert/error'
 require 'slop/symbol'
+require 'vcr_setup'
+require 'timecop'
 
 RSpec.configure do |config|
   include CoreExtensions::String::Inflections
@@ -25,12 +27,16 @@ RSpec.configure do |config|
   config.filter_run_when_matching focus: true
 
   # Automatically cleanup generated CSV files
-  config.after(:example, writes_csv: true) do
+  config.after(:example) do
     Dir.glob('*.csv').each { |f| File.delete(f) }
   end
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.mock_with :rspec do |mocks|
+    mocks.verify_doubled_constant_names = true
   end
 end
 

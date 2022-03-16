@@ -4,6 +4,7 @@ require 'ynab_convert/version'
 require 'slop'
 require 'ynab_convert/logger'
 require 'core_extensions/string.rb'
+require 'byebug' if ENV['YNAB_CONVERT_DEBUG']
 
 # The application
 module YnabConvert
@@ -32,7 +33,7 @@ module YnabConvert
 
       begin
         @processor = opts[:processor].new(
-          file: @file
+          filepath: @file
         )
       rescue Errno::ENOENT
         handle_file_not_found
@@ -98,7 +99,7 @@ module YnabConvert
     end
 
     def processor_class_name
-      "Processor::#{@options[:institution].camel_case}"
+      "Processors::#{@options[:institution].camel_case}"
     end
 
     def processor
