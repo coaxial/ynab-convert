@@ -6,6 +6,8 @@ module APIClients
   # Client for currency-api
   # (https://github.com/fawazahmed0/currency-api#readme)
   class CurrencyAPI < APIClient
+    # The days that are missing from the API's otherwise normally available
+    # range
     MISSING_DAYS = { '2021-09-14' => true }.freeze
 
     def initialize
@@ -20,7 +22,7 @@ module APIClients
 
     # @param base_currency [Symbol] ISO symbol for base currency
     # @param date [Date, String] The date on which to get the rates for
-    # @return [Hash<Symbol, Hash<Symbol, Numeric>>] The rates for that day
+    # @return [Hash<Symbol, Numeric>] The rates for that day in base_currency
     def historical(base_currency:, date:)
       parsed_date = date.is_a?(Date) ? date : Date.parse(date)
       handle_date_out_of_bounds(parsed_date) if out_of_bounds?(parsed_date)
@@ -45,7 +47,6 @@ module APIClients
     end
 
     # @param date [Date] The date to show in the error message
-    # @return [Errno::EDOM] Raises an Errno::EDOM
     def handle_date_out_of_bounds(date)
       error_message = "#{date} is out of the currency-api available date "\
       "range (#{@available_date_range[:min]}–#{@available_date_range[:max]})"
@@ -53,6 +54,10 @@ module APIClients
       raise Errno::EDOM, error_message
     end
 
+    # Indicates whether a date is missing from the API's normally available
+    # date range
+    # @param date [Date] the date to check
+    # @return [Boolean] whether the date is unavailable in the API
     def missing_day?(date)
       MISSING_DAYS.key?(date.to_s)
     end
