@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/transformers/cleaners/cleaner'
-
 RSpec.describe Transformers::Cleaners::Cleaner do
   let(:subject) { Transformers::Cleaners::Cleaner.new }
 

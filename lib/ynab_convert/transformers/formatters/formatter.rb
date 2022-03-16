@@ -3,7 +3,7 @@
 module Transformers
   module Formatters
     # Formats Statements rows into YNAB4 rows (Date, Payee, Memo, Amount or
-    # Outflow and Inflow.
+    # Outflow and Inflow.)
     class Formatter
       # @param [Hash] headers_indices the indices at which to find each
       #   header's name
@@ -20,7 +20,7 @@ module Transformers
       #   using the :flows format)
       def initialize(**headers_indices)
         default_values = {
-          memo: []
+          memo: [] # The Memo field tends to be empty for most institutions
         }
 
         @format = :flows
@@ -52,7 +52,7 @@ module Transformers
       # @note In more complex cases, some heuristics are required to format some
       #   of the columns. In that case, any of the aliased #field methods
       #   (#date, #payee, #memo, #amount, #outflow, #inflow) can be
-      #   overridden in the instance.
+      #   overridden in the child.
       # @param row [CSV::Row] The row to process
       # @return [String] The corresponding field(s)
       def field(row)
@@ -72,6 +72,7 @@ module Transformers
           formatted_field = assembled_field.join(' ')
         end
 
+        # Avoid "nil" values in the output
         return '' if formatted_field.nil?
 
         formatted_field

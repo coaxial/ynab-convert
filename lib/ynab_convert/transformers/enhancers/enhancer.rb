@@ -5,7 +5,8 @@ module Transformers
     # An Enhancer parses YNAB4 rows (Date, Payee, Memo, Amount or Inflow and
     # Outflow) and augments the data therein.
     # A typical case would be converting from one currency to the user's YNAB
-    # base currency when the Statement is in a different currency.
+    # base currency when the Statement is in a different currency (see
+    # n26_enhancer.rb for an example)
     class Enhancer
       def initialize; end
 

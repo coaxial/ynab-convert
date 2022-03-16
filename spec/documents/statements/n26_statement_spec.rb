@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/documents/statements/statement'
-
 RSpec.describe Documents::Statements::N26 do
   statement = File.join(File.dirname(__dir__),
                         '..',

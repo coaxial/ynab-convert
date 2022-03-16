@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/transformers/cleaners/cleaner'
-require 'ynab_convert/transformers/cleaners/n26_cleaner'
-
 RSpec.describe Transformers::Cleaners::N26 do
   let(:statement) do
     csv_statement = <<~CSV

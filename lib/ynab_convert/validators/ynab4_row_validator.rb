@@ -27,7 +27,7 @@ module Validators
       format
     end
 
-    # Indiciates whether the amount on the row is valid
+    # Indicates whether the amount on the row is valid
     # @param row [CSV::Row] the row to check
     # @return [Boolean] whether the amount is invalid
     def self.amount_valid?(row)
@@ -47,6 +47,7 @@ module Validators
     end
 
     # Indicates whether a value is valid
+    # @note Prefer using the #valid? method
     # @param value [#zero?, #nil?, #to_s] the value to check
     # @return [Boolean] whether the value is valid
     def self.value_valid?(value)

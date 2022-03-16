@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/processors/n26_processor'
-
 RSpec.describe Processors::N26, :vcr do
   let(:fixture_path) do
     File.join(File.dirname(__dir__),

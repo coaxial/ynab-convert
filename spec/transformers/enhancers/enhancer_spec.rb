@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/transformers/enhancers/enhancer'
-
 RSpec.describe Transformers::Enhancers::Enhancer do
   let(:subject) { Transformers::Enhancers::Enhancer.new }
 

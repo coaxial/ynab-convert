@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/transformers/formatters/formatter'
-
 RSpec.describe Transformers::Formatters::Formatter do
   it 'instantiates' do
     subject = Transformers::Formatters::Formatter.new(date: [0], payee:

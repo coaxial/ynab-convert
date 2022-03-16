@@ -10,10 +10,6 @@ RSpec.describe Processors::Processor do
               'fixtures/statements/statement.csv')
   end
 
-  after(:example) do
-    FileUtils.rm(Dir.glob('statement_test*'))
-  end
-
   context 'with custom converters' do
     before(:example) do
       options = { statement: nil, ynab4_file: nil, converters: {

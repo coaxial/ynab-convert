@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/transformers/formatters/n26_formatter'
-
 RSpec.describe Transformers::Formatters::N26 do
   let(:statement) do
     options = { col_sep: ',', quote_char: '"', headers: true }

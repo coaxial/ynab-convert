@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/api_clients/currency_api'
-
 RSpec.describe APIClients::CurrencyAPI, :vcr do
   let(:subject) { APIClients::CurrencyAPI.new }
 
@@ -41,8 +39,7 @@ RSpec.describe APIClients::CurrencyAPI, :vcr do
     context 'with a date before 2020-11-22' do
       it 'errors' do
         actual = lambda {
-          subject.historical(base_currency: :eur, date:
-                                '1986-07-25')
+          subject.historical(base_currency: :eur, date: '1986-07-25')
         }
 
         expect(&actual).to raise_error(Errno::EDOM, /.* out of .* range.*/)
