@@ -46,6 +46,7 @@ RSpec.describe Processors::Processor do
     before(:example) do
       allow(statement).to receive(:institution_name).and_return('Test')
       allow(ynab4_file).to receive(:filename).and_return('test_ynab4.csv')
+      allow(cleaner).to receive(:run) { |row| row }
 
       processor.to_ynab!
     end
@@ -103,9 +104,9 @@ transformers
                                    'test_20191223-20200202_ynab4.csv'))
       expected = <<~CSV
         "Date","Payee","Memo","Outflow","Inflow"
-        "2019-12-23","Chequing","coaxial","1000000.00","","12000000"
-        "2019-12-30","Chequing","Santa","50000.00","","11950000"
-        "2020-02-02","Chequing","Someone Else","45.00","","11949955"
+        "2019-12-23","Chequing","coaxial","1000000.0","","12000000"
+        "2019-12-30","Chequing","Santa","50000.0","","11950000"
+        "2020-02-02","Chequing","Someone Else","45.0","","11949955"
       CSV
 
       expect(actual).to eq(expected)

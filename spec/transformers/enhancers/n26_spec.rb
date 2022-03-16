@@ -27,9 +27,9 @@ RSpec.describe Transformers::Enhancers::N26 do
       end
       expected = [
         { 'Date' => '2022-03-10', 'Payee' => 'Test Payee', 'Memo' => '',
-          'Amount' => '13.71' },
+          'Amount' => 13.71 },
         { 'Date' => '2022-03-10', 'Payee' => 'Test Credit', 'Memo' => '',
-          'Amount' => '6.83' }
+          'Amount' => 6.83 }
       ]
 
       expect(actual).to eq(expected)

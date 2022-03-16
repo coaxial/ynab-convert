@@ -34,7 +34,7 @@ module Transformers
                                           target_currency: :chf,
                                           date: date)
 
-        enhanced_row = row
+        enhanced_row = row.dup
         enhanced_row[amount_index] = converted_amount
         # Remove currency in memo
         enhanced_row[2] = ''
@@ -66,7 +66,8 @@ module Transformers
                                  target_currency: target_currency,
                                  date: date)
 
-        format('%<converted>.2f', converted: amount * rate)
+        # format('%<converted>.2f', converted: amount * rate)
+        (amount * rate).round(2)
       end
     end
   end

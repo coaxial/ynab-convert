@@ -55,9 +55,22 @@ module Transformers
         # Figure out the aliased name the method was called with, to derive
         # which field to return from the row.
         requested_field = __callee__.to_sym
-        @headers_indices[requested_field].reduce([]) do |fields_data, i|
+        assembled_field = @headers_indices[requested_field].reduce([]) do
+          |fields_data, i|
           fields_data << row[i]
-        end .join(' ')
+        end
+
+        # Avoid turning Dates and Numerics back to strings
+        # If the assembled_field isn't a composite from several Statement
+        # fields, there is no need to join(' ') and turn it into a String
+        formatted_field = assembled_field[0]
+        if assembled_field.length > 1
+          formatted_field = assembled_field.join(' ')
+        end
+
+        return '' if formatted_field.nil?
+
+        formatted_field
       end
 
       # Create alias names for the field method. This allows the function to

@@ -37,7 +37,9 @@ RSpec.describe Documents::Statements::Statement do
       end
 
       it 'exposes the options' do
-        expected = custom_options
+        default_options = CSV::DEFAULT_OPTIONS.merge(converters: %i[numeric
+                                                                    date])
+        expected = default_options.merge(custom_options)
         actual = subject.csv_import_options
 
         expect(actual).to eq(expected)

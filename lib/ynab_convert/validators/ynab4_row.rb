@@ -15,21 +15,9 @@ module Validators
         payee_valid?(row)
     end
 
-    # Validates the Amount or the Inflow and Outflow values
-    # @note Prefer using the #valid? method
-    # @param row [Array<String, Numeric, Date] The row to validate
-    # @return [Boolean] Whether the row's Amount or Inflow and Outflow is valid
-    def self.amount_valid?(row)
-      # An amount is invalid either if:
-      #   - the Amount value is empty or 0
-      #   - the Inflow and Outflow values are both empty or 0
-      # Whether Amount or Inflow and Outflow are checked depends on the YNAB4
-      # format for that row (:flows or :amounts)
-      return !amount_is_invalid?(row) if row_format(row) == :amounts
-
-      !(inflow_is_invalid?(row) && outflow_is_invalid?(row))
-    end
-
+    # Indicates which format the row is in (:flows or :amounts)
+    # @param row [CSV::Row] the row to check
+    # @return [:flows, :amounts] the row's format
     def self.row_format(row)
       format = :flows
       # :flows has 5 columns: Date, Payee, Memo, Outflow, Inflow
@@ -39,41 +27,45 @@ module Validators
       format
     end
 
-    def self.amount_is_invalid?(row)
-      amount_index = 3
-      (
-        row[amount_index].nil? ||
-        row[amount_index].empty? ||
-        row[amount_index] == '0.0'
-      )
+    # Indiciates whether the amount on the row is valid
+    # @param row [CSV::Row] the row to check
+    # @return [Boolean] whether the amount is invalid
+    def self.amount_valid?(row)
+      format = row_format(row)
+      indices = [3]
+      indices << 4 if format == :flows
+
+      if format == :amounts
+        return indices.reduce(true) do |valid, i|
+          valid && value_valid?(row[i])
+        end
+      end
+
+      indices.reduce(false) do |valid, i|
+        valid || value_valid?(row[i])
+      end
     end
 
-    def self.inflow_is_invalid?(row)
-      inflow_index = 4
-      (
-        row[inflow_index].nil? ||
-        row[inflow_index].empty? ||
-        row[inflow_index] == '0.0'
-      )
-    end
-
-    def self.outflow_is_invalid?(row)
-      outflow_index = 3
-      (
-        row[outflow_index].nil? ||
-        row[outflow_index].empty? ||
-        row[outflow_index] == '0.0'
-      )
+    # Indicates whether a value is valid
+    # @param value [#zero?, #nil?, #to_s] the value to check
+    # @return [Boolean] whether the value is valid
+    def self.value_valid?(value)
+      if value.respond_to? :zero?
+        !value.zero?
+      else
+        !value.nil? && !value.to_s.empty?
+      end
     end
 
     # Validates the Date value
     # @note Prefer using the #valid? method
     # @param row [Array<String, Numeric, Date] The row to validate
-    # @return [Boolean] Whether the row's Date is valid
+    # @return [Boolean] Whether the row's Date is invalid
     def self.transaction_date_valid?(row)
       date_index = 0
+      date = row[date_index]
 
-      !(row[date_index].nil? || row[date_index].empty?)
+      value_valid?(date)
     end
 
     # Validates the Payee value
@@ -82,8 +74,9 @@ module Validators
     # @return [Boolean] Whether the row's Payee is valid
     def self.payee_valid?(row)
       payee_index = 1
+      payee = row[payee_index]
 
-      !(row[payee_index].nil? || row[payee_index].empty?)
+      value_valid?(payee)
     end
   end
 end

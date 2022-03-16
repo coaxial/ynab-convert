@@ -16,8 +16,10 @@ module Documents
       def initialize(filepath:, csv_import_options: CSV::DEFAULT_OPTIONS)
         validate(filepath)
 
+        default_options = CSV::DEFAULT_OPTIONS.merge(converters: %i[numeric
+                                                                    date])
         @filepath = filepath
-        @csv_import_options = csv_import_options
+        @csv_import_options = default_options.merge(csv_import_options)
       end
 
       def institution_name

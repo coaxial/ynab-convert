@@ -16,10 +16,14 @@ module APIClients
       super(api_base_path: api_base_path)
     end
 
+    # @param base_currency [Symbol] ISO symbol for base currency
+    # @param date [Date, String] The date on which to get the rates for
+    # @return [Hash<Symbol, Hash<Symbol, Numeric>>] The rates for that day
     def historical(base_currency:, date:)
-      handle_date_out_of_bounds(date) if out_of_bounds?(date)
+      parsed_date = date.is_a?(Date) ? date : Date.parse(date)
+      handle_date_out_of_bounds(parsed_date) if out_of_bounds?(parsed_date)
       currency = base_currency.downcase
-      endpoint = "#{date}/currencies/#{currency}.min.json"
+      endpoint = "#{parsed_date}/currencies/#{currency}.min.json"
       rates = make_request(endpoint: endpoint)
       rates[currency]
     end
@@ -29,16 +33,13 @@ module APIClients
     # The currency-api only has rates since 2020-11-22 and until yesterday
     # (the current day's rate are updated at 23:59 on that day). This method
     # ensures the requested date falls within the available range.
-    # @param date [String] Date in YYYY-MM-DD format
+    # @param date [Date] The date to check
     # @return [Boolean] Whether the date is out of bounds for this API
     def out_of_bounds?(date)
-      parsed_date = Date.parse(date)
-
-      parsed_date < @available_date_range[:min] ||
-        parsed_date > @available_date_range[:max]
+      date < @available_date_range[:min] || date > @available_date_range[:max]
     end
 
-    # @param date [String] Date in YYYY-MM-DD format
+    # @param date [Date] The date to show in the error message
     # @return [Errno::EDOM] Raises an Errno::EDOM
     def handle_date_out_of_bounds(date)
       error_message = "#{date} is out of the currency-api available date "\

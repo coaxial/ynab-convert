@@ -19,7 +19,10 @@ module Documents
 
       def update_dates(row)
         date_index = 0
-        transaction_date = Date.parse(row[date_index])
+        transaction_date = row[date_index]
+        unless transaction_date.is_a?(Date)
+          transaction_date = Date.parse(transaction_date)
+        end
 
         update_start_date(transaction_date)
         update_end_date(transaction_date)
