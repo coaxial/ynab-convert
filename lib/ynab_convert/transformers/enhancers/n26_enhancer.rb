@@ -36,8 +36,10 @@ module Transformers
 
         enhanced_row = row.dup
         enhanced_row[amount_index] = converted_amount
-        # Remove currency in memo
-        enhanced_row[2] = ''
+        # Put original amount and currency in Memo
+        memo_line = 'Original amount: '\
+          "#{format('%<amount>.2f', amount: amount)} #{base_currency}"
+        enhanced_row[2] = memo_line
         enhanced_row
       end
 

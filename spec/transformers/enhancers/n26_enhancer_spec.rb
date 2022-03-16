@@ -14,7 +14,7 @@ RSpec.describe Transformers::Enhancers::N26 do
       csv = <<~CSV
         Date,Payee,Memo,Amount
         "2022-03-10","Test Payee","EUR","13.37"
-        "2022-03-10","Test Credit","EUR","6.66"
+        "2022-03-10","Test Credit","EUR","66.60"
       CSV
       options = { col_sep: ',', quote_char: '"', headers: true, converters:
                   %i[numeric] }
@@ -26,10 +26,10 @@ RSpec.describe Transformers::Enhancers::N26 do
         acc << subject.run(row).to_h
       end
       expected = [
-        { 'Date' => '2022-03-10', 'Payee' => 'Test Payee', 'Memo' => '',
-          'Amount' => 13.71 },
-        { 'Date' => '2022-03-10', 'Payee' => 'Test Credit', 'Memo' => '',
-          'Amount' => 6.83 }
+        { 'Date' => '2022-03-10', 'Payee' => 'Test Payee',
+          'Memo' => 'Original amount: 13.37 EUR', 'Amount' => 13.71 },
+        { 'Date' => '2022-03-10', 'Payee' => 'Test Credit',
+          'Memo' => 'Original amount: 66.60 EUR', 'Amount' => 68.31 }
       ]
 
       expect(actual).to eq(expected)
