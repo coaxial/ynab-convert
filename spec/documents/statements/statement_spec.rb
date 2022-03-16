@@ -7,7 +7,7 @@ RSpec.describe Documents::Statements::Statement do
     csv_path = File.join(
       File.dirname(__dir__),
       '..',
-      'fixtures/documents/statements/statement.csv'
+      'fixtures/statements/statement.csv'
     )
 
     let(:subject) do

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/transformers/formatters/n26'
+require 'ynab_convert/transformers/formatters/n26_formatter'
 
 RSpec.describe Transformers::Formatters::N26 do
   let(:statement) do
     options = { col_sep: ',', quote_char: '"', headers: true }
-    CSV.read('spec/fixtures/documents/statements/n26/n26.csv', options)
+    CSV.read('spec/fixtures/statements/n26.csv', options)
   end
   let(:subject) { Transformers::Formatters::N26.new }
 

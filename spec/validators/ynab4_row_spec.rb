@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'ynab_convert/validators/ynab4_row'
+require 'ynab_convert/validators/ynab4_row_validator'
 
 RSpec.describe Validators::YNAB4Row do
   let(:subject) { Validators::YNAB4Row }

@@ -7,7 +7,7 @@ require 'ynab_convert/processors/processor'
 RSpec.describe Processors::Processor do
   let(:fixture_filepath) do
     File.join(File.dirname(__dir__),
-              'fixtures/documents/statements/statement.csv')
+              'fixtures/statements/statement.csv')
   end
 
   after(:example) do
