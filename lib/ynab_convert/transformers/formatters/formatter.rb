@@ -19,11 +19,15 @@ module Transformers
       # @option  headers_indices [Array<Numeric>] :inflow transaction inflow (if
       #   using the :flows format)
       def initialize(**headers_indices)
+        default_values = {
+          memo: []
+        }
+
         @format = :flows
         unless headers_indices[:amount].nil? || headers_indices[:amount].empty?
           @format = :amounts
         end
-        @headers_indices = headers_indices
+        @headers_indices = default_values.merge(headers_indices)
       end
 
       # Turns CSV rows into YNAB4 rows (Date, Payee, Memo, Amount or Outflow and

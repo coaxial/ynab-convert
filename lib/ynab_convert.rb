@@ -33,7 +33,7 @@ module YnabConvert
 
       begin
         @processor = opts[:processor].new(
-          file: @file
+          filepath: @file
         )
       rescue Errno::ENOENT
         handle_file_not_found
@@ -99,7 +99,7 @@ module YnabConvert
     end
 
     def processor_class_name
-      "Processor::#{@options[:institution].camel_case}"
+      "Processors::#{@options[:institution].camel_case}"
     end
 
     def processor

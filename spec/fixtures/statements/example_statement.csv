@@ -1,0 +1,4 @@
+transaction_date;account;beneficiary;debit;credit;balance
+2019-12-23;Chequing;coaxial;1000000.00;;12000000
+2019-12-30;Chequing;Santa;50000.00;;11950000
+2020-02-02;Chequing;Someone Else;45.00;;11949955

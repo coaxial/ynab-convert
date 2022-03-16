@@ -2,6 +2,8 @@
 
 require 'ynab_convert/documents'
 require 'ynab_convert/validators'
+require 'csv'
+require 'fileutils'
 
 module Processors
   # A processor instantiates the Documents and Transformers required to turn a

@@ -5,7 +5,7 @@ require 'ynab_convert/processors/n26_processor'
 RSpec.describe Processors::N26, :vcr do
   let(:fixture_path) do
     File.join(File.dirname(__dir__),
-              'fixtures/statements/n26.csv')
+              'fixtures/statements/n26_statement.csv')
   end
   let(:subject) { Processors::N26.new(filepath: fixture_path) }
 
