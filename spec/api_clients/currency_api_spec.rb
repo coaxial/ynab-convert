@@ -49,4 +49,12 @@ RSpec.describe APIClients::CurrencyAPI, :vcr do
       end
     end
   end
+
+  context 'with a missing date' do
+    it "uses the previous day's rate" do
+      actual = subject.historical(base_currency: :EUR, date: '2021-09-14')
+
+      expect(actual[:chf]).to eq(1.085032)
+    end
+  end
 end

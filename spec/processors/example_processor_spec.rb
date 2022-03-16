@@ -16,7 +16,8 @@ RSpec.describe Processors::Example do
   end
 
   it 'converts the statement' do
-    actual = File.read(File.join(File.dirname(__dir__), '..', 'example_20191223-20200202_ynab4.csv'))
+    actual = File.read(File.join(File.dirname(__dir__), '..',
+                                 'example_20191223-20200202_ynab4.csv'))
     expected = <<~CSV
       "Date","Payee","Memo","Outflow","Inflow"
       "2019-12-23","coaxial","","1000000.0",""
