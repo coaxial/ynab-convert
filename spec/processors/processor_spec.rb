@@ -56,6 +56,7 @@ RSpec.describe Processors::Processor do
 
   context 'with a valid statement' do
     let(:statement) do
+      # rubocop:disable Lint/ConstantDefinitionInBlock
       module Documents
         module Statements
           class Test < Statement
@@ -67,6 +68,7 @@ RSpec.describe Processors::Processor do
           end
         end
       end
+      # rubocop:enable Lint/ConstantDefinitionInBlock
 
       Documents::Statements::Test.new(filepath: fixture_filepath)
     end

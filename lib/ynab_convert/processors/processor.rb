@@ -18,7 +18,7 @@ module Processors
     #   converted value. See CSV::Converters.
     # @param transformers [Array<Transformers::Transformer>] The Transformers
     #   to run in sequense
-    def initialize(statement:, ynab4_file:, converters: {}, transformers:)
+    def initialize(statement:, ynab4_file:, transformers:, converters: {})
       @statement = statement
       @transformers = transformers
       @validators = [::Validators::YNAB4Row]

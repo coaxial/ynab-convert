@@ -6,8 +6,7 @@ module Documents
     # Represents a CSV statement from a financial institution, typically from
     # its online banking portal.
     class Statement
-      attr_reader :csv_import_options
-      attr_reader :filepath
+      attr_reader :csv_import_options, :filepath
 
       # @param filepath [String] path to the CSV file
       # @param csv_import_options [CSV::DEFAULT_OPTIONS] options describing

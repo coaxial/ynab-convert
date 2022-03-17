@@ -13,12 +13,14 @@ RSpec.describe Documents::Statements::Statement do
     let(:subject) do
       # Defining a Documents::Statements::Test class properly nested in modules
       # so that .class.name contains all the namespaces
+      # rubocop:disable Lint/ConstantDefinitionInBlock
       module Documents
         module Statements
           class Test < Statement
           end
         end
       end
+      # rubocop:enable Lint/ConstantDefinitionInBlock
 
       Documents::Statements::Test.new(filepath: csv_path)
     end

@@ -5,6 +5,7 @@ require: rubocop-rake
 
 AllCops:
   DisplayCopNames: true
+  NewCops: enable
 
 Metrics/LineLength:
   Exclude:

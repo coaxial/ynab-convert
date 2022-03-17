@@ -3,7 +3,7 @@
 require 'ynab_convert/version'
 require 'slop'
 require 'ynab_convert/logger'
-require 'core_extensions/string.rb'
+require 'core_extensions/string'
 require 'byebug' if ENV['YNAB_CONVERT_DEBUG']
 
 # The application

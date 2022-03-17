@@ -6,7 +6,7 @@ module Documents
     class YNAB4File
       attr_reader :csv_export_options
 
-      def initialize(format: :flows, institution_name:)
+      def initialize(institution_name:, format: :flows)
         @format = format
         @institution_name = institution_name
         @csv_export_options = {
@@ -20,9 +20,7 @@ module Documents
       def update_dates(row)
         date_index = 0
         transaction_date = row[date_index]
-        unless transaction_date.is_a?(Date)
-          transaction_date = Date.parse(transaction_date)
-        end
+        transaction_date = Date.parse(transaction_date) unless transaction_date.is_a?(Date)
 
         update_start_date(transaction_date)
         update_end_date(transaction_date)
