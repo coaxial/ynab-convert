@@ -3,6 +3,7 @@
 RSpec.describe YnabConvert do
   let(:fixture_path) { 'spec/fixtures/statements/example_statement.csv' }
   let(:ynab_filename) { 'example_20191223-20200202_ynab4.csv' }
+
   it 'has a version number' do
     expect(YnabConvert::VERSION).not_to be nil
   end
@@ -24,8 +25,8 @@ RSpec.describe YnabConvert do
   end
 
   describe YnabConvert::Metadata do
-    before(:example) do
-      @subject = YnabConvert::Metadata.new
+    before do
+      @subject = described_class.new
     end
 
     it 'can show a short description' do
@@ -45,10 +46,10 @@ RSpec.describe YnabConvert do
   describe YnabConvert::File do
     context 'with an existing file' do
       context 'that is valid CSV' do
-        before(:example) do
+        before do
           filename = File.join(File.dirname(__dir__), fixture_path)
           opts = { file: filename, processor: Processors::Example }
-          @subject = YnabConvert::File.new opts
+          @subject = described_class.new opts
         end
 
         it 'converts it' do

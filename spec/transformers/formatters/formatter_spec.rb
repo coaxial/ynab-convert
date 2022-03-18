@@ -2,10 +2,10 @@
 
 RSpec.describe Transformers::Formatters::Formatter do
   it 'instantiates' do
-    subject = Transformers::Formatters::Formatter.new(date: [0], payee:
+    subject = described_class.new(date: [0], payee:
                                                       [1], memo: [2],
-                                                      amount: [3])
-    expect(subject).to be_kind_of(Transformers::Formatters::Formatter)
+                                  amount: [3])
+    expect(subject).to be_kind_of(described_class)
   end
 
   context 'when Statement fields and YNAB4 fields match 1:1' do
@@ -19,8 +19,8 @@ RSpec.describe Transformers::Formatters::Formatter do
     end
 
     let(:subject) do
-      Transformers::Formatters::Formatter.new(date: [0], payee: [1], memo: [2],
-                                              amount: [3])
+      described_class.new(date: [0], payee: [1], memo: [2],
+                          amount: [3])
     end
 
     it 'formats rows' do
@@ -42,8 +42,8 @@ RSpec.describe Transformers::Formatters::Formatter do
     end
 
     let(:subject) do
-      Transformers::Formatters::Formatter.new(date: [0], payee: [1, 2],
-                                              memo: [3], amount: [4])
+      described_class.new(date: [0], payee: [1, 2],
+                          memo: [3], amount: [4])
     end
 
     it 'formats rows' do
@@ -65,8 +65,8 @@ RSpec.describe Transformers::Formatters::Formatter do
     end
 
     let(:subject) do
-      Transformers::Formatters::Formatter.new(date: [0], payee: [1, 2],
-                                              memo: [], amount: [3])
+      described_class.new(date: [0], payee: [1, 2],
+                          memo: [], amount: [3])
     end
 
     it 'formats rows' do
@@ -89,7 +89,7 @@ RSpec.describe Transformers::Formatters::Formatter do
     end
 
     let(:subject) do
-      Transformers::Formatters::Formatter.new(date: [0], payee: [1], memo:
+      described_class.new(date: [0], payee: [1], memo:
                                               [2], outflow: [3], inflow: [4])
     end
 

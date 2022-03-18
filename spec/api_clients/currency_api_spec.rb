@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe APIClients::CurrencyAPI, :vcr do
-  let(:subject) { APIClients::CurrencyAPI.new }
+  let(:subject) { described_class.new }
 
   it 'inherits from APIClient' do
     expect(subject).to be_kind_of(APIClients::APIClient)
@@ -26,7 +26,7 @@ RSpec.describe APIClients::CurrencyAPI, :vcr do
   context "with today's date" do
     let(:today) { Date.parse('2022-03-14') }
 
-    before(:example) { Timecop.freeze(today) }
+    before { Timecop.freeze(today) }
 
     it 'errors' do
       actual = lambda {

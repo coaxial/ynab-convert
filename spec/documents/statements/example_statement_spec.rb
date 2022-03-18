@@ -7,7 +7,7 @@ RSpec.describe Documents::Statements::Example do
                         '..',
                         'fixtures/statements/example_statement.csv')
 
-  let(:subject) { Documents::Statements::Example.new(filepath: statement) }
+  let(:subject) { described_class.new(filepath: statement) }
 
   it 'inherits from Statement' do
     expect(subject).to be_kind_of(Documents::Statements::Statement)

@@ -5,9 +5,9 @@ RSpec.describe Processors::N26, :vcr do
     File.join(File.dirname(__dir__),
               'fixtures/statements/n26_statement.csv')
   end
-  let(:subject) { Processors::N26.new(filepath: fixture_path) }
+  let(:subject) { described_class.new(filepath: fixture_path) }
 
-  before(:example) do
+  before do
     subject.to_ynab!
   end
 

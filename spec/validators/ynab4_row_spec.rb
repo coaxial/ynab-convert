@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Validators::YNAB4Row do
-  let(:subject) { Validators::YNAB4Row }
+  let(:subject) { described_class }
 
   context 'when a row has no Date value' do
     let(:row) { ['', 'Test Payee', '', 1337.0] }

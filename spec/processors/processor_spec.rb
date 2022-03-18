@@ -11,12 +11,12 @@ RSpec.describe Processors::Processor do
   end
 
   context 'with custom converters' do
-    before(:example) do
+    before do
       options = { statement: nil, ynab4_file: nil, converters: {
         test_converter: ->(s) { s }
       }, transformers: [] }
 
-      Processors::Processor.new(options)
+      described_class.new(options)
     end
 
     it 'registers customer converters' do
@@ -36,10 +36,10 @@ RSpec.describe Processors::Processor do
       options = { statement: statement, ynab4_file: ynab4_file,
                   converters: {}, transformers: [cleaner] }
 
-      Processors::Processor.new(options)
+      described_class.new(options)
     end
 
-    before(:example) do
+    before do
       allow(statement).to receive(:institution_name).and_return('Test')
       allow(ynab4_file).to receive(:filename).and_return('test_ynab4.csv')
       allow(cleaner).to receive(:run) { |row| row }
@@ -90,10 +90,10 @@ RSpec.describe Processors::Processor do
 transformers
       }
 
-      Processors::Processor.new(options)
+      described_class.new(options)
     end
 
-    before(:example) do
+    before do
       subject.to_ynab!
     end
 

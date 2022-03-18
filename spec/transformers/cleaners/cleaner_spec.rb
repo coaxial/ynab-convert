@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe Transformers::Cleaners::Cleaner do
-  let(:subject) { Transformers::Cleaners::Cleaner.new }
+  let(:subject) { described_class.new }
 
   it 'instantiates' do
-    expect(subject).to be_an_instance_of(Transformers::Cleaners::Cleaner)
+    expect(subject).to be_an_instance_of(described_class)
   end
 
   it 'has a `run` method' do

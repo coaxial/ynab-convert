@@ -10,7 +10,7 @@ RSpec.describe Transformers::Cleaners::N26 do
     CSV.parse(csv_statement, headers: true)
   end
 
-  let(:subject) { Transformers::Cleaners::N26.new }
+  let(:subject) { described_class.new }
 
   it 'inherits from Cleaner' do
     expect(subject).to be_kind_of(Transformers::Cleaners::Cleaner)

@@ -5,7 +5,7 @@ RSpec.describe Transformers::Formatters::Example do
     options = { col_sep: ';', quote_char: nil, headers: true }
     CSV.read('spec/fixtures/statements/example_statement.csv', options)
   end
-  let(:subject) { Transformers::Formatters::Example.new }
+  let(:subject) { described_class.new }
 
   it 'inherits from Formatter' do
     expect(subject).to be_kind_of(Transformers::Formatters::Formatter)

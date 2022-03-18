@@ -32,7 +32,7 @@ RSpec.describe Documents::Statements::Statement do
     context 'when given custom CSV import options' do
       custom_options = { col_sep: ';' }
       let(:subject) do
-        Documents::Statements::Statement.new(
+        described_class.new(
           filepath: csv_path,
           csv_import_options: custom_options
         )
@@ -59,11 +59,12 @@ RSpec.describe Documents::Statements::Statement do
   context 'with a non-existent CSV statement' do
     let(:subject) do
       lambda {
-        Documents::Statements::Statement.new(
+        described_class.new(
           filepath: 'nope.csv'
         )
       }
     end
+
     it 'raises' do
       expect(&subject).to raise_error(Errno::ENOENT)
     end

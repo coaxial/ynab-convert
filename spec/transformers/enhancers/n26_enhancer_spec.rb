@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Transformers::Enhancers::N26 do
-  let(:subject) { Transformers::Enhancers::N26.new }
+  let(:subject) { described_class.new }
 
   it 'inherits from Enhancers::Enhancer' do
     expect(subject).to be_kind_of(Transformers::Enhancers::Enhancer)

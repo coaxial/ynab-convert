@@ -1,7 +1,9 @@
 ---
 # See https://github.com/rubocop/rubocop/blob/master/config/default.yml for all
 # options
-require: rubocop-rake
+require:
+  - rubocop-rake
+  - rubocop-rspec
 
 AllCops:
   DisplayCopNames: true
