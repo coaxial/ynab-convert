@@ -32,6 +32,8 @@ module Transformers
         cleaned_row
       end
 
+      private
+
       def parse_transaction_date(date)
         # Transaction dates are dd.mm.YYYY which Date#parse understands, but
         # the CSV::Converter[:date] doesn't recognize it as it's not looking
