@@ -8,9 +8,12 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 2.6
 
-Metrics/LineLength:
+Layout/LineLength:
+  AllowHeredoc: true
+  AllowURI: true
   Exclude:
     - ynab_convert.gemspec
+  Max: 80
 
 Metrics/BlockLength:
   Exclude:

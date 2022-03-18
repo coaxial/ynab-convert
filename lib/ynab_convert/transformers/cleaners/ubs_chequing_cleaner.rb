@@ -44,7 +44,9 @@ module Transformers
       end
 
       def parse_amount(amount)
-        return amount.delete("'").to_f unless amount.nil? || amount.is_a?(Numeric)
+        unless amount.nil? || amount.is_a?(Numeric)
+          return amount.delete("'").to_f
+        end
 
         amount
       end
@@ -65,8 +67,11 @@ module Transformers
         # Then removing the rest of the junk appended after the worthwhile data;
         # Finally removing the CARD 00000000-0 0000 at the beginning of debit
         # card payment entries
-        raw_payee_line = [row[HEADERS[:payee_line2]], row[HEADERS[:payee_line3]]].join(' ')
-        raw_payee_line = row[HEADERS[:payee_line1]] if row[HEADERS[:payee_line2]].nil?
+        raw_payee_line = [row[HEADERS[:payee_line2]],
+                          row[HEADERS[:payee_line3]]].join(' ')
+        if row[HEADERS[:payee_line2]].nil?
+          raw_payee_line = row[HEADERS[:payee_line1]]
+        end
 
         # UBS thought wise to append a bunch of junk information after the
         # transaction details within the third description field. *Most* of
@@ -77,7 +82,10 @@ module Transformers
         # always looks different (thanks to the variable nature of the appended
         # junk).
 
+        # rubocop:disable Layout/LineLength
         junk_desc_regex = /,? (O[FN]|ESR|QRR|\d{2} \d{5} \d{5} \d{5} \d{5} \d{5}, TN).*/
+        # rubocop:enable Layout/LineLength
+
         # Of course, it wouldn't be complete with more junk information at the
         # beginning of *some* lines (debit card payments) in the following
         # form: "CARD 00000000-0 0000"

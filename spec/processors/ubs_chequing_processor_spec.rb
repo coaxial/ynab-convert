@@ -16,7 +16,8 @@ RSpec.describe Processors::UBSChequing, :vcr do
   end
 
   it 'converts the statement' do
-    actual = File.read(File.join(File.dirname(__dir__), '..', 'ubschequing_20191018-20191106_ynab4.csv'))
+    actual = File.read(File.join(File.dirname(__dir__), '..',
+                                 'ubschequing_20191018-20191106_ynab4.csv'))
     expected = <<~CSV
       "Date","Payee","Memo","Outflow","Inflow"
       "2019-11-06","VIS1W OBJECTION TO UBS WITHIN 30 DAYS, UBS SWITZERLAND AG, C/O UBS CARD CENTER, CREDIT CARD STATEMENT","","10959.4",""
