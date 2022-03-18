@@ -5,20 +5,9 @@ RSpec.describe Processors::UBSChequing, :vcr do
     File.join(File.dirname(__dir__),
               'fixtures/statements/ubs_chequing_fixture.csv')
   end
-  let(:subject) { described_class.new(filepath: fixture_path) }
-
-  before do
-    subject.to_ynab!
-  end
-
-  it 'instantiates' do
-    expect(subject).to be_kind_of(Processors::Processor)
-  end
-
-  it 'converts the statement' do
-    actual = File.read(File.join(File.dirname(__dir__), '..',
-                                 'ubschequing_20191018-20191106_ynab4.csv'))
-    expected = <<~CSV
+  let(:processor) { described_class.new(filepath: fixture_path) }
+  let(:processed) do
+    <<~CSV
       "Date","Payee","Memo","Outflow","Inflow"
       "2019-11-06","VIS1W OBJECTION TO UBS WITHIN 30 DAYS, UBS SWITZERLAND AG, C/O UBS CARD CENTER, CREDIT CARD STATEMENT","","10959.4",""
       "2019-11-04","TRANSFER CH0123456789012345678, FRAU MACKENZIE EXAMPLE U/O, HERR WALTER WHITE, E-Banking virement compte à compte","","21502.0",""
@@ -33,7 +22,18 @@ RSpec.describe Processors::UBSChequing, :vcr do
       "2019-10-18","EBILL INVOICE ST.PLACE STADTWERKE, 6660 ST. PLACE","","283.0",""
       "2019-10-18","SERAFE TAX","","23450.0",""
     CSV
+  end
 
-    expect(actual).to eq(expected)
+  before { processor.to_ynab! }
+
+  it 'instantiates' do
+    expect(processor).to be_kind_of(Processors::Processor)
+  end
+
+  it 'converts the statement' do
+    actual = File.read(File.join(File.dirname(__dir__), '..',
+                                 'ubschequing_20191018-20191106_ynab4.csv'))
+
+    expect(actual).to eq(processed)
   end
 end

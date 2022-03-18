@@ -1,22 +1,23 @@
 # frozen_string_literal: true
 
 RSpec.describe APIClients::CurrencyAPI, :vcr do
-  let(:subject) { described_class.new }
+  let(:currency_api) { described_class.new }
 
   it 'inherits from APIClient' do
-    expect(subject).to be_kind_of(APIClients::APIClient)
+    expect(currency_api).to be_kind_of(APIClients::APIClient)
   end
 
   context 'with a valid date' do
     it 'fetches the rate' do
-      actual = subject.historical(base_currency: :eur, date: '2022-03-10')
+      actual = currency_api.historical(base_currency: :eur, date: '2022-03-10')
 
       expect(actual[:chf]).to eq(1.025742)
     end
 
     context 'with base_currency in upper case' do
       it 'fetches the rate' do
-        actual = subject.historical(base_currency: :EUR, date: '2022-03-10')
+        actual = currency_api.historical(base_currency: :EUR,
+                                         date: '2022-03-10')
 
         expect(actual[:chf]).to eq(1.025742)
       end
@@ -30,7 +31,7 @@ RSpec.describe APIClients::CurrencyAPI, :vcr do
 
     it 'errors' do
       actual = lambda {
-        subject.historical(base_currency: :eur, date: today.to_s)
+        currency_api.historical(base_currency: :eur, date: today.to_s)
       }
 
       expect(&actual).to raise_error(Errno::EDOM, /.* out of .* range.*/)
@@ -39,7 +40,7 @@ RSpec.describe APIClients::CurrencyAPI, :vcr do
     context 'with a date before 2020-11-22' do
       it 'errors' do
         actual = lambda {
-          subject.historical(base_currency: :eur, date: '1986-07-25')
+          currency_api.historical(base_currency: :eur, date: '1986-07-25')
         }
 
         expect(&actual).to raise_error(Errno::EDOM, /.* out of .* range.*/)
@@ -49,7 +50,7 @@ RSpec.describe APIClients::CurrencyAPI, :vcr do
 
   context 'with a missing date' do
     it "uses the previous day's rate" do
-      actual = subject.historical(base_currency: :EUR, date: '2021-09-14')
+      actual = currency_api.historical(base_currency: :EUR, date: '2021-09-14')
 
       expect(actual[:chf]).to eq(1.085032)
     end

@@ -13,6 +13,7 @@ AllCops:
 Layout/LineLength:
   AllowHeredoc: true
   AllowURI: true
+  AutoCorrect: true
   Exclude:
     - ynab_convert.gemspec
   Max: 80

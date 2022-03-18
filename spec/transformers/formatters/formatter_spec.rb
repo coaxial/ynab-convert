@@ -2,10 +2,10 @@
 
 RSpec.describe Transformers::Formatters::Formatter do
   it 'instantiates' do
-    subject = described_class.new(date: [0], payee:
+    formatter = described_class.new(date: [0], payee:
                                                       [1], memo: [2],
-                                  amount: [3])
-    expect(subject).to be_kind_of(described_class)
+                                    amount: [3])
+    expect(formatter).to be_kind_of(described_class)
   end
 
   context 'when Statement fields and YNAB4 fields match 1:1' do
@@ -18,13 +18,13 @@ RSpec.describe Transformers::Formatters::Formatter do
       CSV.parse(csv_statement, options)
     end
 
-    let(:subject) do
+    let(:formatter) do
       described_class.new(date: [0], payee: [1], memo: [2],
                           amount: [3])
     end
 
     it 'formats rows' do
-      actual = statement.reduce([]) { |acc, row| acc << subject.run(row) }
+      actual = statement.reduce([]) { |acc, row| acc << formatter.run(row) }
       expected = [['2022-03-10', 'Test Payee', '', '13.37']]
 
       expect(actual).to eq(expected)
@@ -41,13 +41,13 @@ RSpec.describe Transformers::Formatters::Formatter do
       CSV.parse(csv_statement, options)
     end
 
-    let(:subject) do
+    let(:formatter) do
       described_class.new(date: [0], payee: [1, 2],
                           memo: [3], amount: [4])
     end
 
     it 'formats rows' do
-      actual = statement.reduce([]) { |acc, row| acc << subject.run(row) }
+      actual = statement.reduce([]) { |acc, row| acc << formatter.run(row) }
       expected = [['2022-03-10', 'Test Payee', '', '13.37']]
 
       expect(actual).to eq(expected)
@@ -64,13 +64,13 @@ RSpec.describe Transformers::Formatters::Formatter do
       CSV.parse(csv_statement, options)
     end
 
-    let(:subject) do
+    let(:formatter) do
       described_class.new(date: [0], payee: [1, 2],
                           memo: [], amount: [3])
     end
 
     it 'formats rows' do
-      actual = statement.reduce([]) { |acc, row| acc << subject.run(row) }
+      actual = statement.reduce([]) { |acc, row| acc << formatter.run(row) }
       expected = [['2022-03-10', 'Test Payee', '', '13.37']]
 
       expect(actual).to eq(expected)
@@ -87,18 +87,19 @@ RSpec.describe Transformers::Formatters::Formatter do
       options = { col_sep: ',', quote_char: '"', headers: true }
       CSV.parse(csv_statement, options)
     end
-
-    let(:subject) do
-      described_class.new(date: [0], payee: [1], memo:
-                                              [2], outflow: [3], inflow: [4])
-    end
-
-    it 'formats rows' do
-      actual = statement.reduce([]) { |acc, row| acc << subject.run(row) }
-      expected = [
+    let(:expected) do
+      [
         ['2022-03-10', 'Test Payee', '', '13.37', ''],
         ['2022-03-10', 'Test Credit', '', '', '6.66']
       ]
+    end
+    let(:formatter) do
+      described_class.new(date: [0], payee: [1], memo: [2], outflow: [3],
+                          inflow: [4])
+    end
+
+    it 'formats rows' do
+      actual = statement.reduce([]) { |acc, row| acc << formatter.run(row) }
 
       expect(actual).to eq(expected)
     end
