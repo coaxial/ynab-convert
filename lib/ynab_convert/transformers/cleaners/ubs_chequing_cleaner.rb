@@ -68,18 +68,19 @@ module Transformers
         raw_payee_line = [row[HEADERS[:payee_line2]], row[HEADERS[:payee_line3]]].join(' ')
         raw_payee_line = row[HEADERS[:payee_line1]] if row[HEADERS[:payee_line2]].nil?
 
-        # Moreover, UBS thought wise to append a bunch of junk information after
-        # the transaction details within the third description field. *Most* of
-        # this junk starts after the meaningful data and starts with ", OF",
-        # ", ON", ", ESR", ", QRR", two digits then five groups of five digits
+        # UBS thought wise to append a bunch of junk information after the
+        # transaction details within the third description field. *Most* of
+        # this junk starts after the meaningful data and starts with ", OF", ",
+        # ON", ", ESR", ", QRR", two digits then five groups of five digits
         # then ", TN" so we discard it; YNAB4 being unable to automatically
-        # categorize new transactions at the same store/payee if the payee always
-        # looks different (thanks to the variable nature of the appended junk).
+        # categorize new transactions at the same store/payee if the payee
+        # always looks different (thanks to the variable nature of the appended
+        # junk).
 
         junk_desc_regex = /,? (O[FN]|ESR|QRR|\d{2} \d{5} \d{5} \d{5} \d{5} \d{5}, TN).*/
         # Of course, it wouldn't be complete with more junk information at the
-        # beginning of *some* lines (debit card payments)
-        # CARD 00000000-0 0000 at the beginning of debit card transactions.
+        # beginning of *some* lines (debit card payments) in the following
+        # form: "CARD 00000000-0 0000"
         debit_card_junk_regex = /CARD \d{8}-\d \d{4} /
 
         raw_payee_line.sub(junk_desc_regex, '').sub(debit_card_junk_regex, '')
