@@ -1,0 +1,6 @@
+"TransferWise ID",Date,Amount,Currency,Description,"Payment Reference","Running Balance","Exchange From","Exchange To","Exchange Rate","Payer Name","Payee Name","Payee Account Number",Merchant,"Card Last Four Digits","Card Holder Full Name",Attachment,Note,"Total fees"
+CARD-000000000,23-12-2021,-5.93,EUR,"Card transaction of 10.00 USD issued by Someplace Location",,0.00,EUR,USD,1.13270,,,,"Someplace Location",0000,"Rick Sanchez",,,0.02
+CARD-000000000,18-12-2021,2.83,EUR,"Card transaction of -2.83 EUR issued by Merchant O*00-00000-00000 Luxembourg",,5.93,,,,,,,"Merchant 0*00-00000-00000 Luxembourg",0000,"Rick Sanchez",,,0.00
+CARD-000000000,16-12-2021,3.10,EUR,"Card transaction of -3.10 EUR issued by Merchant O*00-00000-00000 Luxembourg",,3.10,,,,,,,"Merchant 0*00-00000-00000 Luxembourg",0000,"Rick Sanchez",,,0.00
+CARD-000000000,23-11-2021,-4.00,EUR,"Card transaction of 9.51 USD issued by merchant.com Luxembourg",,0.00,EUR,USD,1.12605,,,,"merchant.com Luxembourg",0000,"Rick Sanchez",,,0.02
+CARD-000000000,22-11-2021,4.00,EUR,"Card transaction of -4.00 EUR issued by Merchant O*00-00000-00000 Luxembourg",,4.00,,,,,,,"Merchant O*00-00000-00000 Luxembourg",0000,"Rick Sanchez",,,0.00
