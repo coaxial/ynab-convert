@@ -9,6 +9,7 @@ module Transformers
     class N26 < Enhancer
       def initialize
         @api_client = APIClients::CurrencyAPI.new
+        super()
       end
 
       # @param row [CSV::Row] The YNAB4 formatted row to enhance
@@ -17,10 +18,7 @@ module Transformers
       # @note Takes a YNAB4 formatted CSV::Row, with the transaction's currency
       # in the Memo field
       def run(row)
-        # Handle :flows and :amounts formats
         amount_index = 3
-        # "".to_f => 0.0
-        amount_index = 4 if row[3].to_f == 0.0
         amount = row[amount_index]
 
         # Transaction currency should be in the memo field

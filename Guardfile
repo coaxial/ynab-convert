@@ -74,7 +74,7 @@ group :red_green_refactor, halt_on_fail: true do
     end
   end
 
-  guard :rubocop, cli: ['--auto-correct', '--display-cop-names'] do
+  guard :rubocop, cli: ['--auto-correct-all', '--display-cop-names'] do
     watch('Gemfile')
     watch('Rakefile')
     watch('bin/convert')

@@ -4,4 +4,4 @@
 require 'ynab_convert/processors/processor'
 
 # Load all known processors
-Dir[File.join(__dir__, 'processors', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'processors', '*.rb')].sort.each { |file| require file }

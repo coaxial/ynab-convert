@@ -6,7 +6,7 @@ module Documents
     class YNAB4File
       attr_reader :csv_export_options
 
-      def initialize(format: :flows, institution_name:)
+      def initialize(institution_name:, format: :flows)
         @format = format
         @institution_name = institution_name
         @csv_export_options = {

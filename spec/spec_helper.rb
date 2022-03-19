@@ -27,7 +27,7 @@ RSpec.configure do |config|
   config.filter_run_when_matching focus: true
 
   # Automatically cleanup generated CSV files
-  config.after(:example) do
+  config.after do
     Dir.glob('*.csv').each { |f| File.delete(f) }
   end
 

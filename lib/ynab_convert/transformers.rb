@@ -11,7 +11,7 @@ module Transformers
     # class since files are otherwise loaded in alphabetical order
     require File.join(__dir__, 'transformers', "#{t}s", "#{t}.rb")
 
-    Dir[File.join(__dir__, 'transformers', "#{t}s", '*.rb')].each do |file|
+    Dir[File.join(__dir__, 'transformers', "#{t}s", '*.rb')].sort.each do |file|
       require file
     end
   end

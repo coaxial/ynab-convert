@@ -1,16 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe Validators::YNAB4Row do
-  let(:subject) { Validators::YNAB4Row }
+  let(:ynab4_row) { described_class }
 
   context 'when a row has no Date value' do
     let(:row) { ['', 'Test Payee', '', 1337.0] }
 
     it 'is invalid' do
-      actual = subject.valid?(row)
-      expected = false
-
-      expect(actual).to eq(expected)
+      expect(ynab4_row.valid?(row)).to eq(false)
     end
   end
 
@@ -18,7 +15,7 @@ RSpec.describe Validators::YNAB4Row do
     let(:row) { [Date.parse('2022/03/08'), 'Test Payee', '', '', ''] }
 
     it 'is invalid' do
-      actual = subject.valid?(row)
+      actual = ynab4_row.valid?(row)
       expected = false
 
       expect(actual).to eq(expected)
@@ -29,7 +26,7 @@ RSpec.describe Validators::YNAB4Row do
     let(:row) { [Date.parse('2022/03/08'), 'Test Payee', '', '', 666.0] }
 
     it 'is valid' do
-      actual = subject.valid?(row)
+      actual = ynab4_row.valid?(row)
       expected = true
 
       expect(actual).to eq(expected)
@@ -40,7 +37,7 @@ RSpec.describe Validators::YNAB4Row do
     let(:row) { [Date.parse('2022/03/08'), 'Test Payee', '', 666.0, ''] }
 
     it 'is valid' do
-      actual = subject.valid?(row)
+      actual = ynab4_row.valid?(row)
       expected = true
 
       expect(actual).to eq(expected)
@@ -51,7 +48,7 @@ RSpec.describe Validators::YNAB4Row do
     let(:row) { [Date.parse('2022/03/08'), 'Test Payee', '', ''] }
 
     it 'is invalid' do
-      actual = subject.valid?(row)
+      actual = ynab4_row.valid?(row)
       expected = false
 
       expect(actual).to eq(expected)
@@ -62,7 +59,7 @@ RSpec.describe Validators::YNAB4Row do
     let(:row) { [Date.parse('2022/03/08'), 'Test Payee', '', 666.0] }
 
     it 'is valid' do
-      actual = subject.valid?(row)
+      actual = ynab4_row.valid?(row)
       expected = true
 
       expect(actual).to eq(expected)
@@ -73,7 +70,7 @@ RSpec.describe Validators::YNAB4Row do
     let(:row) { [Date.parse('2022/03/08'), '', '', 666.0] }
 
     it 'is invalid' do
-      actual = subject.valid?(row)
+      actual = ynab4_row.valid?(row)
       expected = false
 
       expect(actual).to eq(expected)

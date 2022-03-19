@@ -7,8 +7,8 @@ module Transformers
     # columns into one to build the payee name, etc.
     class Cleaner
       # Cleans up a row
-      # @param row [CSV::Row] The row to parse in YNAB4 format
-      # @return [CSV::Row] The cleaned up row in YNAB4 format
+      # @param row [CSV::Row] The row to parse
+      # @return [CSV::Row] The cleaned up row
       def run(_row)
         raise NotImplementedError, :run
       end
