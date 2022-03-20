@@ -6,30 +6,38 @@ module Transformers
     class Wise < Enhancer
       def initialize
         @api_client = APIClients::CurrencyAPI.new
+        @indices = { date: 0, amount: 3, memo: 2 }
+
         super()
       end
 
       def run(ynab_row)
-        indices = {
-          date: 0,
-          amount: 3,
-          memo: 2
-        }
-
-        amount = ynab_row[indices[:amount]]
-        date = ynab_row[indices[:date]]
-        metadata = deserialize_metadata(ynab_row[indices[:memo]])
-
-        converted_amount = convert_amount(amount: amount,
-                                          base_currency:
-                                          metadata[:amount_currency],
-                                          target_currency: :chf, date: date)
-
+        amount = ynab_row[@indices[:amount]]
+        date = ynab_row[@indices[:date]]
+        metadata = deserialize_metadata(ynab_row[@indices[:memo]])
         enhanced_row = ynab_row.dup
-        enhanced_row[indices[:amount]] = converted_amount
-        # Put original amount and currency in Memo
-        enhanced_row[indices[:memo]] = 'Original amount: '\
-          "#{metadata[:original_amount]}"
+
+        # Some transactions, like topups, don't have require conversion
+        unless metadata[:original_amount].nil?
+          converted_amount = convert_amount(
+            amount: amount,
+            base_currency: metadata[:amount_currency],
+            target_currency: :chf,
+            date: date
+          )
+        end
+
+        # Inlude the original transaction amount in the original currency in
+        # the Memo field if conversion was performed
+        unless converted_amount.nil?
+          enhanced_row[@indices[:amount]] = converted_amount
+          # Put original amount and currency in Memo
+          enhanced_row[@indices[:memo]] = 'Original amount: '\
+            "#{metadata[:original_amount]}"
+        end
+
+        # If not, clear the metadata from the Memo field
+        enhanced_row[@indices[:memo]] = '' if converted_amount.nil?
 
         enhanced_row
       end

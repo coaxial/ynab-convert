@@ -8,6 +8,15 @@ module Transformers
         super({ date: [1], payee: [13], amount: [2] })
       end
 
+      def payee(row)
+        merchant = row[13]
+        description = row[4]
+
+        return description if merchant.nil?
+
+        merchant
+      end
+
       def memo(row)
         # Description goes in Memo because we'll need to extract the original
         # amount from it in the enhancer.
