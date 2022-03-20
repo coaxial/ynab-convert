@@ -1,0 +1,7 @@
+"TransferWise ID",Date,Amount,Currency,Description,"Payment Reference","Running Balance","Exchange From","Exchange To","Exchange Rate","Payer Name","Payee Name","Payee Account Number",Merchant,"Card Last Four Digits","Card Holder Full Name",Attachment,Note,"Total fees"
+CARD-000000000,23-12-2021,-3.05,CHF,"Card transaction of 10.00 USD issued by Someone Someplace",,185.95,CHF,USD,1.08749,,,,"Someone Someplace",0000,"Rick Sanchez",,,0.01
+CARD-000000000,16-12-2021,-11.00,CHF,"Card transaction of 11.00 CHF issued by Lala Australia +61000000000",,189.00,,,,,,,"Lala Australia +61408655667",0000,"Rick Sanchez",,,0.00
+TRANSFER-000000000,15-12-2021,200.00,CHF,"Topped up account",,200.00,,,,,,,,,,,,0.00
+CARD-000000000,13-11-2021,-0.07,CHF,"Card transaction of 11.00 CHF issued by Lala Australia +61000000000",,0.00,,,,,,,"Lala Australia +61408655667",0000,,,,0.00
+CARD-000000000,13-11-2021,-9.25,CHF,"Card transaction of 10.00 USD issued by Someone Someplace",,0.07,CHF,USD,1.08560,,,,"Someone Someplace",0000,,,,0.04
+CARD-000000000,11-11-2021,-31.82,CHF,"Card transaction of 30.00 EUR issued by Merchant merchant.com LOCATION LOCATION",,9.32,CHF,EUR,0.94652,,,,"Merchant merchant.com LOCATION LOCATION",0000,,,,0.12

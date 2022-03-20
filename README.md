@@ -31,6 +31,7 @@ latest one on 2019-12-01.
 `revolut` | Revolut Ltd | [revolut.com](https://www.revolut.com/) | The processor isn't aware of currencies. Make sure the statements processed with `revolut` are in the same currency that your YNAB is in
 `ubs_chequing` | UBS Switzerland (private banking) | [ubs.ch](https://ubs.ch) | Private chequing and joint accounts
 `ubs_credit` | UBS Switzerland (credit cards) | [ubs.ch](https://ubs.ch) | Both MasterCard and Visa
+`wise` | Wise (Transferwise) cards | [wise.com](https://wise.com) | Performs currency conversion (hardcoded to CHF for now)
 
 ## Contributing
 
