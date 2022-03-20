@@ -124,9 +124,14 @@ Or add `byebug` or `pry` statements in the code (works with guard and with rspec
 If there is no processor for your financial institution, you can contribute one
 to the project.
 
-There is a commented example processor located at
-`lib/ynab_convert/processors/example_processor.rb`. Looking at the other,
-real-world processors in that directory can also help.
+Looking at the other, real-world processors in `lib/processors` is helpful.
+
+Note that if the processor name's case cannot be camel cased from its lowercase
+string, it will need to be added manually in `lib/ynab_convert.rb` in the
+`processor_class_name` method. For instance, the USB Chequing processor is
+called with `-i ubs_chequing` from the command line. That makes the gem try to
+use `Processors::UbsChequing` as the processor class, but it's actually called
+`Processors::UBSChequing`.
 
 Be sure to add tests to your processor as well before you make a PR.
 

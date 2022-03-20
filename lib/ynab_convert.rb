@@ -6,6 +6,9 @@ require 'ynab_convert/logger'
 require 'core_extensions/string'
 require 'byebug' if ENV['YNAB_CONVERT_DEBUG']
 
+# FIXME: The architecture in here is not the greatest... It should be
+#   redesigned entirely.
+
 # The application
 module YnabConvert
   # Metadata about the gem
@@ -99,7 +102,22 @@ module YnabConvert
     end
 
     def processor_class_name
-      "Processors::#{@options[:institution].camel_case}"
+      # Processor class names don't always match camelcasing the `-i` argument
+      # from the command line. For those classes that don't, a lookup is
+      # performed to find the proper class name.
+      institution = @options[:institution].to_sym
+      institution_to_classname = {
+        ubs_chequing: 'UBSChequing',
+        ubs_credit: 'UBSCredit'
+      }
+
+      classname = institution_to_classname.fetch(institution) do |el|
+        # If the class name is "regular", it will be found by camelcasing the
+        # name passed as the `-i` argument from the command line.
+        el.to_s.camel_case
+      end
+
+      "Processors::#{classname}"
     end
 
     def processor
