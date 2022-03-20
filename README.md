@@ -28,7 +28,6 @@ latest one on 2019-12-01.
 ---|---|---|---
 `example` | Example Bank | N/A | Reference processor implementation, not a real institution
 `n26` | N26 | [n26.com](n26.com) | N26 CSV statements, will convert EUR amounts to CHF (hardcoded for now)
-`revolut` | Revolut Ltd | [revolut.com](https://www.revolut.com/) | The processor isn't aware of currencies. Make sure the statements processed with `revolut` are in the same currency that your YNAB is in
 `ubs_chequing` | UBS Switzerland (private banking) | [ubs.ch](https://ubs.ch) | Private chequing and joint accounts
 `ubs_credit` | UBS Switzerland (credit cards) | [ubs.ch](https://ubs.ch) | Both MasterCard and Visa
 `wise` | Wise (Transferwise) cards | [wise.com](https://wise.com) | Performs currency conversion (hardcoded to CHF for now)
@@ -124,9 +123,14 @@ Or add `byebug` or `pry` statements in the code (works with guard and with rspec
 If there is no processor for your financial institution, you can contribute one
 to the project.
 
-There is a commented example processor located at
-`lib/ynab_convert/processors/example_processor.rb`. Looking at the other,
-real-world processors in that directory can also help.
+Looking at the other, real-world processors in `lib/processors` is helpful.
+
+Note that if the processor name's case cannot be camel cased from its lowercase
+string, it will need to be added manually in `lib/ynab_convert.rb` in the
+`processor_class_name` method. For instance, the USB Chequing processor is
+called with `-i ubs_chequing` from the command line. That makes the gem try to
+use `Processors::UbsChequing` as the processor class, but it's actually called
+`Processors::UBSChequing`.
 
 Be sure to add tests to your processor as well before you make a PR.
 
