@@ -32,6 +32,7 @@ module APIClients
       currency = base_currency.downcase
       endpoint = "#{parsed_date}/currencies/#{currency}.min.json"
       rates = make_request(endpoint: endpoint)
+
       rates[currency]
     end
 

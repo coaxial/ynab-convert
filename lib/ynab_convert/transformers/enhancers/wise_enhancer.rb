@@ -11,7 +11,7 @@ module Transformers
 
       def run(ynab_row)
         indices = {
-          date: 1,
+          date: 0,
           amount: 3,
           memo: 2
         }
@@ -28,8 +28,8 @@ module Transformers
         enhanced_row = ynab_row.dup
         enhanced_row[indices[:amount]] = converted_amount
         # Put original amount and currency in Memo
-        enhanced_row[indices[:memo]] = "Original amount:
-        #{metadata[:original_amount]}"
+        enhanced_row[indices[:memo]] = 'Original amount: '\
+          "#{metadata[:original_amount]}"
 
         enhanced_row
       end
@@ -43,7 +43,9 @@ module Transformers
         # metadata is `<amount_currency>,<original_amount>`
         split = memo.split(',')
 
-        { amount_currency: split[0], original_amount: split[1] }
+        # amount_currency is a String but the CurrencyAPI needs it to be a
+        # Symbol
+        { amount_currency: split[0].to_sym, original_amount: split[1] }
       end
 
       # @param base_currency [Symbol] The ISO symbol of the amount's

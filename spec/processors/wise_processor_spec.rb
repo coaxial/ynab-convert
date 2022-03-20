@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Processors::Wise do
+RSpec.describe Processors::Wise, :vcr do
   let(:chf_fixture_path) do
     File.join(File.dirname(__dir__),
               'fixtures/statements/wise_chf_fixture.csv')
@@ -14,7 +14,12 @@ RSpec.describe Processors::Wise do
     let(:processor) { described_class.new(filepath: chf_fixture_path) }
     let(:processed) do
       <<~CSV
-        ""
+        "Date","Payee","Memo","Amount"
+        "2021-12-23","Someone Someplace","Original amount: 10.00 USD","-3.05"
+        "2021-12-16","Lala Australia +61408655667","Original amount: 11.00 CHF","-11.0"
+        "2021-11-13","Lala Australia +61408655667","Original amount: 11.00 CHF","-0.07"
+        "2021-11-13","Someone Someplace","Original amount: 10.00 USD","-9.25"
+        "2021-11-11","Merchant merchant.com LOCATION LOCATION","Original amount: 30.00 EUR","-31.82"
       CSV
     end
 
@@ -36,7 +41,12 @@ RSpec.describe Processors::Wise do
     let(:processor) { described_class.new(filepath: eur_fixture_path) }
     let(:processed) do
       <<~CSV
-        ""
+        "Date","Payee","Memo","Amount"
+        "2021-12-23","Someplace Location","Original amount: 10.00 USD","-6.18"
+        "2021-12-18","Merchant 0*00-00000-00000 Luxembourg","Original amount: 2.83 EUR","2.94"
+        "2021-12-16","Merchant 0*00-00000-00000 Luxembourg","Original amount: 3.10 EUR","3.24"
+        "2021-11-23","merchant.com Luxembourg","Original amount: 9.51 USD","-4.19"
+        "2021-11-22","Merchant O*00-00000-00000 Luxembourg","Original amount: 4.00 EUR","4.19"
       CSV
     end
 

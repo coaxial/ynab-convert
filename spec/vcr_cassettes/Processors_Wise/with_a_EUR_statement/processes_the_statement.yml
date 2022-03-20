@@ -1,0 +1,365 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/2021-12-23/currencies/eur.min.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - cdn.jsdelivr.net
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 20 Mar 2022 08:02:55 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1584'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Timing-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=604800, s-maxage=43200
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Jsd-Version:
+      - '1'
+      X-Jsd-Version-Type:
+      - branch
+      Etag:
+      - W/"b73-h/aJ9/q/8jAzljqh6oIL/yyFHa8"
+      Fastly-Original-Body-Size:
+      - '1584'
+      Age:
+      - '523'
+      X-Served-By:
+      - cache-fra19163-FRA
+      X-Cache:
+      - MISS
+      Vary:
+      - Accept-Encoding
+      Cf-Cache-Status:
+      - HIT
+      Accept-Ranges:
+      - bytes
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 6eeceda828ff020d-ZRH
+      Alt-Svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"date":"2021-12-23","eur":{"ada":0.86181,"aed":4.162461,"afn":117.286936,"all":120.745206,"amd":558.055575,"ang":2.042383,"aoa":639.830723,"ars":115.872331,"aud":1.570873,"awg":2.03981,"azn":1.931088,"bam":1.961191,"bbd":2.288055,"bch":0.002599,"bdt":97.224887,"bgn":1.955277,"bhd":0.427242,"bif":2268.722342,"bmd":1.133228,"bnb":0.002137,"bnd":1.546528,"bob":7.824891,"brl":6.407727,"bsd":1.133198,"btc":0.000024,"btn":85.593289,"bwp":13.300761,"byn":2.862525,"byr":22211.267685,"bzd":2.284245,"cad":1.455716,"cdf":2268.72228,"chf":1.042015,"clf":0.035348,"clp":975.346416,"cny":7.218776,"cop":4532.90044,"crc":725.342894,"cuc":1.133228,"cup":30.03054,"cve":110.750404,"czk":25.072778,"djf":201.397023,"dkk":7.435528,"doge":6.586237,"dop":64.650235,"dzd":157.592337,"egp":17.799585,"ern":16.998508,"etb":55.35801,"etc":0.032067,"eth":0.000289,"eur":1,"fjd":2.42399,"fkp":0.854883,"gbp":0.848618,"gel":3.496002,"ggp":0.854883,"ghs":6.997733,"gip":0.854883,"gmd":59.437956,"gnf":10541.856008,"gtq":8.748516,"gyd":236.977834,"hkd":8.838895,"hnl":27.593746,"hrk":7.521344,"htg":115.589992,"huf":368.242635,"idr":16091.610147,"ils":3.587992,"imp":0.854883,"inr":85.518877,"iqd":1655.079411,"irr":47893.049184,"isk":146.798251,"jep":0.854883,"jmd":174.159105,"jod":0.803423,"jpy":129.374954,"kes":128.224463,"kgs":96.095576,"khr":4616.770414,"kmf":492.784357,"kpw":1019.905061,"krw":1347.662963,"kwd":0.343258,"kyd":0.944382,"kzt":495.224738,"lak":12632.092406,"lbp":1712.57116,"link":0.057756,"lkr":229.477631,"lrd":161.99521,"lsl":17.916595,"ltc":0.007378,"ltl":3.346127,"lvl":0.685478,"lyd":5.218551,"mad":10.490348,"mdl":20.211052,"mga":4328.931074,"mkd":61.74784,"mmk":2014.870619,"mnt":3239.201361,"mop":9.103888,"mro":404.562181,"mur":49.692245,"mvr":17.5085,"mwk":919.619076,"mxn":23.492161,"myr":4.768053,"mzn":72.334019,"nad":17.916595,"ngn":465.949234,"nio":40.120582,"nok":10.05518,"npr":136.949383,"nzd":1.665409,"omr":0.436301,"pab":1.133198,"pen":4.572006,"pgk":4.000802,"php":56.822878,"pkr":201.917451,"pln":4.63471,"pyg":7708.573184,"qar":4.126068,"ron":4.952431,"rsd":117.649864,"rub":83.481279,"rwf":1138.894083,"sar":4.25458,"sbd":9.172259,"scr":14.773754,"sdg":495.857764,"sek":10.288293,"sgd":1.543649,"shp":1.560908,"sll":12720.483548,"sos":661.805029,"srd":24.272579,"std":23455.530445,"svc":9.915105,"syp":2847.227029,"szl":17.916375,"thb":38.131972,"theta":0.260549,"tjs":12.788856,"tmt":3.97763,"tnd":3.261995,"top":2.590049,"trx":14.458127,"try":13.643154,"ttd":7.691928,"twd":31.420107,"tzs":2606.423698,"uah":30.894457,"ugx":4022.89753,"usd":1.133228,"usdt":1.13042,"uyu":50.264409,"uzs":12295.523451,"vef":242318383040.19318,"vnd":26018.913574,"vuv":128.341071,"wst":2.946586,"xaf":657.755127,"xag":0.049762,"xau":0.000628,"xcd":3.062605,"xdr":0.811318,"xlm":4.255872,"xof":658.968763,"xpf":119.785729,"xrp":1.205246,"yer":283.335332,"zar":17.818372,"zmk":10200.416984,"zmw":18.737824,"zwl":364.898935}}'
+  recorded_at: Sun, 13 Mar 2022 23:00:00 GMT
+- request:
+    method: get
+    uri: https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/2021-12-18/currencies/eur.min.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - cdn.jsdelivr.net
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 20 Mar 2022 08:02:55 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1602'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Timing-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=604800, s-maxage=43200
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Jsd-Version:
+      - '1'
+      X-Jsd-Version-Type:
+      - branch
+      Etag:
+      - W/"b71-KcZJClCrfgs1mMGemlHKdnDCiq8"
+      Age:
+      - '1'
+      X-Served-By:
+      - cache-fra19152-FRA
+      X-Cache:
+      - MISS
+      Vary:
+      - Accept-Encoding
+      Cf-Cache-Status:
+      - HIT
+      Accept-Ranges:
+      - bytes
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 6eeceda85d9901f4-ZRH
+      Alt-Svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"date":"2021-12-18","eur":{"ada":0.929157,"aed":4.12787,"afn":115.194974,"all":120.529037,"amd":540.108577,"ang":2.025471,"aoa":638.337406,"ars":114.548897,"aud":1.570618,"awg":2.023419,"azn":1.914938,"bam":1.942099,"bbd":2.269286,"bch":0.002658,"bdt":96.472053,"bgn":1.953916,"bhd":0.423728,"bif":2248.743085,"bmd":1.12381,"bnb":0.002153,"bnd":1.53416,"bob":7.749011,"brl":6.401674,"bsd":1.123869,"btc":0.000024,"btn":84.471382,"bwp":13.175549,"byn":2.845991,"byr":22026.668898,"bzd":2.265364,"cad":1.448681,"cdf":2250.991111,"chf":1.038904,"clf":0.034344,"clp":947.66416,"cny":7.164741,"cop":4466.379119,"crc":717.229172,"cuc":1.12381,"cup":29.780955,"cve":110.474866,"czk":25.220143,"djf":199.723891,"dkk":7.436833,"doge":6.695762,"dop":64.001401,"dzd":156.234309,"egp":17.690003,"ern":16.857232,"etb":54.561399,"etc":0.032943,"eth":0.000292,"eur":1,"fjd":2.394155,"fkp":0.847778,"gbp":0.84912,"gel":3.466998,"ggp":0.847778,"ghs":6.950808,"gip":0.847778,"gmd":59.416254,"gnf":10451.43003,"gtq":8.690359,"gyd":235.026267,"hkd":8.768694,"hnl":27.320249,"hrk":7.51728,"htg":112.888374,"huf":367.29514,"idr":16166.844495,"ils":3.51358,"imp":0.847778,"inr":85.760728,"iqd":1640.762071,"irr":47480.957587,"isk":146.387877,"jep":0.847778,"jmd":173.081539,"jod":0.796336,"jpy":127.797951,"kes":127.107145,"kgs":95.298388,"khr":4573.905619,"kmf":491.526285,"kpw":1011.428587,"krw":1334.962661,"kwd":0.340571,"kyd":0.936574,"kzt":492.206656,"lak":12418.096888,"lbp":1698.076755,"link":0.061828,"lkr":227.021641,"lrd":159.58136,"lsl":17.846526,"ltc":0.007814,"ltl":3.318318,"lvl":0.679782,"lyd":5.18119,"mad":10.440619,"mdl":19.94885,"mga":4450.286555,"mkd":61.115208,"mmk":2000.487403,"mnt":3212.280221,"mop":9.032817,"mro":401.199847,"mur":49.281652,"mvr":17.310873,"mwk":918.71858,"mxn":23.420534,"myr":4.740795,"mzn":71.733193,"nad":17.846521,"ngn":460.942185,"nio":39.760808,"nok":10.155705,"npr":135.155843,"nzd":1.659676,"omr":0.43269,"pab":1.123854,"pen":4.535739,"pgk":3.944993,"php":56.060504,"pkr":200.207108,"pln":4.630668,"pyg":7638.561195,"qar":4.091834,"ron":4.949599,"rsd":117.604776,"rub":83.357348,"rwf":1151.112593,"sar":4.217529,"sbd":9.096028,"scr":14.980462,"sdg":491.67085,"sek":10.303653,"sgd":1.537271,"shp":1.54794,"sll":12609.144515,"sos":656.305209,"srd":24.19454,"std":23260.590537,"svc":9.83339,"syp":2823.563604,"szl":17.846513,"thb":37.473999,"theta":0.277935,"tjs":12.683099,"tmt":3.933334,"tnd":3.209643,"top":2.576165,"trx":14.164303,"try":18.451273,"ttd":7.642668,"twd":31.289337,"tzs":2590.381592,"uah":30.631074,"ugx":3995.370407,"usd":1.12381,"usdt":1.120995,"uyu":49.872181,"uzs":12170.858752,"vef":240304464683.14218,"vnd":25827.954997,"vuv":127.274423,"wst":2.922097,"xaf":651.343293,"xag":0.050245,"xau":0.000625,"xcd":3.037152,"xdr":0.804005,"xlm":4.446383,"xof":650.127923,"xpf":119.629945,"xrp":1.413313,"yer":281.233771,"zar":17.887008,"zmk":10115.639348,"zmw":18.476308,"zwl":361.866245}}'
+  recorded_at: Sun, 13 Mar 2022 23:00:00 GMT
+- request:
+    method: get
+    uri: https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/2021-12-16/currencies/eur.min.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - cdn.jsdelivr.net
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 20 Mar 2022 08:02:55 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1592'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Timing-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=604800, s-maxage=43200
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Jsd-Version:
+      - '1'
+      X-Jsd-Version-Type:
+      - branch
+      Etag:
+      - W/"b6d-debvJPJbZaP/dw7DcR09DRITvyU"
+      Age:
+      - '1'
+      X-Served-By:
+      - cache-fra19174-FRA
+      X-Cache:
+      - MISS
+      Vary:
+      - Accept-Encoding
+      Cf-Cache-Status:
+      - HIT
+      Accept-Ranges:
+      - bytes
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 6eeceda88ef60208-ZRH
+      Alt-Svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"date":"2021-12-16","eur":{"ada":0.857654,"aed":4.147839,"afn":124.86067,"all":121.112298,"amd":544.319852,"ang":2.035197,"aoa":630.074153,"ars":114.975542,"aud":1.574963,"awg":2.033211,"azn":1.912693,"bam":1.959714,"bbd":2.279978,"bch":0.00252,"bdt":96.885122,"bgn":1.9557,"bhd":0.425758,"bif":2259.625428,"bmd":1.129248,"bnb":0.002084,"bnd":1.544996,"bob":7.785893,"brl":6.415146,"bsd":1.129218,"btc":0.000023,"btn":86.202319,"bwp":13.371898,"byn":2.856061,"byr":22133.262567,"bzd":2.276211,"cad":1.449362,"cdf":2259.624935,"chf":1.043763,"clf":0.03484,"clp":961.340481,"cny":7.190597,"cop":4517.331135,"crc":720.658294,"cuc":1.129248,"cup":29.925074,"cve":111.089723,"czk":25.260178,"djf":200.68981,"dkk":7.43587,"doge":6.183391,"dop":64.310833,"dzd":157.224085,"egp":17.775837,"ern":16.938809,"etb":54.599006,"etc":0.031149,"eth":0.00028,"eur":1,"fjd":2.405242,"fkp":0.851881,"gbp":0.851188,"gel":3.495011,"ggp":0.851881,"ghs":6.905384,"gip":0.851881,"gmd":59.567975,"gnf":10530.238136,"gtq":8.732,"gyd":236.255564,"hkd":8.811528,"hnl":27.452002,"hrk":7.519773,"htg":113.103159,"huf":369.456546,"idr":16166.767358,"ils":3.522153,"imp":0.851881,"inr":86.061861,"iqd":1648.702212,"irr":47710.73168,"isk":147.00576,"jep":0.851881,"jmd":174.000709,"jod":0.800615,"jpy":128.904229,"kes":127.605004,"kgs":95.752447,"khr":4596.039868,"kmf":493.764122,"kpw":1016.323194,"krw":1338.608445,"kwd":0.34258,"kyd":0.941086,"kzt":494.532612,"lak":12489.483631,"lbp":1728.558919,"link":0.056829,"lkr":228.109146,"lrd":159.845173,"lsl":18.305301,"ltc":0.007326,"ltl":3.334376,"lvl":0.683071,"lyd":5.205727,"mad":10.46531,"mdl":20.015569,"mga":4495.536964,"mkd":61.605894,"mmk":2010.070719,"mnt":3227.82541,"mop":9.07639,"mro":403.141374,"mur":48.834944,"mvr":17.458518,"mwk":924.291298,"mxn":23.751644,"myr":4.777178,"mzn":72.080088,"nad":18.305149,"ngn":462.969012,"nio":39.964824,"nok":10.156728,"npr":137.922406,"nzd":1.665177,"omr":0.434771,"pab":1.129218,"pen":4.57741,"pgk":3.963724,"php":56.687131,"pkr":201.006083,"pln":4.621985,"pyg":7676.652515,"qar":4.111613,"ron":4.950057,"rsd":117.955589,"rub":83.187987,"rwf":1132.07121,"sar":4.236067,"sbd":9.147486,"scr":15.205278,"sdg":494.049061,"sek":10.254053,"sgd":1.54183,"shp":1.55543,"sll":12683.714588,"sos":660.610032,"srd":24.327955,"std":23373.155523,"svc":9.880583,"syp":2837.227677,"szl":18.305364,"thb":37.750613,"theta":0.260847,"tjs":12.748515,"tmt":3.952368,"tnd":3.26124,"top":2.587445,"trx":12.861155,"try":16.739421,"ttd":7.670767,"twd":31.341185,"tzs":2597.270502,"uah":30.765776,"ugx":4025.678611,"usd":1.129248,"usdt":1.124057,"uyu":49.952551,"uzs":12252.341428,"vef":241467370193.57892,"vnd":26012.229757,"vuv":127.890342,"wst":2.936238,"xaf":657.274222,"xag":0.051125,"xau":0.000635,"xcd":3.05185,"xdr":0.807318,"xlm":4.131839,"xof":657.222211,"xpf":120.095416,"xrp":1.357847,"yer":282.59456,"zar":18.058264,"zmk":10164.590896,"zmw":18.462892,"zwl":363.617424}}'
+  recorded_at: Sun, 13 Mar 2022 23:00:00 GMT
+- request:
+    method: get
+    uri: https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/2021-11-23/currencies/eur.min.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - cdn.jsdelivr.net
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 20 Mar 2022 08:02:55 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1586'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Timing-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=604800, s-maxage=43200
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Jsd-Version:
+      - '1'
+      X-Jsd-Version-Type:
+      - branch
+      Etag:
+      - W/"b6b-buH77IMMTFiImeWoARZay66n0Do"
+      Age:
+      - '0'
+      X-Served-By:
+      - cache-fra19165-FRA
+      X-Cache:
+      - MISS
+      Vary:
+      - Accept-Encoding
+      Cf-Cache-Status:
+      - HIT
+      Accept-Ranges:
+      - bytes
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 6eeceda8bca101f8-ZRH
+      Alt-Svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"date":"2021-11-23","eur":{"ada":0.622127,"aed":4.129166,"afn":105.952835,"all":121.269092,"amd":536.20578,"ang":2.026413,"aoa":657.63569,"ars":112.880311,"aud":1.555533,"awg":2.023776,"azn":1.921093,"bam":1.950069,"bbd":2.270233,"bch":0.001991,"bdt":96.467719,"bgn":1.956381,"bhd":0.423824,"bif":2242.7065,"bmd":1.124164,"bnb":0.001979,"bnd":1.53133,"bob":7.752702,"brl":6.280928,"bsd":1.124388,"btc":0.00002,"btn":83.699987,"bwp":13.120203,"byn":2.814285,"byr":22033.607722,"bzd":2.266404,"cad":1.428031,"cdf":2255.635322,"chf":1.048491,"clf":0.03309,"clp":913.056385,"cny":7.178236,"cop":4413.185485,"crc":719.663754,"cuc":1.124164,"cup":29.790337,"cve":110.584124,"czk":25.452306,"djf":199.786238,"dkk":7.436843,"doge":5.040574,"dop":63.683601,"dzd":156.564495,"egp":17.672686,"ern":16.862804,"etb":53.127904,"etc":0.022983,"eth":0.000271,"eur":1,"fjd":2.374739,"fkp":0.83799,"gbp":0.839087,"gel":3.512978,"ggp":0.83799,"ghs":6.89108,"gip":0.83799,"gmd":58.795578,"gnf":10634.588494,"gtq":8.6986,"gyd":235.239171,"hkd":8.757907,"hnl":27.187936,"hrk":7.518967,"htg":111.594295,"huf":370.254165,"idr":16032.653484,"ils":3.471645,"imp":0.83799,"inr":83.671557,"iqd":1641.841024,"irr":47495.914621,"isk":148.007607,"jep":0.83799,"jmd":175.186645,"jod":0.797023,"jpy":129.070862,"kes":126.353937,"kgs":95.315703,"khr":4575.345867,"kmf":492.102719,"kpw":1011.747687,"krw":1338.305729,"kwd":0.340104,"kyd":0.937065,"kzt":487.720829,"lak":12062.276067,"lbp":1724.155905,"link":0.041477,"lkr":227.97167,"lrd":160.924283,"lsl":17.795156,"ltc":0.005289,"ltl":3.319363,"lvl":0.679996,"lyd":5.17675,"mad":10.387442,"mdl":19.901102,"mga":4496.655188,"mkd":61.656253,"mmk":1998.89868,"mnt":3213.105494,"mop":9.02386,"mro":401.326233,"mur":48.898711,"mvr":17.368284,"mwk":916.193241,"mxn":23.608671,"myr":4.705188,"mzn":71.755355,"nad":17.795541,"ngn":461.851692,"nio":39.609876,"nok":10.041215,"npr":133.920098,"nzd":1.617542,"omr":0.432815,"pab":1.124378,"pen":4.507997,"pgk":3.973968,"php":56.997228,"pkr":196.588105,"pln":4.708583,"pyg":7695.463758,"qar":4.09305,"ron":4.94958,"rsd":117.576485,"rub":84.318346,"rwf":1129.784478,"sar":4.216502,"sbd":9.047631,"scr":14.517462,"sdg":492.383358,"sek":10.110507,"sgd":1.534292,"shp":1.548426,"sll":12399.525061,"sos":656.511555,"srd":24.179595,"std":23267.91807,"svc":9.837934,"syp":1412.830403,"szl":17.795935,"thb":37.141895,"theta":0.17235,"tjs":12.693264,"tmt":3.945814,"tnd":3.194871,"top":2.542577,"trx":10.890318,"try":12.833448,"ttd":7.631887,"twd":31.256019,"tzs":2585.576219,"uah":29.995279,"ugx":4013.940815,"usd":1.124164,"usdt":1.108668,"uyu":49.703918,"uzs":12124.105427,"vef":240380165207.43896,"vnd":25490.410974,"vuv":125.141459,"wst":2.881952,"xaf":654.047888,"xag":0.046372,"xau":0.000621,"xcd":3.038108,"xdr":0.804053,"xlm":3.30055,"xof":653.714098,"xpf":118.458729,"xrp":1.067221,"yer":281.32176,"zar":17.824176,"zmk":10118.826669,"zmw":19.788734,"zwl":361.98024}}'
+  recorded_at: Sun, 13 Mar 2022 23:00:00 GMT
+- request:
+    method: get
+    uri: https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/2021-11-22/currencies/eur.min.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - cdn.jsdelivr.net
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 20 Mar 2022 08:02:55 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1604'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Timing-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=604800, s-maxage=43200
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Jsd-Version:
+      - '1'
+      X-Jsd-Version-Type:
+      - branch
+      Etag:
+      - W/"b77-VsaEiJQupPQTFWJbejsAJaC4xNE"
+      Age:
+      - '0'
+      X-Served-By:
+      - cache-fra19183-FRA
+      X-Cache:
+      - MISS
+      Vary:
+      - Accept-Encoding
+      Cf-Cache-Status:
+      - HIT
+      Accept-Ranges:
+      - bytes
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 6eeceda8dcefcc42-ZRH
+      Alt-Svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"date":"2021-11-22","eur":{"ada":0.615079,"aed":4.143706,"afn":105.371243,"all":121.274498,"amd":537.992147,"ang":2.032037,"aoa":670.370567,"ars":113.401333,"aud":1.559071,"awg":2.030991,"azn":1.919418,"bam":1.953478,"bbd":2.276516,"bch":0.001972,"bdt":96.646804,"bgn":1.954561,"bhd":0.425476,"bif":2244.798031,"bmd":1.128171,"bnb":0.001949,"bnd":1.534825,"bob":7.785397,"brl":6.327857,"bsd":1.127522,"btc":0.000019,"btn":83.721897,"bwp":13.150165,"byn":2.782549,"byr":22112.16043,"bzd":2.272721,"cad":1.427385,"cdf":2263.111936,"chf":1.047806,"clf":0.033874,"clp":934.69034,"cny":7.205862,"cop":4415.663057,"crc":721.684181,"cuc":1.128171,"cup":29.896543,"cve":110.120679,"czk":25.410144,"djf":200.498928,"dkk":7.436399,"doge":4.976515,"dop":63.737467,"dzd":157.090252,"egp":17.723394,"ern":16.922922,"etb":53.74756,"etc":0.022615,"eth":0.000265,"eur":1,"fjd":2.369668,"fkp":0.840977,"gbp":0.839423,"gel":3.525534,"ggp":0.840977,"ghs":6.908746,"gip":0.840977,"gmd":59.118898,"gnf":10770.983854,"gtq":8.72127,"gyd":235.910822,"hkd":8.789694,"hnl":27.188368,"hrk":7.508997,"htg":110.561102,"huf":367.568182,"idr":16098.273287,"ils":3.492838,"imp":0.840977,"inr":83.83538,"iqd":1645.169713,"irr":47665.243977,"isk":147.81302,"jep":0.840977,"jmd":175.469699,"jod":0.799848,"jpy":128.659493,"kes":126.388698,"kgs":95.646826,"khr":4587.094879,"kmf":488.498495,"kpw":1015.354701,"krw":1344.486854,"kwd":0.341373,"kyd":0.939668,"kzt":488.771419,"lak":12082.236321,"lbp":1705.116463,"link":0.039634,"lkr":227.775673,"lrd":161.328352,"lsl":17.644202,"ltc":0.005165,"ltl":3.331197,"lvl":0.682419,"lyd":5.179412,"mad":10.387087,"mdl":19.958865,"mga":4498.734087,"mkd":61.540892,"mmk":1997.829287,"mnt":3224.560637,"mop":9.050041,"mro":402.757014,"mur":48.865769,"mvr":17.430697,"mwk":919.517906,"mxn":23.532156,"myr":4.719706,"mzn":72.011429,"nad":17.644898,"ngn":463.49812,"nio":39.721942,"nok":10.075926,"npr":133.955316,"nzd":1.613945,"omr":0.434324,"pab":1.127522,"pen":4.538252,"pgk":3.960061,"php":56.981406,"pkr":197.501317,"pln":4.689753,"pyg":7717.985028,"qar":4.107666,"ron":4.933889,"rsd":117.683669,"rub":82.986024,"rwf":1167.020536,"sar":4.232115,"sbd":9.079923,"scr":16.836873,"sdg":494.139151,"sek":10.098923,"sgd":1.536773,"shp":1.553947,"sll":12438.089832,"sos":658.852096,"srd":24.252243,"std":23350.871256,"svc":9.86607,"syp":1417.86733,"szl":17.757028,"thb":37.012482,"theta":0.155698,"tjs":12.736463,"tmt":3.9486,"tnd":3.229673,"top":2.550459,"trx":10.61758,"try":12.691111,"ttd":7.65307,"twd":31.362606,"tzs":2597.050415,"uah":29.981829,"ugx":4030.817325,"usd":1.128171,"usdt":1.113083,"uyu":49.750798,"uzs":12112.164473,"vef":241237152098.03217,"vnd":25566.621411,"vuv":125.587605,"wst":2.892227,"xaf":655.156443,"xag":0.045817,"xau":0.000611,"xcd":3.04894,"xdr":0.804916,"xlm":3.309982,"xof":655.098447,"xpf":118.881044,"xrp":1.074149,"yer":282.324644,"zar":17.752792,"zmk":10154.893107,"zmw":19.872256,"zwl":363.270747}}'
+  recorded_at: Sun, 13 Mar 2022 23:00:00 GMT
+recorded_with: VCR 6.1.0
