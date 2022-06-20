@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ynab_convert (2.0.2)
+    ynab_convert (2.0.3)
       i18n
       slop
       timecop
