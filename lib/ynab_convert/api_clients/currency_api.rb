@@ -8,7 +8,7 @@ module APIClients
   class CurrencyAPI < APIClient
     # The days that are missing from the API's otherwise normally available
     # range
-    MISSING_DAYS = { '2021-09-14' => true }.freeze
+    MISSING_DAYS = { '2021-09-14' => true, '2022-05-01' => true }.freeze
 
     def initialize
       api_base_path = 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/'
